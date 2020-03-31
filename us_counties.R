@@ -8,14 +8,21 @@ library(plotly)
 library(Hmisc)
 library(RColorBrewer)
 library(scales)
-library(fredsUtils)
+library(devtools)
+library(lubridate)
+install_github("fkzack/FredsRUtils")
+library(FredsRUtils)
+
 
 
 #covid by county from ny times
-#Seems to be limited to 1000 records, so get by state
+#Seems to be limited to around 1000 records, so get by state
 counties_url <- "https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+order+by+date+desc"
 #https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties++where+county+in+(%27Santa+Clara%27%2C+%27Harris%27)+order+by+date+desc
 
+
+
+# Build up the encoded url to retireve data for seleced counties from covid-19-datasettes.com
 getSelectedCountiesUrl <- function(){
   sql_url <- paste(
     "https://covid-19.datasettes.com/covid.json?sql=select",
@@ -31,6 +38,8 @@ getSelectedCountiesUrl <- function(){
   return(sql_url)
 }
 
+
+# Build url to get county data for a single state
 getStateUrl <- function(state){
   state_url <- "https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22state%22+%3D+%3Ap0+order+by+county%2C++date+desc&p0=STATE"
   state_url <- sub("STATE", state, state_url)
@@ -39,6 +48,7 @@ getStateUrl <- function(state){
 
 
 
+# Wrap xyplot go create the plot I want (log y axis, log 10 grids, ...)
 covidPlot <- function(formula1, data, ...){
   
   #this gets the incoming data frame
@@ -68,33 +78,79 @@ covidPlot <- function(formula1, data, ...){
 
 
 
-
-plotCounties <- function (countyUrl, title){
-
+#get county data from api
+getCounties <- function(countyUrl, countiesPopulation){
+  
   rawJSON <- fromJSON(countyUrl)
   
   counties <- data.frame(rawJSON$rows, stringsAsFactors = F)
-  ifelse(counties$state=='New York', "")
   names(counties) <- rawJSON$columns
   counties$date <- as.Date(counties$date)
   counties$deaths <- as.numeric(counties$deaths)
   counties$cases <- as.numeric(counties$cases)
   counties$county <- paste(counties$county, state.abb[match(counties$state, state.name)])
-  
+  counties$fips < as.numeric(counties$fips)
   print(str(counties))
-  print(addGrid(covidPlot(cases~date | county, data=counties, group=county, main=title )))
-  print(addGrid(covidPlot(cases~date, data=counties, group=county, main=title, 
-                          auto.key= list(cex=0.6, columns=3), ,
-                          par.settings= list(superpose.symbol=list(pch=1:25)) )
-                ))
-  print(addGrid(covidPlot(deaths~date | county, data=counties, group=county, main=title )))
-        
-        
- 
-
+  return(counties)
 }
 
-plotCounties(getStateUrl('California'), "California Counties")
-plotCounties(getStateUrl('New+York'), "New York Counties")
-plotCounties(getSelectedCountiesUrl(), "Selected Counties")
 
+plotCounties <- function (countyUrl, title){
+
+  counties <- getCounties(countyUrl)
+  
+  print(addGrid(covidPlot(cases~date | county, data=counties, group=county, main=title )))
+  print(addGrid(covidPlot(cases~date, data=counties, group=county, main=title,
+                          auto.key= list(cex=0.6, columns=3),
+                          par.settings= list(superpose.symbol=list(pch=1:25)) )
+  ))
+  print(addGrid(covidPlot(deaths~date | county, data=counties, group=county, main=title )))
+
+  return (c(p1,p2,p3))        
+}
+
+
+
+
+# GetCountiesPopulation <- function() {
+#   # get 2019 county population data from census bureau
+#   # note that the nytimes data combines all of the new york city bouroughs into "new york city", and does not include a fips code,
+#   # so to use this I would have to combine bouroghs populations and replace into ny
+#   pop <- fromJSON("https://api.census.gov/data/2019/pep/population?get=NAME,POP&for=county:*")
+#   popNames <- pop[1,]
+#   pop <- data.frame(pop[-1,], stringsAsFactors = FALSE)
+#   names(pop) <- popNames
+#   pop <- rename(pop, "county.name" = "NAME" , "state.FIPS" = "state", "county.FIPS" = "county", "county.population" = "POP")
+#   pop$state.FIPS <- as.numeric(pop$state.FIPS)
+#   pop$county.FIPS <- as.numeric(pop$county.FIPS)
+#   pop$fips <- pop$state.FIPS + pop$county.FIPS
+#   pop$county.population < as.numeric(pop$county.population)
+#   return (pop)
+# }
+
+
+#plotCounties(getStateUrl('California'), "California Counties")
+#plotCounties(getStateUrl('New+York'), "New York Counties")
+#plotCounties(getSelectedCountiesUrl(), "Selected Counties")
+
+ca <- getCounties(getStateUrl('California'))
+ny <- getCounties(getStateUrl('New+York'))
+selected <- getCounties(getSelectedCountiesUrl())
+
+print(addGrid(covidPlot(cases~date | county, data=ca, group=county, main="California Counties")))
+print(addGrid(covidPlot(deaths~date | county, data=ca, group=county, main="California Counties")))
+
+print(addGrid(covidPlot(cases~date | county, data=ny, group=county, main="New York Counties")))
+print(addGrid(covidPlot(deaths~date | county, data=ny, group=county, main="New York Counties")))
+
+
+print(addGrid(covidPlot(cases~date | county, data=selected, group=county, main="Selected Counties")))
+print(addGrid(covidPlot(deaths~date | county, data=selected, group=county, main="Selected Counties")))
+
+print(addGrid(covidPlot(cases~date, data=selected, group=county, main="Selected Counties",
+                        auto.key= list(cex=0.6, columns=3),
+                        par.settings= list(superpose.symbol=list(pch=1:25)) )))
+
+print(addGrid(covidPlot(deaths~date, data=selected, group=county, main="Selected Counties",
+                        auto.key= list(cex=0.6, columns=3),
+                        par.settings= list(superpose.symbol=list(pch=1:25)) )))
