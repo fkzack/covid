@@ -3,14 +3,15 @@ title: "CovidPlots"
 output: github_document
 date: '`r format(Sys.time(), "%d %B, %Y")`'
 ---
+
 <style>
-  .main-container {
-    max-width: 1200px !important;
-  }
+    body {
+        max-width: 2400px;;
+    }
 </style>
 
 ```{r, setup, include=FALSE}
-knitr::opts_chunk$set(fig.width=12, fig.height=8, dev = 'svg') 
+knitr::opts_chunk$set(out.width = 4800,  fig.width = 12, fig.asp=0.62,  dev = 'svg') 
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
