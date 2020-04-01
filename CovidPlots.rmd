@@ -3,6 +3,11 @@ title: "CovidPlots"
 output: github_document
 date: '`r format(Sys.time(), "%d %B, %Y")`'
 ---
+<style>
+  .main-container {
+    max-width: 1200px !important;
+  }
+</style>
 
 ```{r, setup, include=FALSE}
 knitr::opts_chunk$set(fig.width=12, fig.height=8, dev = 'svg') 
