@@ -3,5 +3,10 @@
 
 @import "{{ site.theme }}";
 
-h2{color: red;}
+.main-content {
+  max-width:2400;
+  h2 {color: red;}
+}
+
+
 
