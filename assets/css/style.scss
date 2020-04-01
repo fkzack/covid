@@ -3,10 +3,12 @@
 
 @import "{{ site.theme }}";
 
-.body {
+.main-content {
   max-width:4800px;
-  
 }
 
+.page-header {
+  max-width:4800px;
+}
 
 
