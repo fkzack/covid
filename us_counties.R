@@ -133,6 +133,7 @@ getCounties <- function(countyUrl, countiesPopulation){
 #plotCounties(getStateUrl('New+York'), "New York Counties")
 #plotCounties(getSelectedCountiesUrl(), "Selected Counties")
 
+
 plotCounties <- function (){
     
     ca <- getCounties(getStateUrl('California'))

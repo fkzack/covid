@@ -3,8 +3,8 @@ title: "CovidPlots"
 output: github_document
 ---
 
-```{r}
-knitr::opts_chunk$set(fig.width=12, fig.height=8) 
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=12, fig.height=8, dev = 'svg') 
 ```
 
 
@@ -22,32 +22,19 @@ Covid case counts and death counts by county, based on data from NY Times via ht
 
 ```
 
+## Covid in a Few Interesting Counties
 
 
-## Reported Cases
+
 ```{r echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-    
-    print(addGrid(covidPlot(cases~date | county, data=ca, group=county, main="California Counties")))
-    
-    print(addGrid(covidPlot(cases~date | county, data=ny, group=county, main="New York Counties")))
-    
+
     print(addGrid(covidPlot(cases~date | county, data=selected, group=county, main="Selected Counties")))
     
+    print(addGrid(covidPlot(deaths~date | county, data=selected, group=county, main="Selected Counties")))
+
     print(addGrid(covidPlot(cases~date, data=selected, group=county, main="Selected Counties",
                             auto.key= list(cex=0.6, columns=3),
                             par.settings= list(superpose.symbol=list(pch=1:25)) )))
-    
-```
-
-## Reported Deaths
-```{r echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-    
-    
-    print(addGrid(covidPlot(deaths~date | county, data=ca, group=county, main="California Counties")))
-    
-    print(addGrid(covidPlot(deaths~date | county, data=ny, group=county, main="New York Counties")))
-    
-    print(addGrid(covidPlot(deaths~date | county, data=selected, group=county, main="Selected Counties")))
     
     print(addGrid(covidPlot(deaths~date, data=selected, group=county, main="Selected Counties",
                             auto.key= list(cex=0.6, columns=3),
@@ -55,3 +42,15 @@ Covid case counts and death counts by county, based on data from NY Times via ht
 
 ```
 
+## Covid in All California Counties
+```{r echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+    print(addGrid(covidPlot(cases~date | county, data=ca, group=county, main="California Counties")))
+    print(addGrid(covidPlot(deaths~date | county, data=ca, group=county, main="California Counties")))
+    
+```
+
+## Covid in All New York Counties
+```{r echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+    print(addGrid(covidPlot(cases~date | county, data=ny, group=county, main="New York Counties")))
+    print(addGrid(covidPlot(deaths~date | county, data=ny, group=county, main="New York Counties")))
+```
