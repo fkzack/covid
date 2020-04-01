@@ -1,9 +1,5 @@
 @import "{{ site.theme }}";
 body {
   max-width: 4800px;
-  width: 4800px;
-  background-color: coral;
   
 }
-
-h2{color: red;}
