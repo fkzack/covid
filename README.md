@@ -1,2 +1,2 @@
 ## Covid Plots (Static)
-[a relative link](CovidPlots.md)
+[COVID Plots (static)](CovidPlots.md)
