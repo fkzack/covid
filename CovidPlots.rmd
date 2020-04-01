@@ -4,11 +4,6 @@ output: github_document
 date: '`r format(Sys.time(), "%d %B, %Y")`'
 ---
 
-<style>
-    body {
-        max-width: 4800px;;
-    }
-</style>
 
 ```{r, setup, include=FALSE}
 knitr::opts_chunk$set(out.width = 4800,  fig.width = 12, fig.asp=0.62,  dev = 'svg') 
