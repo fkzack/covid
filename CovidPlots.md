@@ -4,7 +4,7 @@ CovidPlots
 
 <style>
     body {
-        max-width: 2400px;;
+        max-width: 4800px;;
     }
 </style>
 
