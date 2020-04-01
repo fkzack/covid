@@ -3,18 +3,15 @@ title: "CovidPlots"
 output: github_document
 ---
 
-```{r include=FALSE}
+```{r, setup, include=FALSE}
 knitr::opts_chunk$set(fig.width=12, fig.height=8, dev = 'svg') 
-```
-
-
-```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-Covid case counts and death counts by county, based on data from NY Times via https://covid-19.datasettes.com
-```{r include=FALSE}
+
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
+```{r, get_data, include=FALSE}
     source("us_counties.R")
     ca <- getCounties(getStateUrl('California'))
     ny <- getCounties(getStateUrl('New+York'))
@@ -24,9 +21,7 @@ Covid case counts and death counts by county, based on data from NY Times via ht
 
 ## Covid in a Few Interesting Counties
 
-
-
-```{r echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+```{r, selected_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
     print(addGrid(covidPlot(cases~date | county, data=selected, group=county, main="Selected Counties")))
     
@@ -43,14 +38,14 @@ Covid case counts and death counts by county, based on data from NY Times via ht
 ```
 
 ## Covid in All California Counties
-```{r echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+```{r, california_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     print(addGrid(covidPlot(cases~date | county, data=ca, group=county, main="California Counties")))
     print(addGrid(covidPlot(deaths~date | county, data=ca, group=county, main="California Counties")))
     
 ```
 
 ## Covid in All New York Counties
-```{r echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+```{r, new_york_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     print(addGrid(covidPlot(cases~date | county, data=ny, group=county, main="New York Counties")))
     print(addGrid(covidPlot(deaths~date | county, data=ny, group=county, main="New York Counties")))
 ```

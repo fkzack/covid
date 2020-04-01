@@ -159,4 +159,4 @@ plotCounties <- function (){
                             par.settings= list(superpose.symbol=list(pch=1:25)) )))
 }
 
-plotCounties()
+#plotCounties()
