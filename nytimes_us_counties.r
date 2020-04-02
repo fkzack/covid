@@ -13,7 +13,7 @@ library(lubridate)
 install_github("fkzack/FredsRUtils")
 library(FredsRUtils)
 
-
+rm(list=ls())
 
 #covid by county from ny times
 #Seems to be limited to around 1000 records, so get by state

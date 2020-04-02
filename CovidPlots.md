@@ -1,6 +1,6 @@
 CovidPlots
 ================
-01 April, 2020
+02 April, 2020
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
@@ -16,3 +16,10 @@ NY Times via <https://covid-19.datasettes.com>
 ## Covid in All New York Counties
 
 <img src="CovidPlots_files/figure-gfm/new_york_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-2.svg" width="4800" />
+
+## Covid in US States
+
+Covid positive tests, deaths, and hospitalizations by state from
+covidtracking.com <https://covidtracking.com>
+
+<img src="CovidPlots_files/figure-gfm/states-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/states-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/states-3.svg" width="4800" />

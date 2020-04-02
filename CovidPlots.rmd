@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 ```{r, get_data, include=FALSE}
-    source("us_counties.R")
+    source("nytimes_us_counties.r")
     ca <- getCounties(getStateUrl('California'))
     ny <- getCounties(getStateUrl('New+York'))
     selected <- getCounties(getSelectedCountiesUrl())
@@ -51,3 +51,24 @@ Covid case counts and death counts by county, based on daily data from NY Times 
     print(addGrid(covidPlot(cases~date | county, data=ny, group=county, main="New York Counties")))
     print(addGrid(covidPlot(deaths~date | county, data=ny, group=county, main="New York Counties")))
 ```
+
+
+## Covid in US States
+Covid positive tests, deaths, and hospitalizations by state from covidtracking.com https://covidtracking.com
+```{r, get_data2, include=FALSE}
+    source("covidtracking_us_states.r")
+    
+```
+
+
+```{r, states, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+
+  print(p_hospPer)
+  print(p_positivesPer)
+  print (p_deathsPer)
+
+
+```
+
+
+

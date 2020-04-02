@@ -1,3 +1,6 @@
+#covid data by state from https://covidtracking.com/
+
+
 library (jsonlite)
 library(datasets)
 library(tidyverse)
@@ -8,36 +11,21 @@ library(plotly)
 library(Hmisc)
 library(RColorBrewer)
 library(scales)
-library(fredsUtils)
+install_github("fkzack/FredsRUtils")
+library(FredsRUtils)
+
 
 rm(list=ls())
 
+source("census.r")
 
-GetStatesAndPopulation <- function() {
-  # get 2019 state population data from census bureau
-  pop <- fromJSON("https://api.census.gov/data/2019/pep/population?get=NAME,POP&for=state:*")
-  popNames <- pop[1,]
-  pop <- data.frame(pop[-1,], stringsAsFactors = FALSE)
-  names(pop) <- popNames
-  pop <- rename(pop, c("state.name" = "NAME" , "state.FIPS" = "state", "state.population" = "POP"))
-
-
-  #need to match state names with state abbreviations
-  states <- data.frame(state.name, state.abb, stringsAsFactors = FALSE)
-  states <- add_row(states, state.name="District of Columbia",  state.abb ="DC")
-  states <- add_row(states, state.name="Puerto Rico",  state.abb ="PR")
-  states <- merge(states, pop)
-  print(str(states))
-  return (states)
-head(states)
-}
 
 
 states <- GetStatesAndPopulation()
 
 #get latest corona data from covidtracking.com
 corona <- fromJSON("https://covidtracking.com/api/states")
-corona <- rename(corona, c("state.abb" = "state" ))
+corona <- rename(corona, "state.abb" = state )
 print(str(corona))
 head(corona)
 
@@ -166,15 +154,12 @@ p_hospPer <- xyplot(na_if(100000*hospitalized/state.population, 0)~date | state.
                  yscale.components = latticeExtra::yscale.components.log10ticks,
                  as.table=TRUE
 )
+
 print(p_hospPer)
-
-
-
 print(p_positivesPer)
-print(p_deaths)
 print (p_deathsPer)
 
-
+#print(p_deaths)
 
 #show a color palette
 showColorPalette<- function (pal){
@@ -196,3 +181,4 @@ showColorPalette<- function (pal){
 # showColorPalette((pal2))
 # pal3 <- colorRamp(c("#FFEEEE", "#FF0000"), interpolate="linear", space="Lab", bias = 1)
 # showColorPalette((pal3))
+
