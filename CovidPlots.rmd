@@ -1,9 +1,7 @@
 ---
 title: "CovidPlots"
 output: github_document
-date: '`r format(Sys.time(), "%d %B, %Y")`'
-always_allow_html: yes
-
+date: '`r format(Sys.time(), "%d %B %Y %I:%M %p")`'
 ---
 
 
@@ -63,12 +61,12 @@ Covid positive tests, deaths, and hospitalizations by state from covidtracking.c
 ```
 
 
-```{r, state}
+```{r, state, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
   addGrid(p_hospPer)
   addGrid(p_positivesPer)
   addGrid(p_deathsPer)
-  print(p_death_map)
+  p_death_map
 
 ```
 
