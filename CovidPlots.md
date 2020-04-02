@@ -1,6 +1,6 @@
 CovidPlots
 ================
-02 April 2020 09:09 AM
+02 April 2020 09:19 AM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>

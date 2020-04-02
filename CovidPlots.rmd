@@ -1,7 +1,7 @@
 ---
 title: "CovidPlots"
 output: github_document
-date: '`r format(Sys.time(), "%d %B %Y %I:%M %p")`'
+date: '`r format(Sys.time(), "%d %B %Y %I:%M %p %Z")`'
 ---
 
 
@@ -21,7 +21,7 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
 ```
 
-## Covid in a Few Interesting Counties
+## Covid in a Few Interesting Counties {.tabset}
 
 ```{r, selected_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
@@ -39,21 +39,21 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
 ```
 
-## Covid in All California Counties
+## Covid in All California Counties {.tabset}
 ```{r, california_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     print(addGrid(covidPlot(cases~date | county, data=ca, group=county, main="California Counties")))
     print(addGrid(covidPlot(deaths~date | county, data=ca, group=county, main="California Counties")))
     
 ```
 
-## Covid in All New York Counties
+## Covid in All New York Counties {.tabset}
 ```{r, new_york_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     print(addGrid(covidPlot(cases~date | county, data=ny, group=county, main="New York Counties")))
     print(addGrid(covidPlot(deaths~date | county, data=ny, group=county, main="New York Counties")))
 ```
 
 
-## Covid in US States
+## Covid in US States {.tabset}
 Covid positive tests, deaths, and hospitalizations by state from covidtracking.com https://covidtracking.com
 ```{r, get_data2, include=FALSE}
     source("covidtracking_us_states.r")
