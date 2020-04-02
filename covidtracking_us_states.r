@@ -81,7 +81,7 @@ f <- plot_ly(type='choropleth', locations = coronaData$state.abb, locationmode="
 f <- layout(f, geo=list(scope="usa", bgcolor="EEE"), title = 'Deaths from COVID 19<br>(Hover for Details)')
 f <- colorbar(f, title="Deaths per Million", tickvals=log.ticks, ticktext=log.labels)
 print(f)
-
+p_death_map <- f
 
 
 
