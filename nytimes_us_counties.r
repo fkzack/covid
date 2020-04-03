@@ -22,6 +22,7 @@ rm(list=ls())
 source ("census.r")
 countyPopulations <- GetCountyPopulationsNYT()
 
+# an xyplot formatted for this
 source("covidPlot.r")
 
 
@@ -54,15 +55,9 @@ getStateUrl <- function(state){
   return (state_url)
 } 
 
-
-
-
-
-
 #get county data from NYT
 getCounties <- function(countyUrl, population_data){
-  
-  
+
   rawJSON <- fromJSON(countyUrl)
   
   counties <- data.frame(rawJSON$rows, stringsAsFactors = F)
@@ -82,11 +77,6 @@ getCounties <- function(countyUrl, population_data){
   return(counties)
 }
 
-
-
-
-
-
 plotCounties <- function (countyPopulations){
     subtitle <- "Data from NY Times via covid-19.datasettes.com"
     
@@ -94,24 +84,24 @@ plotCounties <- function (countyPopulations){
     ny <- getCounties(getStateUrl('New+York'), countyPopulations)
     selected <- getCounties(getSelectedCountiesUrl(), countyPopulations)
     
-    print(addGrid(covidPlot(cases~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties")))
-    print(addGrid(covidPlot(100000* cases/county.population ~ date | county, data=ca, group=county, subtitle = subtitle, main="California Counties")))
-    print(addGrid(covidPlot(deaths~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties")))
+    print(covidPlot(cases~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
+    print(covidPlot(100000* cases/county.population ~ date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
+    print(covidPlot(deaths~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
     
-    print(addGrid(covidPlot(cases~date | county, data=ny, group=county, subtitle = subtitle, main="New York Counties")))
-    print(addGrid(covidPlot(deaths~date | county, data=ny, group=county, subtitle = subtitle, main="New York Counties")))
+    print(covidPlot(cases~date | county, data=ny, group=county, subtitle = subtitle, main="New York Counties"))
+    print(covidPlot(deaths~date | county, data=ny, group=county, subtitle = subtitle, main="New York Counties"))
     
     
-    print(addGrid(covidPlot(cases~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties")))
-    print(addGrid(covidPlot(deaths~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties")))
+    print(covidPlot(cases~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties"))
+    print(covidPlot(deaths~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties"))
     
-    print(addGrid(covidPlot(cases~date, data=selected, group=county, subtitle = subtitle, main="Selected Counties",
+    print(covidPlot(cases~date, data=selected, group=county, subtitle = subtitle, main="Selected Counties",
                             auto.key= list(cex=0.6, columns=3),
-                            par.settings= list(superpose.symbol=list(pch=1:25)) )))
+                            par.settings= list(superpose.symbol=list(pch=1:25)) ))
     
-    print(addGrid(covidPlot(deaths~date, data=selected, group=county, subtitle = subtitle, main="Selected Counties",
+    print(covidPlot(deaths~date, data=selected, group=county, subtitle = subtitle, main="Selected Counties",
                             auto.key= list(cex=0.6, columns=3),
-                            par.settings= list(superpose.symbol=list(pch=1:25)) )))
+                            par.settings= list(superpose.symbol=list(pch=1:25)) ))
 }
 
 #plotCounties(countyPopulations)

@@ -1,6 +1,11 @@
+install_github("fkzack/FredsRUtils")
+library(FredsRUtils)
+library(lattice)
+library(latticeExtra)
+        
 
 # Wrap xyplot to create the plot I want (log y axis, log 10 grids, ...)
-covidPlot <- function(formula1, data, subtitle, ...){
+covidPlot <- function(formula1, data, subtitle = "", ...){
   
   #this gets the incoming data frame
   #print(get_all_vars(formula, data=data))
@@ -23,5 +28,5 @@ covidPlot <- function(formula1, data, subtitle, ...){
               },
               
               ...)
-  return (p)
+  return (addGrid(p))
 }

@@ -18,6 +18,7 @@ library(FredsRUtils)
 rm(list=ls())
 
 source("census.r")
+source("covidPlot.r")
 
 
 
@@ -39,11 +40,6 @@ coronaData$hover = paste(coronaData$state.name,
                          '<br>', "  Deaths Per Million", prettyNum(coronaData$deaths.per.million, digits=3) ,
                          '<br>', "  Last Update(ET)", coronaData$lastUpdateEt
 )
-#print (coronaData$hover)
-#print (coronaData$state.death)
-
-
-str(coronaData)
 
 
 #replace zero values with low number to use in log plot
@@ -57,27 +53,26 @@ log.ticks <- seq(floor(min(coronaData$log.deaths.per.million, na.rm=TRUE)) , cei
 log.labels <- 10 ^ log.ticks
 
 
-print(str(coronaData))
-head(coronaData)
+str(coronaData)
 
 
-barchart(coronaData$deaths.per.million~coronaData$state.name,  scales=list(x=list(rot=45)))
+#barchart(coronaData$deaths.per.million~coronaData$state.name,  scales=list(x=list(rot=45)))
 
 
 
 redPallete <- colorRamp(c("#FFFFFF", "#FF0000"), interpolate="spline", space="Lab", bias = 10)
 
 
-f <- plot_ly(type='choropleth', locations = coronaData$state.abb, locationmode="USA-states",  z=coronaData$deaths.per.million,
-             text=coronaData$hover, colors = redPallete) 
-f <- layout(f, geo=list(scope="usa", bgcolor="EEE"), title = 'Deaths from COVID 19<br>(Hover for Details)')
-f <- colorbar(f, title="Deaths per Million")
-print(f)
+# f <- plot_ly(type='choropleth', locations = coronaData$state.abb, locationmode="USA-states",  z=coronaData$deaths.per.million,
+#              text=coronaData$hover, colors = redPallete) 
+# f <- layout(f, geo=list(scope="usa", bgcolor="EEE"), title = 'Deaths from COVID 19<br>(Hover for Details)')
+# f <- colorbar(f, title="Deaths per Million")
+# print(f)
  
 
-rm(p_death_map)
+
 p_death_map <- plot_ly(type='choropleth', locations = coronaData$state.abb, locationmode="USA-states", z=coronaData$log.deaths.per.million,
-             text=coronaData$hover, colors = redPallete) 
+                       text=coronaData$hover, colors = redPallete) 
 p_death_map <- layout(p_death_map, geo=list(scope="usa", bgcolor="EEE"), title = 'Deaths from COVID 19<br>(Hover for Details)')
 p_death_map <- colorbar(p_death_map, title="Deaths per Million", tickvals=log.ticks, ticktext=log.labels)
 print(p_death_map)
@@ -95,71 +90,33 @@ str(dailies)
 
 label <- paste( "COVID data from covidtracking.com/api/states/daily on ", Sys.Date())
 
-p_positives <- xyplot(na_if(positive, 0)~date | state.abb,  group=state.abb, data=dailies, 
-       ylab='positives',
-       main=list(label=label, cex=0.75),
-       scales=list(y=list(log=10), x=list(rot=45, at=as.Date(pretty_dates(dailies$date,2)))),
-       yscale.components = latticeExtra::yscale.components.log10ticks,
-       as.table=TRUE
-       )
-#print(addGrid(p_positives))
-#print(addGrid(p_positives, MinorGrid=FALSE))
+p_positives <- covidPlot(positive~date | state.abb, group=state.abb, data=dailies, subtitle=label, main="US States")
 
-p_positivesPer <- xyplot(na_if(10000*positive/state.population, 0)~date | state.abb,  group=state.abb, data=dailies, 
-            ylab='positive tests per 100,000 population',
-            main=list(label=label, cex=0.75),
-            scales=list(y=list(log=10), x=list(rot=45, at=as.Date(pretty_dates(dailies$date,2)))),
-            yscale.components = latticeExtra::yscale.components.log10ticks,
-            as.table=TRUE
-)
+p_positivesPer <- covidPlot(100000*positive/state.population ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "positves per 100,000", main="US States")
 
-#print(p_positivesPer)
-#print(addGrid(p_positivesPer))
+p_deaths <- covidPlot(death ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "deaths", main="US States")
 
-p_deaths <- xyplot(na_if(death, 0)~date | state.abb,  group=state.abb, data=dailies, 
-            ylab='deaths',
-            main=list(label=label, cex=0.75),
-            scales=list(y=list(log=10), x=list(rot=45, at=as.Date(pretty_dates(dailies$date,2)))),
-            yscale.components = latticeExtra::yscale.components.log10ticks,
-            as.table=TRUE
-)
+p_deathsPer <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "deaths per 100,000", main="US States")
+
+
+p_hosp <- covidPlot(hospitalized ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "hospitalizations", main="US States")
+
+p_hospPer <- covidPlot(100000*hospitalized/state.population ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "hospitalizations per 100,000", main="US States")
+
 
 #print(p_deaths)
-#print(addGrid(p_deaths))
 
-p_deathsPer <- xyplot(na_if(100000*death/state.population, 0)~date | state.abb,  group=state.abb, data=dailies, 
-            ylab='deaths per 100,000 population',
-            main=list(label=label, cex=0.75),
-            scales=list(y=list(log=10), x=list(rot=45, at=as.Date(pretty_dates(dailies$date,2)))),
-            yscale.components = latticeExtra::yscale.components.log10ticks,
-            as.table=TRUE
-)
+printPlots <- function (){
+  print(p_positives)
+  print(p_positivesPer)
+  print(p_deaths)
+  print (p_deathsPer)
+  print (p_hosp)
+  print(p_hospPer)
+  
+}
 
-#print(p_deathsPer)
-#print(addGrid(p_deathsPer))
-
-p_hosp <- xyplot(na_if(hospitalized, 0)~date | state.abb,  group=state.abb, data=dailies, 
-                   ylab='hospitalized',
-                   main=list(label=label, cex=0.75),
-                   scales=list(y=list(log=10), x=list(rot=45, at=as.Date(pretty_dates(dailies$date,2)))),
-                   yscale.components = latticeExtra::yscale.components.log10ticks,
-                   as.table=TRUE
-)
-print(p_hosp)
-
-p_hospPer <- xyplot(na_if(100000*hospitalized/state.population, 0)~date | state.abb,  group=state.abb, data=dailies, 
-                 ylab='hospitalized per 100,000 population',
-                 main=list(label=label, cex=0.75),
-                 scales=list(y=list(log=10), x=list(rot=45, at=as.Date(pretty_dates(dailies$date,2)))),
-                 yscale.components = latticeExtra::yscale.components.log10ticks,
-                 as.table=TRUE
-)
-
-print(p_hospPer)
-print(p_positivesPer)
-print (p_deathsPer)
-
-#print(p_deaths)
+printPlots()
 
 #show a color palette
 showColorPalette<- function (pal){
