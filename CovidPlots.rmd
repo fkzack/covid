@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
+
 ```{r, get_data, include=FALSE}
     source("nytimes_us_counties.r")
     ca <- getCounties(getStateUrl('California'),countyPopulations)
@@ -22,7 +22,9 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
 ```
 
-## Covid in a Few Interesting Counties {.tabset}
+## Covid in a Few Interesting Counties {.tabset} 
+
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 
 ```{r, selected_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
@@ -46,6 +48,7 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 ```
 
 ## Covid in All California Counties {.tabset}
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 ```{r, california_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     print(covidPlot(cases~date | county, data=ca, group=county, subtitle=subtext, main="California Counties"))
     print(covidPlot(deaths~date | county, data=ca, group=county, subtitle=subtext, main="California Counties"))
@@ -55,6 +58,7 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 ```
 
 ## Covid in All New York Counties {.tabset}
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 ```{r, new_york_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     print(covidPlot(cases~date | county, data=ny, group=county, subtitle=subtext, main="New York Counties"))
     print(covidPlot(deaths~date | county, data=ny, group=county, subtitle=subtext, main="New York Counties"))
@@ -68,5 +72,13 @@ Covid positive tests, deaths, and hospitalizations by state from covidtracking.c
     printPlots()
 ```
 
+
+## Covid in China {.tabset}
+Covid data from Johns Hopkins CSSE via https://covid-19.datasettes.com
+```{r,  china, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+    source("covid_international.r")
+    print(p_china)
+    print(p_china_deaths)
+```
 
 

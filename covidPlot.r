@@ -5,6 +5,7 @@ library(latticeExtra)
         
 
 # Wrap xyplot to create the plot I want (log y axis, log 10 grids, ...)
+# depends on x variable being $date, should change this once I figure out how to decode formula
 covidPlot <- function(formula1, data, subtitle = "", ...){
   
   #this gets the incoming data frame
