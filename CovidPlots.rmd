@@ -15,9 +15,10 @@ knitr::opts_chunk$set(echo = TRUE)
 Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 ```{r, get_data, include=FALSE}
     source("nytimes_us_counties.r")
-    ca <- getCounties(getStateUrl('California'))
-    ny <- getCounties(getStateUrl('New+York'))
-    selected <- getCounties(getSelectedCountiesUrl())
+    ca <- getCounties(getStateUrl('California'),countyPopulations)
+    ny <- getCounties(getStateUrl('New+York'),countyPopulations)
+    selected <- getCounties(getSelectedCountiesUrl(),countyPopulations)
+    subtext = "Data from NY Times via covid-19.datasettes.com"
 
 ```
 
@@ -25,15 +26,18 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
 ```{r, selected_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
-    print(addGrid(covidPlot(cases~date | county, data=selected, group=county, main="Selected Counties")))
-    
-    print(addGrid(covidPlot(deaths~date | county, data=selected, group=county, main="Selected Counties")))
+    print(addGrid(covidPlot(cases~date | county, data=selected, subtitle=subtext, group=county, main="Selected Counties")))
 
-    print(addGrid(covidPlot(cases~date, data=selected, group=county, main="Selected Counties",
+    
+    print(addGrid(covidPlot(deaths~date | county, data=selected, subtitle=subtext, group=county, main="Selected Counties")))
+    print(addGrid(covidPlot(100000*deaths/county.population~date | county, data=selected, group=county, 
+                            subtitle=subtext, ylab="Deaths per 100,000", main="Selected Counties")))
+
+    print(addGrid(covidPlot(cases~date, data=selected, group=county, subtitle=subtext, main="Selected Counties",
                             auto.key= list(cex=0.6, columns=3),
                             par.settings= list(superpose.symbol=list(pch=1:25)) )))
     
-    print(addGrid(covidPlot(deaths~date, data=selected, group=county, main="Selected Counties",
+    print(addGrid(covidPlot(deaths~date, data=selected, group=county, subtitle=subtext, main="Selected Counties",
                             auto.key= list(cex=0.6, columns=3),
                             par.settings= list(superpose.symbol=list(pch=1:25)) )))
 
@@ -41,32 +45,28 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
 ## Covid in All California Counties {.tabset}
 ```{r, california_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-    print(addGrid(covidPlot(cases~date | county, data=ca, group=county, main="California Counties")))
-    print(addGrid(covidPlot(deaths~date | county, data=ca, group=county, main="California Counties")))
+    print(addGrid(covidPlot(cases~date | county, data=ca, group=county, subtitle=subtext, main="California Counties")))
+    print(addGrid(covidPlot(deaths~date | county, data=ca, group=county, subtitle=subtext, main="California Counties")))
+    print(addGrid(covidPlot(100000*deaths/county.population~date | county, data=ca, group=county, subtitle=subtext, 
+                            ylab="Deaths per 100,000", main="California Counties")))
     
 ```
 
 ## Covid in All New York Counties {.tabset}
 ```{r, new_york_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-    print(addGrid(covidPlot(cases~date | county, data=ny, group=county, main="New York Counties")))
-    print(addGrid(covidPlot(deaths~date | county, data=ny, group=county, main="New York Counties")))
+    print(addGrid(covidPlot(cases~date | county, data=ny, group=county, subtitle=subtext, main="New York Counties")))
+    print(addGrid(covidPlot(deaths~date | county, data=ny, group=county, subtitle=subtext, main="New York Counties")))
 ```
 
 
 ## Covid in US States {.tabset}
 Covid positive tests, deaths, and hospitalizations by state from covidtracking.com https://covidtracking.com
-```{r, get_data2, include=FALSE}
+```{r,  state, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     source("covidtracking_us_states.r")
-    
-```
-
-
-```{r, state, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-
-  addGrid(p_hospPer)
-  addGrid(p_positivesPer)
-  addGrid(p_deathsPer)
-  p_death_map
+    addGrid(p_hospPer)
+    addGrid(p_positivesPer)
+    addGrid(p_deathsPer)
+    p_death_map
 
 ```
 

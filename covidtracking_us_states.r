@@ -39,8 +39,8 @@ coronaData$hover = paste(coronaData$state.name,
                          '<br>', "  Deaths Per Million", prettyNum(coronaData$deaths.per.million, digits=3) ,
                          '<br>', "  Last Update(ET)", coronaData$lastUpdateEt
 )
-print (coronaData$hover)
-print (coronaData$state.death)
+#print (coronaData$hover)
+#print (coronaData$state.death)
 
 
 str(coronaData)
@@ -75,7 +75,7 @@ f <- colorbar(f, title="Deaths per Million")
 print(f)
  
 
-
+rm(p_death_map)
 p_death_map <- plot_ly(type='choropleth', locations = coronaData$state.abb, locationmode="USA-states", z=coronaData$log.deaths.per.million,
              text=coronaData$hover, colors = redPallete) 
 p_death_map <- layout(p_death_map, geo=list(scope="usa", bgcolor="EEE"), title = 'Deaths from COVID 19<br>(Hover for Details)')
