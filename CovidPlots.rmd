@@ -30,6 +30,7 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
     
     print(addGrid(covidPlot(deaths~date | county, data=selected, subtitle=subtext, group=county, main="Selected Counties")))
+    
     print(addGrid(covidPlot(100000*deaths/county.population~date | county, data=selected, group=county, 
                             subtitle=subtext, ylab="Deaths per 100,000", main="Selected Counties")))
 
