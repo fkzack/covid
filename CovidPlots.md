@@ -1,13 +1,13 @@
 CovidPlots
 ================
-03 April 2020 12:31 PM PDT
+03 April 2020 04:34 PM PDT
 
 ## Covid in a Few Interesting Counties
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
 
-<img src="CovidPlots_files/figure-gfm/selected_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-6.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/selected_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-7.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-8.svg" width="4800" />
 
 ## Covid in All California Counties
 

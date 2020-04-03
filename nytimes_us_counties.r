@@ -55,6 +55,20 @@ getStateUrl <- function(state){
   return (state_url)
 } 
 
+
+# central diference approx to dx/dy, 
+# y is a date, we assume we are sorted in date order (ascending)
+# group_id identifies series that are in order, do not calculate across changes in group id
+centralDifference <- function (x,y, group_id){
+  dx <- lead(x,1) - lag(x,1)
+  dy <- lead(y,1) - lag(y,1)
+  dy <- as.numeric(dy, units='days' )
+  slope <- dx/dy
+  breaks <- (group_id != lag(group_id,1)) & (lead(group_id,1) == group_id)
+  slope <- ifelse(breaks, NA, slope)
+  return (slope)
+}
+
 #get county data from NYT
 getCounties <- function(countyUrl, population_data){
 
@@ -74,6 +88,12 @@ getCounties <- function(countyUrl, population_data){
   
   # add in census population data
   counties <- merge(counties, population_data)
+  
+  counties <- counties[order( counties$fips, counties$date),]
+  counties$death.slope = centralDifference(counties$deaths, counties$date, counties$fips)
+  counties$case.slope = centralDifference(counties$cases, counties$date, counties$fips)
+  
+  
   return(subset(counties, counties$date > as.POSIXct("2020-2-29")))
 }
 
@@ -85,6 +105,8 @@ plotCounties <- function (countyPopulations){
     selected <- getCounties(getSelectedCountiesUrl(), countyPopulations)
     
     print(covidPlot(cases~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
+    
+    
     print(covidPlot(100000* cases/county.population ~ date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
     print(covidPlot(deaths~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
     
@@ -94,6 +116,8 @@ plotCounties <- function (countyPopulations){
     
     print(covidPlot(cases~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties"))
     print(covidPlot(deaths~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties"))
+    print(covidPlot(case.slope~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties", ylab="Slope (Cases/Day)"))
+    print(covidPlot(death.slope~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties", ylab="Slope (Deaths/Day)"))
     
     print(covidPlot(cases~date, data=selected, group=county, subtitle = subtitle, main="Selected Counties",
                             auto.key= list(cex=0.6, columns=3),
@@ -104,5 +128,9 @@ plotCounties <- function (countyPopulations){
                             par.settings= list(superpose.symbol=list(pch=1:25)) ))
 }
 
-#plotCounties(countyPopulations)
 
+
+# s <- getCounties(getSelectedCountiesUrl(), countyPopulations)
+# print(covidPlot(case.slope~date | county, data=s, group=county, subtitle = "fdfdfdfd", main="Selected Counties", ylab="Slope (Cases/Day)"))
+
+# plotCounties(countyPopulations)
