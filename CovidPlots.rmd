@@ -65,13 +65,7 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 Covid positive tests, deaths, and hospitalizations by state from covidtracking.com https://covidtracking.com
 ```{r,  state, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     source("covidtracking_us_states.r")
-    
-
-  p_hospPer
-  p_positivesPer
-  p_deathsPer
-  p_death_map
-
+    printPlots()
 ```
 
 

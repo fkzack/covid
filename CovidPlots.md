@@ -1,6 +1,6 @@
 CovidPlots
 ================
-02 April 2020 07:21 PM PDT
+02 April 2020 09:15 PM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
@@ -21,4 +21,4 @@ NY Times via <https://covid-19.datasettes.com>
 
 Covid positive tests, deaths, and hospitalizations by state from
 covidtracking.com <https://covidtracking.com>
-<img src="CovidPlots_files/figure-gfm/state-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-7.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-8.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-9.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/state-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-6.svg" width="4800" />

@@ -74,7 +74,7 @@ getCounties <- function(countyUrl, population_data){
   
   # add in census population data
   counties <- merge(counties, population_data)
-  return(counties)
+  return(subset(counties, counties$date > as.POSIXct("2020-2-29")))
 }
 
 plotCounties <- function (countyPopulations){

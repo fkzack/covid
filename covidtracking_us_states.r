@@ -92,7 +92,7 @@ str(dailies)
 
 label <- paste( "COVID data from covidtracking.com/api/states/daily on ", Sys.Date())
 
-p_positives <- covidPlot(positive~date | state.abb, group=state.abb, data=dailies, subtitle=label, main="US States")
+p_positives <- covidPlot(positive~date | state.abb, group=state.abb, data=dailies, subtitle=label,ylab="positves", main="US States")
 
 p_positivesPer <- covidPlot(100000*positive/state.population ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "positves per 100,000", main="US States")
 
@@ -109,16 +109,16 @@ p_hospPer <- covidPlot(100000*hospitalized/state.population ~ date | state.abb, 
 #print(p_deaths)
 
 printPlots <- function (){
+  print (p_hosp)
+  print(p_hospPer)
   print(p_positives)
   print(p_positivesPer)
   print(p_deaths)
   print (p_deathsPer)
-  print (p_hosp)
-  print(p_hospPer)
   
 }
 
-printPlots()
+#printPlots()
 
 #show a color palette
 showColorPalette<- function (pal){
