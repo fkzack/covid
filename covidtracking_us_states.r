@@ -85,6 +85,8 @@ dailies$date <- as.Date(as.character(dailies$date), "%Y%m%d")
 dailies <- rename (dailies, "state.abb" = "state")
 dailies <- merge(states, dailies)
 dailies$state.population <- as.numeric(dailies$state.population)
+dailies <- dailies[order(dailies$state.abb, dailies$date),]
+
 str(dailies)
 
 

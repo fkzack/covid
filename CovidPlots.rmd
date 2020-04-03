@@ -27,6 +27,8 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 ```{r, selected_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
     print(covidPlot(cases~date | county, data=selected, subtitle=subtext, group=county, main="Selected Counties"))
+    print(covidPlot(100000*cases/county.population~date | county, data=selected, subtitle=subtext, group=county, main="Selected Counties",
+          ylab="Cases per 100,000"))
 
     
     print(covidPlot(deaths~date | county, data=selected, subtitle=subtext, group=county, main="Selected Counties"))

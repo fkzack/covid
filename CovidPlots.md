@@ -1,13 +1,13 @@
 CovidPlots
 ================
-02 April 2020 07:03 PM PDT
+02 April 2020 07:21 PM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
 
 ## Covid in a Few Interesting Counties
 
-<img src="CovidPlots_files/figure-gfm/selected_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-5.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/selected_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-6.svg" width="4800" />
 
 ## Covid in All California Counties
 
