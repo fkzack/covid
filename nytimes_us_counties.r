@@ -64,7 +64,7 @@ centralDifference <- function (x,y, group_id){
   dy <- lead(y,1) - lag(y,1)
   dy <- as.numeric(dy, units='days' )
   slope <- dx/dy
-  breaks <- (group_id != lag(group_id,1)) & (lead(group_id,1) == group_id)
+  breaks <- (group_id != lag(group_id,1)) | (lead(group_id,1) != group_id)
   slope <- ifelse(breaks, NA, slope)
   return (slope)
 }
@@ -130,7 +130,7 @@ plotCounties <- function (countyPopulations){
 
 
 
-# s <- getCounties(getSelectedCountiesUrl(), countyPopulations)
-# print(covidPlot(case.slope~date | county, data=s, group=county, subtitle = "fdfdfdfd", main="Selected Counties", ylab="Slope (Cases/Day)"))
+s <- getCounties(getSelectedCountiesUrl(), countyPopulations)
+print(covidPlot(case.slope~date | county, data=s, group=county, subtitle = "fdfdfdfd", main="Selected Counties", ylab="Slope (Cases/Day)"))
 
 # plotCounties(countyPopulations)
