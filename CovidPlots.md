@@ -1,13 +1,33 @@
 CovidPlots
 ================
-03 April 2020 05:00 PM PDT
+04 April 2020 01:35 PM PDT
+
+  - [Covid in a Few Interesting
+    Counties](#covid-in-a-few-interesting-counties)
+      - [Cases](#cases)
+      - [Deaths](#deaths)
+  - [Covid in All California
+    Counties](#covid-in-all-california-counties)
+  - [Covid in All New York Counties](#covid-in-all-new-york-counties)
+  - [Covid in All Michigan Counties](#covid-in-all-michigan-counties)
+  - [Covid in US States](#covid-in-us-states)
+      - [Hospitalizations](#hospitalizations)
+      - [Positives](#positives)
+      - [Deaths](#deaths-1)
+  - [Covid in China](#covid-in-china)
 
 ## Covid in a Few Interesting Counties
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
 
-<img src="CovidPlots_files/figure-gfm/selected_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-7.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties-8.svg" width="4800" />
+### Cases
+
+<img src="CovidPlots_files/figure-gfm/selected_counties_cases-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-4.svg" width="4800" />
+
+### Deaths
+
+<img src="CovidPlots_files/figure-gfm/selected_counties_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-4.svg" width="4800" />
 
 ## Covid in All California Counties
 
@@ -19,13 +39,30 @@ NY Times via <https://covid-19.datasettes.com>
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/new_york_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-2.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/new_york_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-3.svg" width="4800" />
+
+## Covid in All Michigan Counties
+
+Covid case counts and death counts by county, based on daily data from
+NY Times via <https://covid-19.datasettes.com>
+<img src="CovidPlots_files/figure-gfm/michigan_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-3.svg" width="4800" />
 
 ## Covid in US States
 
 Covid positive tests, deaths, and hospitalizations by state from
 covidtracking.com <https://covidtracking.com>
-<img src="CovidPlots_files/figure-gfm/state-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state-6.svg" width="4800" />
+
+### Hospitalizations
+
+<img src="CovidPlots_files/figure-gfm/state_hospital-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_hospital-2.svg" width="4800" />
+
+### Positives
+
+<img src="CovidPlots_files/figure-gfm/state_positves-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_positves-2.svg" width="4800" />
+
+### Deaths
+
+<img src="CovidPlots_files/figure-gfm/state_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-2.svg" width="4800" />
 
 ## Covid in China
 

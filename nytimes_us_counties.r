@@ -31,14 +31,37 @@ source("covidPlot.r")
 counties_url <- "https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+order+by+date+desc"
 
 
-# Build up the encoded url to retireve data for seleced counties from covid-19-datasettes.com
-getSelectedCountiesUrl <- function(){
+# # Build up the encoded url to retireve data for seleced counties from covid-19-datasettes.com
+# getSelectedCountiesUrl <- function(){
+#   sql_url <- paste(
+#     "https://covid-19.datasettes.com/covid.json?sql=select",
+#     "rowid,date,county,state,fips,cases,deaths from ny_times_us_counties where county in (",
+#     "'Alameda', 'Contra Costa', 'San Francisco', 'San Mateo', 'Santa Clara', 'Los Angeles', 'New York City', ",
+#     " 'Harris', 'King'",
+#     ") and state in ('California', 'New York', 'Texas', 'Washington') order by county, date"
+#   )
+#   #urlencode does not work correctly for some reason, so do manually
+#   sql_url <- gsub(" ", "+", sql_url)
+#   sql_url <- gsub(",", "%2c", sql_url)
+#   print (sql_url)
+#   return(sql_url)
+# }
+
+# Build up the encoded url to retireve data for seleced counties in a state from covid-19-datasettes.com
+# State is the state name as a string 
+# counties is a collection of county names in that state
+getSelectedCountiesUrl <- function(state, counties){
+  
+  options(useFancyQuotes = FALSE)
+  counties <- paste(sQuote(counties), collapse = ",")
+  
   sql_url <- paste(
     "https://covid-19.datasettes.com/covid.json?sql=select",
     "rowid,date,county,state,fips,cases,deaths from ny_times_us_counties where county in (",
-    "'Alameda', 'Contra Costa', 'San Francisco', 'San Mateo', 'Santa Clara', 'Los Angeles', 'New York City', ",
-    " 'Harris', 'King'",
-    ") and state in ('California', 'New York', 'Texas', 'Washington') order by county, date"
+    counties,
+    ") and state = ",
+    sQuote(state),
+    "order by county, date"
   )
   #urlencode does not work correctly for some reason, so do manually
   sql_url <- gsub(" ", "+", sql_url)
@@ -68,6 +91,64 @@ centralDifference <- function (x,y, group_id){
   slope <- ifelse(breaks, NA, slope)
   return (slope)
 }
+
+
+#combine several selected counties data into a single df
+addSelectedCounties <- function(selectedCounties, state, counties, population_data){
+  selectedUrl <- getSelectedCountiesUrl(state, counties)
+  selected <- getCounties(selectedUrl, population_data)
+  if (is.null(selectedCounties)){
+    selectedCounties <- selected
+  }
+  else {
+    selectedCounties <- rbind(selectedCounties, selected)
+  }
+  return (selectedCounties)
+}
+
+#get data from a group of counties I find interesting
+getSelectedCounties <- function(population_data) {
+  print(paste('getSelectedCounties populationData',population_data ))
+  selected <- NULL
+  selected <- addSelectedCounties(
+    selected, 
+    "California",
+    c('Alameda','Contra Costa','San Francisco','San Mateo','Santa Clara','Los Angeles', 'Orange'), 
+    population_data
+    )
+  
+  selected <- addSelectedCounties(
+    selected, 
+    "New York",
+    c('New York City'),
+    population_data
+  )
+  
+  selected <- addSelectedCounties(
+    selected, 
+    "Texas",
+    c('Harris'),
+    population_data
+  )
+
+  selected <- addSelectedCounties(
+    selected,       
+    "Washington",
+    c('King'),
+    population_data
+  )
+  
+  selected <- addSelectedCounties(
+    selected,   
+    "Michigan",
+    c('Wayne', 'Oakland'),
+    population_data
+  )
+
+  return(selected)
+}
+  
+  
 
 #get county data from NYT
 getCounties <- function(countyUrl, population_data){
@@ -102,7 +183,7 @@ plotCounties <- function (countyPopulations){
     
     ca <- getCounties(getStateUrl('California'), countyPopulations)
     ny <- getCounties(getStateUrl('New+York'), countyPopulations)
-    selected <- getCounties(getSelectedCountiesUrl(), countyPopulations)
+    selected <- getSelectedCounties(countyPopulations)
     
     print(covidPlot(cases~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
     
@@ -130,7 +211,7 @@ plotCounties <- function (countyPopulations){
 
 
 
-s <- getCounties(getSelectedCountiesUrl(), countyPopulations)
-print(covidPlot(case.slope~date | county, data=s, group=county, subtitle = "fdfdfdfd", main="Selected Counties", ylab="Slope (Cases/Day)"))
+#s <- getSelectedCounties(countyPopulations)
+#print(covidPlot(case.slope~date | county, data=s, group=state, subtitle = "fdfdfdfd", main="Selected Counties", ylab="Slope (Cases/Day)"))
 
 # plotCounties(countyPopulations)

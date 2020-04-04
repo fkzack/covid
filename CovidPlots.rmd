@@ -1,6 +1,9 @@
 ---
 title: "CovidPlots"
-output: github_document
+output: 
+    github_document:
+        toc: true
+        toc_depth: 4
 date: '`r format(Sys.time(), "%d %B %Y %I:%M %p %Z")`'
 ---
 
@@ -16,8 +19,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, get_data, include=FALSE}
     source("nytimes_us_counties.r")
     ca <- getCounties(getStateUrl('California'),countyPopulations)
-    ny <- getCounties(getStateUrl('New+York'),countyPopulations)
-    selected <- getCounties(getSelectedCountiesUrl(),countyPopulations)
+    ny <- getCounties(getStateUrl('New+York'),  countyPopulations)
+    mi <- getCounties(getStateUrl('Michigan'),  countyPopulations)
+    selected <- getSelectedCounties(countyPopulations)
     subtext = "Data from NY Times via covid-19.datasettes.com"
 
 ```
@@ -26,21 +30,32 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 
-```{r, selected_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+### Cases
 
-    print(covidPlot(cases~date | county, data=selected, subtitle=subtext, group=county, main="Selected Counties"))
-    print(covidPlot(case.slope~date | county, data=selected, group=county, subtitle = subtext, main="Selected Counties", ylab="Slope (Cases/Day)"))
-    print(covidPlot(100000*cases/county.population~date | county, data=selected, subtitle=subtext, group=county, main="Selected Counties",
+```{r, selected_counties_cases, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+
+    print(covidPlot(cases~date | county, data=selected, subtitle=subtext, group=state, main="Selected Counties"))
+    print(covidPlot(case.slope~date | county, data=selected, group=state, subtitle = subtext, main="Selected Counties", 
+                    ylab="Slope (Cases/Day)"))
+    print(covidPlot(100000*cases/county.population~date | county, data=selected, subtitle=subtext, group=state, main="Selected Counties",
           ylab="Cases per 100,000"))
+    print(covidPlot(cases~date, data=selected, group=county, subtitle=subtext, main="Selected Counties",
+        auto.key= list(cex=0.6, columns=3),
+        par.settings= list(superpose.symbol=list(pch=1:25)) ))
 
-    print(covidPlot(deaths~date | county, data=selected, subtitle=subtext, group=county, main="Selected Counties"))
-    print(covidPlot(death.slope~date | county, data=selected, group=county, subtitle = subtext, main="Selected Counties", ylab="Slope (Deaths/Day)"))
-    print(covidPlot(100000*deaths/county.population~date | county, data=selected, group=county, 
+
+```
+        
+### Deaths
+
+```{r, selected_counties_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}    
+    
+    print(covidPlot(deaths~date | county, data=selected, subtitle=subtext, group=state, main="Selected Counties"))
+    print(covidPlot(death.slope~date | county, data=selected, group=state, subtitle = subtext, 
+                    main="Selected Counties", ylab="Slope (Deaths/Day)"))
+    print(covidPlot(100000*deaths/county.population~date | county, data=selected, group=state, 
                             subtitle=subtext, ylab="Deaths per 100,000", main="Selected Counties"))
 
-    print(covidPlot(cases~date, data=selected, group=county, subtitle=subtext, main="Selected Counties",
-                            auto.key= list(cex=0.6, columns=3),
-                            par.settings= list(superpose.symbol=list(pch=1:25)) ))
     
     print(covidPlot(deaths~date, data=selected, group=county, subtitle=subtext, main="Selected Counties",
                             auto.key= list(cex=0.6, columns=3),
@@ -63,18 +78,53 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 ```{r, new_york_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     print(covidPlot(cases~date | county, data=ny, group=county, subtitle=subtext, main="New York Counties"))
     print(covidPlot(deaths~date | county, data=ny, group=county, subtitle=subtext, main="New York Counties"))
+    print(covidPlot(100000*deaths/county.population~date | county, data=ny, group=county, subtitle=subtext, 
+                            ylab="Deaths per 100,000", main="New York Counties"))
+    
+```
+
+## Covid in All Michigan Counties {.tabset}
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
+```{r, michigan_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+    print(covidPlot(cases~date | county, data=mi, group=county, subtitle=subtext, main="Michigan Counties"))
+    print(covidPlot(deaths~date | county, data=mi, group=county, subtitle=subtext, main="Michigan Counties"))
+    print(covidPlot(100000*deaths/county.population~date | county, data=mi, group=county, subtitle=subtext, 
+                            ylab="Deaths per 100,000", main="Michigan Counties"))
+    
 ```
 
 
 ## Covid in US States {.tabset}
 Covid positive tests, deaths, and hospitalizations by state from covidtracking.com https://covidtracking.com
-```{r,  state, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+
+### Hospitalizations
+
+```{r,  state_hospital, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     source("covidtracking_us_states.r")
-    printPlots()
+  print (p_hosp)
+  print(p_hospPer)
+```
+
+### Positives
+
+```{r,  state_positves, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+    source("covidtracking_us_states.r")
+  print(p_positives)
+  print(p_positivesPer)
+```
+
+### Deaths
+
+```{r,  state_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+    source("covidtracking_us_states.r")
+  print(p_deaths)
+  print (p_deathsPer)
+    
 ```
 
 
 ## Covid in China {.tabset}
+
 Covid data from Johns Hopkins CSSE via https://covid-19.datasettes.com
 ```{r,  china, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     source("covid_international.r")
