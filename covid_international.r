@@ -63,7 +63,7 @@ p_us <- covidPlot(confirmed~date | location, group=location,
 
 p_china <- covidPlot(confirmed~date | location, group=location,  
                      data=subset(covid, startsWith(location, "China")),
-                     main = 'China',subtitle = label)
+                     main = 'China',subtitle = label, dateTickCount = 2)
 
 p_world <- covidPlot(confirmed~date | location, group=location,  
                      data=subset(covid, !startsWith(location, "China") & !startsWith(location, "US")),

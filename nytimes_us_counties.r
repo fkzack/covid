@@ -211,7 +211,7 @@ plotCounties <- function (countyPopulations){
 
 
 
-#s <- getSelectedCounties(countyPopulations)
-#print(covidPlot(case.slope~date | county, data=s, group=state, subtitle = "fdfdfdfd", main="Selected Counties", ylab="Slope (Cases/Day)"))
+#  s <- getSelectedCounties(countyPopulations)
+#  print(covidPlot(case.slope~date | county, data=s, group=state, subtitle = "fdfdfdfd", main="Selected Counties", ylab="Slope (Cases/Day)"))
 
 # plotCounties(countyPopulations)

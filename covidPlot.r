@@ -6,14 +6,17 @@ library(latticeExtra)
 
 # Wrap xyplot to create the plot I want (log y axis, log 10 grids, ...)
 # depends on x variable being $date, should change this once I figure out how to decode formula
-covidPlot <- function(formula1, data, subtitle = "", ...){
+covidPlot <- function(formula1, data, subtitle = "", dateTickCount = 5, ...){
   
   #this gets the incoming data frame
   #print(get_all_vars(formula, data=data))
   #print(formula(formula1))
   
 
-  ticksAt <-as.Date(pretty_dates(get_all_vars(formula1, data=data)$date, 3))
+  #ticksAt <-as.Date(pretty_dates(get_all_vars(formula1, data=data)$date, 3))
+  ticksAt <-as.Date(weekly_ticks(get_all_vars(formula1, data=data)$date, 0, dateTickCount)$majors)
+  print (dateTickCount)
+  print(ticksAt)
   
   p <- xyplot(formula1,  data = data,
               scales=list(y=list(log=10),
