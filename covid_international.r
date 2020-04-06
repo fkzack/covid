@@ -63,7 +63,7 @@ p_us <- covidPlot(confirmed~date | location, group=location,
 
 p_china <- covidPlot(confirmed~date | location, group=location,  
                      data=subset(covid, startsWith(location, "China")),
-                     main = 'China',subtitle = label, dateTickCount = 2)
+                     main = 'China',subtitle = label)
 
 p_world <- covidPlot(confirmed~date | location, group=location,  
                      data=subset(covid, !startsWith(location, "China") & !startsWith(location, "US")),
@@ -92,4 +92,19 @@ printAll <- function(){
   print(p_world_deaths)
 }
 
+#print(p_china)
+
 #printAll()
+
+test <- function(){
+  s1 <- seq(ISOdate(2020, 1,1), by="day", length.out=160)
+  df <- data.frame(date=s1)
+  df$count <- 1:length(df$date)
+  df$group <- df$count %% 14
+  df$x <- 10^((df$count + df$group)/100)
+  p <- covidPlot(x~date, data=df)
+  
+  print(p)
+  
+  
+}

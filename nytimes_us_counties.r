@@ -11,8 +11,8 @@ library(RColorBrewer)
 library(scales)
 library(devtools)
 library(lubridate)
-install_github("fkzack/FredsRUtils")
-library(FredsRUtils)
+#install_github("fkzack/FredsRUtils")
+#library(FredsRUtils)
 
 rm(list=ls())
 
@@ -211,7 +211,11 @@ plotCounties <- function (countyPopulations){
 
 
 
-#  s <- getSelectedCounties(countyPopulations)
-#  print(covidPlot(case.slope~date | county, data=s, group=state, subtitle = "fdfdfdfd", main="Selected Counties", ylab="Slope (Cases/Day)"))
+  s <- getSelectedCounties(countyPopulations)
+  p <-covidPlot(case.slope~date | county, data=s, group=state,
+                 numTickIntervals = 3,
+                 subtitle = "fdfdfdfd", main="Selected Counties",
+                 ylab="Slope (Cases/Day)")
+  print(p)
 
 # plotCounties(countyPopulations)
