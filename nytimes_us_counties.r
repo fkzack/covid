@@ -211,11 +211,11 @@ plotCounties <- function (countyPopulations){
 
 
 
-  s <- getSelectedCounties(countyPopulations)
-  p <-covidPlot(case.slope~date | county, data=s, group=state,
-                 numTickIntervals = 3,
-                 subtitle = "fdfdfdfd", main="Selected Counties",
-                 ylab="Slope (Cases/Day)")
-  print(p)
+#  s <- getSelectedCounties(countyPopulations)
+#  p <-covidPlot(case.slope~date | county, data=s, group=state,
+#                 numTickIntervals = 3,
+#                 subtitle = "fdfdfdfd", main="Selected Counties",
+#                 ylab="Slope (Cases/Day)")
+#  print(p)
 
 # plotCounties(countyPopulations)
