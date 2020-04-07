@@ -18,9 +18,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, get_data, include=FALSE}
     source("nytimes_us_counties.r")
-    ca <- getCounties(getStateUrl('California'),countyPopulations)
-    ny <- getCounties(getStateUrl('New+York'),  countyPopulations)
-    mi <- getCounties(getStateUrl('Michigan'),  countyPopulations)
+    ca <- getCountiesByChunk ('California', ISOdate(2020,3,1), 5,  countyPopulations)
+    ny <- getCountiesByChunk ('New+York', ISOdate(2020,3,1), 5,  countyPopulations)
+    mi <- getCountiesByChunk ('Michigan', ISOdate(2020,3,1), 5,  countyPopulations)
     selected <- getSelectedCounties(countyPopulations)
     subtext = "Data from NY Times via covid-19.datasettes.com"
 

@@ -71,14 +71,6 @@ getSelectedCountiesUrl <- function(state, counties){
 }
 
 
-# Build url to get county data for a single state
-getStateUrl <- function(state){
-  state_url <- "https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22state%22+%3D+%3Ap0+order+by+county%2C++date+desc&p0=STATE"
-  state_url <- sub("STATE", state, state_url)
-  return (state_url)
-} 
-
-
 # central diference approx to dx/dy, 
 # y is a date, we assume we are sorted in date order (ascending)
 # group_id identifies series that are in order, do not calculate across changes in group id
@@ -148,6 +140,30 @@ getSelectedCounties <- function(population_data) {
   return(selected)
 }
   
+getCountiesByChunk <- function (state, first_day, chunk_days, population_data){
+  # 
+  # state<-'California'
+  # first_day <- ISOdate(2020,4,1)
+  # chunk_days <- 5
+  # population_data <- GetCountyPopulationsNYT()
+  
+  start_days <- seq(as.Date(first_day),Sys.Date() ,by= as.difftime(days(chunk_days)))
+  start_days <- c(start_days, start_days[length(start_days)] + days(chunk_days))
+  counties <- NULL
+  base_url <- 'https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3E%3D+%3Ap0+and+%22date%22+%3C+%3Ap1+and+%22state%22+%3D+%3Ap2+order+by+county%2C+date+desc'
+  for (i in seq(1, length(start_days)-1)){
+    chunk_url <- paste(base_url,"&p0=",start_days[i], "&p1=", start_days[i+1], "&p2=", state, sep="")
+    print(paste("chunk url:", chunk_url))
+    c <- getCounties(chunk_url, population_data  )
+    if (is.null(counties)){
+      counties <- c
+    } else {
+      counties <- rbind(counties,c)
+    }
+  }
+  counties <-  counties[order(counties$county.name, counties$date),]
+  return (counties)
+}
   
 
 #get county data from NYT
@@ -156,6 +172,9 @@ getCounties <- function(countyUrl, population_data){
   rawJSON <- fromJSON(countyUrl)
   
   counties <- data.frame(rawJSON$rows, stringsAsFactors = F)
+  if (length(counties) < 1){
+    return (NULL)
+  }
   names(counties) <- rawJSON$columns
   counties$date <- as.Date(counties$date)
   counties$deaths <- as.numeric(counties$deaths)
@@ -174,15 +193,19 @@ getCounties <- function(countyUrl, population_data){
   counties$death.slope = centralDifference(counties$deaths, counties$date, counties$fips)
   counties$case.slope = centralDifference(counties$cases, counties$date, counties$fips)
   
-  
   return(subset(counties, counties$date > as.POSIXct("2020-2-29")))
 }
 
 plotCounties <- function (countyPopulations){
     subtitle <- "Data from NY Times via covid-19.datasettes.com"
     
-    ca <- getCounties(getStateUrl('California'), countyPopulations)
-    ny <- getCounties(getStateUrl('New+York'), countyPopulations)
+    
+    
+    ca <- getCountiesByChunk ('California', ISOdate(2020,3,1), 5,  countyPopulations)
+    ny <- getCountiesByChunk ('New+York', ISOdate(2020,3,1), 5,  countyPopulations)
+    
+    
+    #change this to include first date
     selected <- getSelectedCounties(countyPopulations)
     
     print(covidPlot(cases~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
