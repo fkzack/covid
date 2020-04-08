@@ -220,8 +220,11 @@ plotCounties <- function (countyPopulations){
     
     print(covidPlot(cases~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties"))
     print(covidPlot(deaths~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties"))
-    print(covidPlot(case.slope~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties", ylab="Slope (Cases/Day)"))
-    print(covidPlot(death.slope~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties", ylab="Slope (Deaths/Day)"))
+    #print(covidPlot(case.slope~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties", ylab="Slope (Cases/Day)"))
+    print(symmetricPlot(case.slope~date | county, data=selected, groupVector = selected$county , subtitle = subtitle, main="Selected Counties", ylab="Slope (Cases/Day)"))
+    #print(covidPlot(death.slope~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties", ylab="Slope (Deaths/Day)"))
+    print(symmetricPlot(death.slope~date | county, data=selected, groupVector = selected$county, subtitle = subtitle, main="Selected Counties", ylab="Slope (Deaths/Day)"))
+    
     
     print(covidPlot(cases~date, data=selected, group=county, subtitle = subtitle, main="Selected Counties",
                             auto.key= list(cex=0.6, columns=3),
@@ -234,11 +237,27 @@ plotCounties <- function (countyPopulations){
 
 
 
-#  s <- getSelectedCounties(countyPopulations)
-#  p <-covidPlot(case.slope~date | county, data=s, group=state,
-#                 numTickIntervals = 3,
-#                 subtitle = "fdfdfdfd", main="Selected Counties",
-#                 ylab="Slope (Cases/Day)")
-#  print(p)
-
+ s <- getSelectedCounties(countyPopulations)
+ 
+ # p <-covidPlot(abs(death.slope)~date | county, data=s, group=sign(death.slope), auto.key=list(text=c("Decreasing", "Zero", "Increasing")),
+ #               numTickIntervals = 3,
+ #               subtitle = "fdfdfdfd", main="Selected Counties",
+ #               ylab="Slope (Deaths/Day)")
+ # 
+ 
+ # p <-covidPlot(death.slope~date | county, data=s, group=county, 
+ #                numTickIntervals = 3,
+ #                subtitle = "fdfdfdfd", main="Selected Counties",
+ #                ylab="Slope (Deaths/Day)")
+ # print(p)
+ # 
+ # str(s)
+ # s2 <- s
+ # s2$death.slope <- ifelse(s2$fips==6013, -s2$death.slope, s2$death.slope)
+ # p2 <-symmetricPlot(death.slope~date | county, groupVector=s$county,  data=s2, 
+ #               numTickIntervals = 3,
+ #               subtitle = "fdfdfdfd", main="Selected Counties",
+ #               ylab="Slope (Deaths/Day)")
+ # print(p2)
+ 
 # plotCounties(countyPopulations)
