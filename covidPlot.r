@@ -1,3 +1,4 @@
+library(devtools)
 install_github("fkzack/FredsRUtils", type="source")
 # install.packages('D:/Data/R/FredsRUtils_0.1.0.tar.gz', repos=NULL, type="source" )
 library(FredsRUtils)
@@ -70,11 +71,13 @@ symmetricPlot <- function(formula1, data,   groupVector, subtitle = "", numTickI
   
   #scale values
   min_absolute <- min(ifelse(df$y==0, NA,abs(df$y)), na.rm = TRUE)
+  
   #the center line we display around 
   log_origin = floor(log10(min_absolute))
   min_y <- min(df$y, na.rm=TRUE)
   max_y <- max(df$y, na.rm=TRUE)
   
+    
   #transform from y values to display values
   df$dv <- ifelse(df$y > 0, log10(df$y) - log_origin+1, NA)
   df$dv <- ifelse(df$y < 0 , -(log10(-df$y) - log_origin+1), df$dv)
@@ -115,11 +118,23 @@ symmetricPlot <- function(formula1, data,   groupVector, subtitle = "", numTickI
               as.table=TRUE,
               panel=function(x,y,...){
                 panel.xyplot(x,y,...)
+                #This gets overwritten by add grid
+                abline(h = 0, col=rgb(1,0,0), alpha=0.5,  lwd=20)
               },
               
               ...)
+  #This does not work here or in xyplot above as it gets overwritten by add grid
+  # p <- update(
+  #   p, panel = function(x,y,...){
+  #     panel.xyplot(x,y,...)
+  #     panel.abline(h = 0, col=rgb(1,0,0), alpha=0.5,  lwd=20)
+  #   }
+  # )  
+ p <- addGrid(p)
   
-  return (addGrid(p))
+  
+  #return (addGrid(p))
+  return(p)
 }
   
 test <- function(){
