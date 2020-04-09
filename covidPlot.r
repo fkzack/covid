@@ -108,7 +108,7 @@ symmetricPlot <- function(formula1, data,   groupVector, subtitle = "", numTickI
   xticksAt <- date_ticks(df$x,numTickIntervals, 0)
   
   #print(str(df))
-  p <- xyplot(df$dv~df$x | df$condition, group=df$group, pch=c('p', 'l'),
+  p <- xyplot(df$dv~df$x | df$condition, group=df$group, 
               scales=list(y=list(at=ticksAt, labels=tickLabels),
                           x=list(at=xticksAt,rot=45, format="%Y-%m-%d" )),
               
@@ -120,6 +120,8 @@ symmetricPlot <- function(formula1, data,   groupVector, subtitle = "", numTickI
                 panel.xyplot(x,y,...)
                 #This gets overwritten by add grid
                 panel.abline(h = 0, col=rgb(0,0,0), alpha=0.1,  lwd=20)
+                panel.abline(h=ticksAt, alpha=0.1)
+                panel.abline(v=xticksAt, alpha=0.1)
               },
               
               ...)
