@@ -35,8 +35,9 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 ```{r, selected_counties_cases, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
     print(covidPlot(cases~date | county, data=selected, subtitle=subtext, group=state, main="Selected Counties"))
-    print(symmetricPlot(case.slope~date | county, data=selected, group=selected$state, subtitle = subtext, main="Selected Counties", 
-                    ylab="Slope (Cases/Day)"))
+    print(symmetricPlot(100000*case.slope/county.population~date | county, data=selected, group=selected$state, subtitle = subtext, main="Selected Counties", 
+          ylab="Slope (Cases/Day/100,000)",
+          xlab="Date"))
     print(covidPlot(100000*cases/county.population~date | county, data=selected, subtitle=subtext, group=state, main="Selected Counties",
           ylab="Cases per 100,000"))
     print(covidPlot(cases~date, data=selected, group=county, subtitle=subtext, main="Selected Counties",
@@ -51,8 +52,10 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 ```{r, selected_counties_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}    
     
     print(covidPlot(deaths~date | county, data=selected, subtitle=subtext, group=state, main="Selected Counties"))
-    print(symmetricPlot(death.slope~date | county, data=selected, group=selected$state, subtitle = subtext, 
-                    main="Selected Counties", ylab="Slope (Deaths/Day)"))
+    print(symmetricPlot(100000*death.slope/county.population~date | county, data=selected, group=selected$state, subtitle = subtext, 
+                    main="Selected Counties", 
+                    ylab="Slope (Deaths/Day/100,000)",
+                    xlab="Date"))
     print(covidPlot(100000*deaths/county.population~date | county, data=selected, group=state, 
                             subtitle=subtext, ylab="Deaths per 100,000", main="Selected Counties"))
 
