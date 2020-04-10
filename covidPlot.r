@@ -125,17 +125,6 @@ symmetricPlot <- function(formula1, data,   groupVector, subtitle = "", numTickI
               },
               
               ...)
-  #This does not work here or in xyplot above as it gets overwritten by add grid
-  # p <- update(
-  #   p, panel = function(x,y,...){
-  #     panel.xyplot(x,y,...)
-  #     panel.abline(h = 0, col=rgb(1,0,0), alpha=0.5,  lwd=20)
-  #   }
-  # )  
-  #p <- addGrid(p)
-  
-  
-  #return (addGrid(p))
   return(p)
 }
   
