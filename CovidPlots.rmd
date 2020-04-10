@@ -114,7 +114,6 @@ Covid positive tests, deaths, and hospitalizations by state from covidtracking.c
     source("covidtracking_us_states.r")
   print (p_hosp)
   print(p_hospPer)
-  print(p_deltaHospPer)
 ```
 
 ### Positives

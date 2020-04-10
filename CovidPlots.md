@@ -1,6 +1,6 @@
 CovidPlots
 ================
-10 April 2020 08:59 AM PDT
+10 April 2020 10:50 AM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
@@ -54,7 +54,7 @@ covidtracking.com <https://covidtracking.com>
 
 ### Hospitalizations
 
-<img src="CovidPlots_files/figure-gfm/state_hospital-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_hospital-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_hospital-3.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/state_hospital-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_hospital-2.svg" width="4800" />
 
 ### Positives
 

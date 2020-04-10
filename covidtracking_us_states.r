@@ -97,20 +97,20 @@ p_positives <- covidPlot(positive~date | state.abb, group=state.abb, data=dailie
 
 p_positivesPer <- covidPlot(100000*positive/state.population ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "positves per 100,000", main="US States")
 
-p_deltaPositivesPer <- symmetricPlot(100000*positiveIncrease/state.population ~ date | state.abb, group=dailies$state.abb, data=dailies, subtitle=label, ylab = "Increase (positives/day/100,000", main="US States")
+p_deltaPositivesPer <- symmetricPlot(100000*positiveIncrease/state.population ~ date | state.abb, group=dailies$state.abb, data=dailies, subtitle=label, ylab = "Increase (positives/day/100,000)", main="US States")
 
 p_deaths <- covidPlot(death ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "deaths", main="US States")
 
 p_deathsPer <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "deaths per 100,000", main="US States")
 
-p_deltaDeathsPer <- symmetricPlot(100000*deathIncrease/state.population ~ date | state.abb, group=dailies$state.abb, data=dailies, subtitle=label, ylab = "Increase (deaths/day/100,000", main="US States")
+p_deltaDeathsPer <- symmetricPlot(100000*deathIncrease/state.population ~ date | state.abb, group=dailies$state.abb, data=dailies, subtitle=label, ylab = "Increase (deaths/day/100,000)", main="US States")
 
 
 p_hosp <- covidPlot(hospitalized ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "hospitalizations", main="US States")
 
 p_hospPer <- covidPlot(100000*hospitalized/state.population ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "hospitalizations per 100,000", main="US States")
 
-p_deltaHospPer <-symmetricPlot(100000*hospitalizedIncrease/state.population ~ date | state.abb, group=dailies$state.abb, data=dailies, subtitle=label, ylab = "Increase (hospitalized/day/100,000", main="US States")
+p_deltaHospPer <-symmetricPlot(100000*hospitalizedIncrease/state.population ~ date | state.abb, group=dailies$state.abb, data=dailies, subtitle=label, ylab = "Increase (hospitalized/day/100,000)", main="US States")
 
 
 #print(p_deaths)
