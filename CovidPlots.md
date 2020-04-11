@@ -1,6 +1,6 @@
 CovidPlots
 ================
-10 April 2020 10:50 AM PDT
+10 April 2020 05:51 PM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
