@@ -1,7 +1,8 @@
 CovidPlots
 ================
-13 April 2020 02:58 PM PDT
+14 April 2020 01:59 PM PDT
 
+  - [CDC All Deaths by Week](#cdc-all-deaths-by-week)
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
       - [Cases](#cases)
@@ -15,6 +16,13 @@ CovidPlots
       - [Positives](#positives)
       - [Deaths](#deaths-1)
   - [Covid in China](#covid-in-china)
+
+## CDC All Deaths by Week
+
+The CDC Flu View website gives weekly deaths by state going back several
+years. Data entry and reporting lags by many weeks, so the last month or
+so of deaths will be under-reported
+<img src="CovidPlots_files/figure-gfm/cdc_all_deaths-1.svg" width="4800" />
 
 ## Covid in a Few Interesting Counties
 
