@@ -13,6 +13,13 @@ knitr::opts_chunk$set(out.width = 4800,  fig.width = 12, fig.asp=0.62,  dev = 's
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## CDC All Deaths by Week
+The CDC Flu View website gives weekly deaths by state going back several years. Data entry and reporting lags by many weeks, so the last month or so of deaths will be under-reported
+```{r, cdc_all_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+  source("cdc_deaths.r")
+  print(p_year_on_year)
+
+```
 
 
 
