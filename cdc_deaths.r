@@ -51,7 +51,7 @@ all_deaths <- pivot_wider(all_deaths,id_cols=c('week_number', 'state', 'all_deat
 
 
 
-all_deaths$key <- ifelse(is.na(all_deaths$all_deaths_2020), "2019/2018 Ratio", "2020/2019 Ratio")
+
 all_deaths$year_on_year <- ifelse(is.na(all_deaths$all_deaths_2020), all_deaths$all_deaths_2019/all_deaths$all_deaths_2018, all_deaths$all_deaths_2020/all_deaths$all_deaths_2019)
 all_deaths$all_deaths <- ifelse(is.na(all_deaths$all_deaths_2020), all_deaths$all_deaths_2019, all_deaths$all_deaths_2020)
 all_deaths$week_starts <- ifelse(is.na(all_deaths$all_deaths_2020), all_deaths$week_start_2019, all_deaths$week_start_2020)
@@ -61,6 +61,7 @@ all_deaths$week_starts <-  as.Date(all_deaths$week_starts, origin = lubridate::o
 str(all_deaths)
 ticksAt <- date_ticks(all_deaths$week_starts, 3, 0)
 
+all_deaths$key <- ifelse(is.na(all_deaths$all_deaths_2020), "2019 Deaths", "2020 Deaths")
 p_all_deaths_recent <- xyplot(all_deaths ~ week_starts | state, data=all_deaths, group=key,
                          auto.key=TRUE, as.table=TRUE, 
                          ylab = "All Deaths",
@@ -69,10 +70,10 @@ p_all_deaths_recent <- xyplot(all_deaths ~ week_starts | state, data=all_deaths,
                          scales=list(x=list(at=ticksAt, rot=45, format="%Y-%m-%d"), y = list(log=10)),
                          yscale.components = latticeExtra::yscale.components.log10ticks
                          )
-# print(p_all_deaths_recent)
+#print(p_all_deaths_recent)
 
 
-
+all_deaths$key <- ifelse(is.na(all_deaths$all_deaths_2020), "2019/2018 Ratio", "2020/2019 Ratio")
 p_year_on_year <- xyplot(year_on_year ~ week_starts | state, data=all_deaths, group=key,
                          auto.key=TRUE, as.table=TRUE, 
                          ylab = "All Deaths Year on Year Ratio",
