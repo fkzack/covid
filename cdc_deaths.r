@@ -18,11 +18,6 @@ install_github("fkzack/FredsRUtils", type="source")
 library(FredsRUtils)
 
 
-#library(reshape2)
-
-#install_github("fkzack/FredsRUtils")
-#library(FredsRUtils)
-
 rm(list=ls())
 
 
@@ -59,31 +54,48 @@ all_deaths$week_starts <-  as.Date(all_deaths$week_starts, origin = lubridate::o
 
 
 str(all_deaths)
-ticksAt <- date_ticks(all_deaths$week_starts, 3, 0)
+xTicksAt <- date_ticks(all_deaths$week_starts, 3, 0)
 
-all_deaths$key <- ifelse(is.na(all_deaths$all_deaths_2020), "2019 Deaths", "2020 Deaths")
-p_all_deaths_recent <- xyplot(all_deaths ~ week_starts | state, data=all_deaths, group=key,
+yMin <- min(all_deaths$all_deaths, na.rm=T)
+yMax <- max(all_deaths$all_deaths, na.rm=T)
+yTicksAtRecent <- log_ticks(log10(c(yMin, yMax)))
+
+
+all_deaths_recentkey <- ifelse(is.na(all_deaths$all_deaths_2020), "2019 Deaths", "2020 Deaths")
+p_all_deaths_recent <- xyplot(all_deaths ~ week_starts | state, data=all_deaths, group=all_deaths_recentkey,
                          auto.key=TRUE, as.table=TRUE, 
                          ylab = "All Deaths",
                          main = "Weekly Death Data from CDC ",
                          xlab = "Date",
-                         scales=list(x=list(at=ticksAt, rot=45, format="%Y-%m-%d"), y = list(log=10)),
-                         yscale.components = latticeExtra::yscale.components.log10ticks
+                         scales=list(x=list(at=xTicksAt, rot=45, format="%Y-%m-%d"), y = list(log=10, at=yTicksAtRecent$majors)),
+                         yscale.components = latticeExtra::yscale.components.log10ticks,
+                         panel=function(x,y,...){
+                           panel.xyplot(x,y,...)
+                           panel.abline(h=yTicksAtRecent$majors, alpha=0.1)
+                           panel.abline(h=yTicksAtRecent$minors, alpha=0.05)
+                           panel.abline(v=xTicksAt, alpha=0.1)
+                         },
                          )
 #print(p_all_deaths_recent)
 
-
-all_deaths$key <- ifelse(is.na(all_deaths$all_deaths_2020), "2019/2018 Ratio", "2020/2019 Ratio")
-p_year_on_year <- xyplot(year_on_year ~ week_starts | state, data=all_deaths, group=key,
+yTicksAt <- linear_ticks(all_deaths$year_on_year, 4)
+all_deaths_year_on_year_key <- ifelse(is.na(all_deaths$all_deaths_2020), "2019/2018 Ratio", "2020/2019 Ratio")
+p_year_on_year <- xyplot(year_on_year ~ week_starts | state, data=all_deaths, group=all_deaths_year_on_year_key,
                          auto.key=TRUE, as.table=TRUE, 
                          ylab = "All Deaths Year on Year Ratio",
                          main = "Weekly Death Data from CDC ",
                          xlab = "Date",
-                         scales=list(x=list(at=ticksAt, rot=45, format="%Y-%m-%d"))
+                         scales=list(x=list(at=xTicksAt, rot=45, format="%Y-%m-%d"), y=list(at=yTicksAt)),
                          #scales=list(x=list(at=ticksAt, rot=45, format="%Y-%m-%d"), y = list(log=10)),
                          #yscale.components = latticeExtra::yscale.components.log10ticks
+                         panel=function(x,y,...){
+                           panel.xyplot(x,y,...)
+                           panel.abline(h=yTicksAt, alpha=0.1)
+                           panel.abline(v=xTicksAt, alpha=0.1)
+                         },
+                         
                          )
-# print(p_year_on_year)
+#print(p_year_on_year)
 
 
 
