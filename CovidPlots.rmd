@@ -18,6 +18,8 @@ The CDC Flu View website gives weekly deaths by state going back several years. 
 ```{r, cdc_all_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
   source("cdc_deaths.r")
   print(p_year_on_year)
+  print(p_all_deaths_recent)
+  print(p_all_deaths)
 
 ```
 

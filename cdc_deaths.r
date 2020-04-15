@@ -12,15 +12,18 @@ library(scales)
 library(devtools)
 library(lubridate)
 library(cdcfluview)
-library(reshape2)
+library(devtools)
+install_github("fkzack/FredsRUtils", type="source")
+# install.packages('D:/Data/R/FredsRUtils_0.1.0.tar.gz', repos=NULL, type="source" )
+library(FredsRUtils)
+
+
+#library(reshape2)
 
 #install_github("fkzack/FredsRUtils")
 #library(FredsRUtils)
 
 rm(list=ls())
-
-
-
 
 
 #overall death rates in us
@@ -38,15 +41,47 @@ p_all_deaths <- xyplot(all_deaths ~week_start | region_name, data=mort)
 # print(p_all_deaths)
 mort$year <- ifelse(mort$weeknumber > 1, year(mort$week_start), year(mort$week_end))
 mort$weeknumber <- as.numeric(mort$weeknumber)
-all_deaths <- mort[c('year', 'weeknumber', 'region_name', 'all_deaths')]
-all_deaths <- dcast(all_deaths, weeknumber+region_name ~ year, value.var = 'all_deaths')
-names(all_deaths) <- paste("all_deaths_", names(all_deaths), sep="")
-names(all_deaths)[1] <- 'week_number'
-names(all_deaths)[2] <- 'state'
+
+all_deaths <- mort[c('year', 'weeknumber', 'week_start', 'region_name', 'all_deaths')]
+names(all_deaths)[2] = "week_number"
+names(all_deaths)[4] = "state"
+
+#all_deaths <- dcast(all_deaths, weeknumber+week_start+region_name ~ year, value.var =  'all_deaths')
+all_deaths <- pivot_wider(all_deaths,id_cols=c('week_number', 'state', 'all_deaths'), names_from='year', values_from = c('all_deaths', 'week_start'))
+
+
+
 all_deaths$key <- ifelse(is.na(all_deaths$all_deaths_2020), "2019/2018 Ratio", "2020/2019 Ratio")
 all_deaths$year_on_year <- ifelse(is.na(all_deaths$all_deaths_2020), all_deaths$all_deaths_2019/all_deaths$all_deaths_2018, all_deaths$all_deaths_2020/all_deaths$all_deaths_2019)
+all_deaths$all_deaths <- ifelse(is.na(all_deaths$all_deaths_2020), all_deaths$all_deaths_2019, all_deaths$all_deaths_2020)
+all_deaths$week_starts <- ifelse(is.na(all_deaths$all_deaths_2020), all_deaths$week_start_2019, all_deaths$week_start_2020)
+all_deaths$week_starts <-  as.Date(all_deaths$week_starts, origin = lubridate::origin)
+
+
 str(all_deaths)
-p_year_on_year <- xyplot(all_deaths$year_on_year ~ week_number | state, data=all_deaths, group=key, auto.key=TRUE, as.table=TRUE, ylab = " All Deaths Year on Year Ratio")
+ticksAt <- date_ticks(all_deaths$week_starts, 3, 0)
+
+p_all_deaths_recent <- xyplot(all_deaths ~ week_starts | state, data=all_deaths, group=key,
+                         auto.key=TRUE, as.table=TRUE, 
+                         ylab = "All Deaths",
+                         main = "Weekly Death Data from CDC ",
+                         xlab = "Date",
+                         scales=list(x=list(at=ticksAt, rot=45, format="%Y-%m-%d"), y = list(log=10)),
+                         yscale.components = latticeExtra::yscale.components.log10ticks
+                         )
+# print(p_all_deaths_recent)
+
+
+
+p_year_on_year <- xyplot(year_on_year ~ week_starts | state, data=all_deaths, group=key,
+                         auto.key=TRUE, as.table=TRUE, 
+                         ylab = "All Deaths Year on Year Ratio",
+                         main = "Weekly Death Data from CDC ",
+                         xlab = "Date",
+                         scales=list(x=list(at=ticksAt, rot=45, format="%Y-%m-%d"))
+                         #scales=list(x=list(at=ticksAt, rot=45, format="%Y-%m-%d"), y = list(log=10)),
+                         #yscale.components = latticeExtra::yscale.components.log10ticks
+                         )
 # print(p_year_on_year)
 
 
