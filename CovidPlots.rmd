@@ -90,6 +90,12 @@ Covid case counts and death counts by county, based on daily data from NY Times 
     print(covidPlot(100000*deaths/county.population~date | county, data=ca, group=county, subtitle=subtext, 
                             ylab="Deaths per 100,000", main="California Counties"))
     
+    
+     print(symmetricPlot(100000*death.slope/county.population~date | county, data=ca, group=ca$county, 
+        subtitle = subtext, main="California Counties", 
+        ylab="Slope (Deaths/Day/100,000)",
+        xlab="Date"))
+    
 ```
 
 ## Covid in All New York Counties {.tabset}
