@@ -70,11 +70,19 @@ Covid case counts and death counts by county, based on daily data from NY Times 
                             subtitle=subtext, ylab="Deaths per 100,000", main="Selected Counties"))
 
     
+    print(symmetricPlot(death.slope ~ date | county, data=selected, group=selected$state, 
+        subtitle = subtext, main="Selected Counties", 
+        ylab="Slope (Deaths/Day)",
+        xlab="Date"))
+
+    
     print(symmetricPlot(100000*death.slope/county.population~date | county, data=selected, group=selected$state, 
         subtitle = subtext, main="Selected Counties", 
         ylab="Slope (Deaths/Day/100,000)",
         xlab="Date"))
 
+    
+    
     print(covidPlot(deaths~date, data=selected, group=county, subtitle=subtext, main="Selected Counties",
                             auto.key= list(cex=0.6, columns=3),
                             par.settings= list(superpose.symbol=list(pch=1:25)) ))
@@ -89,6 +97,12 @@ Covid case counts and death counts by county, based on daily data from NY Times 
     print(covidPlot(deaths~date | county, data=ca, group=county, subtitle=subtext, main="California Counties"))
     print(covidPlot(100000*deaths/county.population~date | county, data=ca, group=county, subtitle=subtext, 
                             ylab="Deaths per 100,000", main="California Counties"))
+    
+    
+    print(symmetricPlot(death.slope~date | county, data=ca, group=ca$county, 
+        subtitle = subtext, main="California Counties", 
+        ylab="Slope (Deaths/Day)",
+        xlab="Date"))
     
     
      print(symmetricPlot(100000*death.slope/county.population~date | county, data=ca, group=ca$county, 

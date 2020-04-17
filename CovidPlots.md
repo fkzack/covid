@@ -1,6 +1,6 @@
 CovidPlots
 ================
-17 April 2020 03:46 PM PDT
+17 April 2020 04:04 PM PDT
 
   - [CDC All Deaths by Week](#cdc-all-deaths-by-week)
   - [Covid in a Few Interesting
@@ -35,13 +35,13 @@ NY Times via <https://covid-19.datasettes.com>
 
 ### Deaths
 
-<img src="CovidPlots_files/figure-gfm/selected_counties_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-4.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/selected_counties_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-5.svg" width="4800" />
 
 ## Covid in All California Counties
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/california_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-4.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/california_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-5.svg" width="4800" />
 
 ## Covid in All New York Counties
 
