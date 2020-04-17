@@ -88,18 +88,20 @@ centralDifference <- function (x,y, group_id){
 #combine several selected counties data into a single df
 addSelectedCounties <- function(selectedCounties, state, counties, population_data){
   selectedUrl <- getSelectedCountiesUrl(state, counties)
-  selected <- getCounties(selectedUrl, population_data)
+  selected <- getCounties(selectedUrl)
   if (is.null(selectedCounties)){
     selectedCounties <- selected
   }
   else {
     selectedCounties <- rbind(selectedCounties, selected)
   }
+  
+  
   return (selectedCounties)
 }
 
 #get data from a group of counties I find interesting
-getSelectedCounties <- function(population_data) {
+getSelectedCounties <- function(population_data, first_day) {
   print(paste('getSelectedCounties populationData',population_data ))
   selected <- NULL
   selected <- addSelectedCounties(
@@ -136,6 +138,16 @@ getSelectedCounties <- function(population_data) {
     c('Wayne', 'Oakland'),
     population_data
   )
+  
+  # add in census population data
+  selected <- merge(selected, population_data)
+  
+  selected <- subset(selected, selected$date >= first_day)
+  #sort and calculate slopes
+  selected <- selected[order( selected$fips, selected$date),]
+  selected$death.slope = centralDifference(selected$deaths, selected$date, selected$fips)
+  selected$case.slope = centralDifference(selected$cases, selected$date, selected$fips)
+  selected <-  selected[order(selected$county.name, selected$date),]
 
   return(selected)
 }
@@ -154,20 +166,28 @@ getCountiesByChunk <- function (state, first_day, chunk_days, population_data){
   for (i in seq(1, length(start_days)-1)){
     chunk_url <- paste(base_url,"&p0=",start_days[i], "&p1=", start_days[i+1], "&p2=", state, sep="")
     print(paste("chunk url:", chunk_url))
-    c <- getCounties(chunk_url, population_data  )
+    c <- getCounties(chunk_url )
     if (is.null(counties)){
       counties <- c
     } else {
       counties <- rbind(counties,c)
     }
   }
+  
+  # add in census population data
+  counties <- merge(counties, population_data)
+  
+  #sort and calculate slopes
+  counties <- counties[order( counties$fips, counties$date),]
+  counties$death.slope = centralDifference(counties$deaths, counties$date, counties$fips)
+  counties$case.slope = centralDifference(counties$cases, counties$date, counties$fips)
   counties <-  counties[order(counties$county.name, counties$date),]
   return (counties)
 }
   
 
 #get county data from NYT
-getCounties <- function(countyUrl, population_data){
+getCounties <- function(countyUrl){
 
   rawJSON <- fromJSON(countyUrl)
   
@@ -181,32 +201,25 @@ getCounties <- function(countyUrl, population_data){
   counties$cases <- as.numeric(counties$cases)
   counties$county <- paste(counties$county, state.abb[match(counties$state, state.name)])
   counties$fips <- as.numeric(counties$fips)
-  print(str(counties))
   
   #special case NYC data since ny times aggregates all five boroughs
   counties$fips <- if_else(counties$county == "New York City NY", 36000, counties$fips)
   
-  # add in census population data
-  counties <- merge(counties, population_data)
-  
-  counties <- counties[order( counties$fips, counties$date),]
-  counties$death.slope = centralDifference(counties$deaths, counties$date, counties$fips)
-  counties$case.slope = centralDifference(counties$cases, counties$date, counties$fips)
-  
-  return(subset(counties, counties$date > as.POSIXct("2020-2-29")))
+  print(str(counties))
+  return(counties)
 }
 
 plotCounties <- function (countyPopulations){
     subtitle <- "Data from NY Times via covid-19.datasettes.com"
     
+    first_day <- ISOdate(2020,3,1, tz="")
+    
+    ca <- getCountiesByChunk ('California', first_day, 5,  countyPopulations)
+    ny <- getCountiesByChunk ('New+York', first_day, 5,  countyPopulations)
     
     
-    ca <- getCountiesByChunk ('California', ISOdate(2020,3,1), 5,  countyPopulations)
-    ny <- getCountiesByChunk ('New+York', ISOdate(2020,3,1), 5,  countyPopulations)
     
-    
-    #change this to include first date
-    selected <- getSelectedCounties(countyPopulations)
+    selected <- getSelectedCounties(countyPopulations, first_day)
     
     print(covidPlot(cases~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
     
@@ -237,7 +250,7 @@ plotCounties <- function (countyPopulations){
 
 
 
- s <- getSelectedCounties(countyPopulations)
+ s <- getSelectedCounties(countyPopulations, ISOdate(2020, 3,1, tz=""))
  
  # p <-covidPlot(abs(death.slope)~date | county, data=s, group=sign(death.slope), auto.key=list(text=c("Decreasing", "Zero", "Increasing")),
  #               numTickIntervals = 3,

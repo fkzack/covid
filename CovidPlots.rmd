@@ -26,10 +26,10 @@ The CDC Flu View website gives weekly deaths by state going back several years. 
 
 ```{r, get_data, include=FALSE}
     source("nytimes_us_counties.r")
-    ca <- getCountiesByChunk ('California', ISOdate(2020,3,1), 5,  countyPopulations)
-    ny <- getCountiesByChunk ('New+York', ISOdate(2020,3,1), 5,  countyPopulations)
-    mi <- getCountiesByChunk ('Michigan', ISOdate(2020,3,1), 5,  countyPopulations)
-    selected <- getSelectedCounties(countyPopulations)
+    ca <- getCountiesByChunk ('California', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
+    ny <- getCountiesByChunk ('New+York', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
+    mi <- getCountiesByChunk ('Michigan', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
+    selected <- getSelectedCounties(countyPopulations, ISOdate(2020,3,1, tz=""))
     subtext = "Data from NY Times via covid-19.datasettes.com"
 
 ```

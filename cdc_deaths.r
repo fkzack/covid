@@ -11,12 +11,13 @@ library(RColorBrewer)
 library(scales)
 library(devtools)
 library(lubridate)
-library(cdcfluview)
+
 library(devtools)
 install_github("fkzack/FredsRUtils", type="source")
 # install.packages('D:/Data/R/FredsRUtils_0.1.0.tar.gz', repos=NULL, type="source" )
 library(FredsRUtils)
 
+library(cdcfluview)
 
 rm(list=ls())
 
