@@ -74,6 +74,7 @@ symmetricPlot <- function(formula1, data,   groupVector, subtitle = "", numTickI
   
   #the center line we display around 
   log_origin = floor(log10(min_absolute))
+  
   min_y <- min(df$y, na.rm=TRUE)
   max_y <- max(df$y, na.rm=TRUE)
   
@@ -102,7 +103,10 @@ symmetricPlot <- function(formula1, data,   groupVector, subtitle = "", numTickI
   }
   
   ticksAt <- c(negTicks_dv, 0, posTicks_dv)
+  #print("ticks:")
+  #print (ticksAt)
   tickLabels <- c(-10^negTicks_y, 0,10^posTicks_y )
+  #print(tickLabels)
   
   #x axis
   xticksAt <- date_ticks(df$x,numTickIntervals, 0)

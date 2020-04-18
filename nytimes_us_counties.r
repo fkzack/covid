@@ -252,6 +252,13 @@ plotCounties <- function (countyPopulations){
 
  s <- getSelectedCounties(countyPopulations, ISOdate(2020, 3,1, tz=""))
  
+ 
+ print(symmetricPlot(death.slope~date | county, data=s, group=s$county, 
+                     subtitle = "sub title", main="California Counties", 
+                     ylab="Slope (Deaths/Day)",
+                     xlab="Date"))
+ 
+ 
  # p <-covidPlot(abs(death.slope)~date | county, data=s, group=sign(death.slope), auto.key=list(text=c("Decreasing", "Zero", "Increasing")),
  #               numTickIntervals = 3,
  #               subtitle = "fdfdfdfd", main="Selected Counties",
