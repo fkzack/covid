@@ -4,7 +4,8 @@ install_github("fkzack/FredsRUtils", type="source")
 library(FredsRUtils)
 library(lattice)
 library(latticeExtra)
-        
+library(lubridate)        
+
 
 # Wrap xyplot to create the plot I want (log y axis, log 10 grids, ...)
 # depends on x variable being $date, should change this once I figure out how to decode formula
@@ -33,6 +34,7 @@ covidPlot <- function(formula1, data, subtitle = "", numTickIntervals = 5, ...){
               sub=list(label=paste(subtitle, "   "), cex=0.5, x=1, just="right"),
               par.strip.text=list(cex=0.75),
               type=c('p', 'l'),
+              grid=FALSE,
               as.table=TRUE,
               panel=function(x,y,...){
                 panel.xyplot(x,y,...)
@@ -41,6 +43,85 @@ covidPlot <- function(formula1, data, subtitle = "", numTickIntervals = 5, ...){
               ...)
   return (addGrid(p))
 }
+
+
+#this will become the generic covid plot function with a bit more mork
+covidPlot2 <- function(formula1, data,  logX = FALSE, logY = FALSE, subtitle = "", numTickIntervals = 5, ...){
+  
+  
+  #this gets the incoming data frame
+  #print(get_all_vars(formula, data=data))
+  #print(formula(formula1))
+  
+  
+  #get_all_vars gives every column used by the formula in its original form
+  gav <- get_all_vars(formula1, data)
+  print(gav)
+  
+  #latticeParseFormula gives the results of applying the forular
+  lpf <- latticeParseFormula(formula1, data=data)
+  print (lpf$left)
+  print (lpf$right)
+  print(lpf$condition)
+  if (is.null(lpf$condition)){
+    lpf$condition <- ""
+  }
+  
+  df <- data.frame(lpf$right, lpf$left, unlist(lpf$condition, use.names = FALSE))
+  names(df) <- c('x', 'y', 'condition')
+  
+  xTicks <- NULL
+  xMinors <- NULL
+  if (is.Date(df$x)){
+    xTicks <- FredsRUtils::weekly_ticks(df$x)
+  } 
+  else if (logX==10){
+    xTicks <- FredsRUtils::log_ticks(df$x)
+    XMinors <- xTicks$minors
+    xTicks <- xTicks$majors
+    
+  }
+  else if(is.numeric(df$x)){
+    xTicks <- FredsRUtils::linear_ticks(df$x)
+  }
+  
+  yTicks <- NULL
+  yMinors <- NULL
+  if (is.Date(df$y)){
+    yTicks <- FredsRUtils::weekly_ticks(df$y)
+    yMinors <-  yTicks$minors
+    yTicks <- yTicks$majors
+  } 
+  else if (logY==10){
+    yTicks <- FredsRUtils::log_ticks(df$y)
+    
+  }
+  else if(is.numeric(df$y)){
+    yTicks <- FredsRUtils::linear_ticks(df$y)
+  }
+  
+    
+  p <- xyplot(y~x | condition,  data = df,
+              scales=list(
+                x=list(rot=45, at=xTicks, log=logX),
+                y=list(at=yTicks, log=logY)),
+              sub=list(label=paste(subtitle, "   "), cex=0.5, x=1, just="right"),
+              par.strip.text=list(cex=0.75),
+              type=c('p', 'l'),
+              as.table=TRUE,
+              panel=function(x,y,...){
+                panel.abline(h=yTicks, alpha=0.1)
+                #panel.abline(h=yMinors, alpha=0.1)
+                panel.abline(v=xTicks, alpha=0.1)
+                #panel.abline(v=xMinors, alpha=0.1)
+                panel.xyplot(x,y,...)
+              },
+              
+              ...)
+  return (p)
+}
+
+
 
 
 # s1 <- seq(ISOdate(2020, 1,11), by="day", length.out=200)
@@ -145,7 +226,16 @@ test <- function(){
   print(p)
 }
 
+testLinear <- function (){
+  df <- data.frame("x" = 1:10)
+  df$y <- df$x + 100
+  df$z <- 1:5
+  df$t <- seq(ISOdate(2020, 4,1), by = "5 days", length.out = 10)
+  print(df)
+  print(covidPlot2(x/z~t, data=df))
+}
 
+#testLinear()
 #test()
 
 

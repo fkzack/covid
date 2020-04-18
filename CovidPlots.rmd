@@ -149,6 +149,7 @@ Covid positive tests, deaths, and hospitalizations by state from covidtracking.c
 ```{r,  state_positves, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     source("covidtracking_us_states.r")
   print(p_positives)
+  print(p_positive_fraction)
   print(p_positivesPer)
   print (p_deltaPositivesPer)
 ```
@@ -173,4 +174,8 @@ Covid data from Johns Hopkins CSSE via https://covid-19.datasettes.com
     print(p_china_deaths)
 ```
 
-
+## Covid in Sweden {.tabset}
+```{r,  sweden, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+  print(p_sweden)
+  print(p_sweden_deaths)
+```

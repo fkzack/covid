@@ -9,7 +9,7 @@ source("covidPlot.r")
 
 #queries seem to be limited to returning a few thousand rows, so need to read in chunks of a few days
 
-chunk_days <- 5
+chunk_days <- 2
 start_days <- seq(ymd('2020-01-01'),Sys.Date() ,by= as.difftime(days(chunk_days)))
 start_days <- c(start_days, start_days[length(start_days)] + days(chunk_days))
 
@@ -17,6 +17,15 @@ start_days <- c(start_days, start_days[length(start_days)] + days(chunk_days))
 base_url <-"https://covid-19.datasettes.com/covid.json?sql=select+*+from+johns_hopkins_csse_daily_reports+where+%22day%22+%3E%3D+%3Ap0+and+%22day%22+%3C+%3Ap1"  
 #"&p0=2020-03-04&p1=2020-03-06"
 
+#base_url <-"https://covid-19.datasettes.com/covid.json?sql=select+*+from+johns_hopkins_csse_daily_reports+where+%22day%22+%3E%3D+%3Ap0+and+%22day%22+%3C+%3Ap1"  
+base_url <-"select * from johns_hopkins_csse_daily_reports where 'country_or_region' != 'US' and 'day' >= :p0 and 'day' < :p1"
+base_url <- gsub(" ", "+", base_url) 
+base_url <- gsub(",", "%2c", base_url)
+base_url <- gsub("'", "%22", base_url)
+base_url <- gsub("<", "%3c", base_url)
+base_url <- gsub(">", "%3e", base_url)
+base_url <- gsub("=", "%3D", base_url)
+base_url <- paste("https://covid-19.datasettes.com/covid.json?sql=", base_url, sep = "")
 
 
 covid <- NULL
@@ -51,31 +60,42 @@ for (i in seq(1, length(start_days)-1)){
   } else {
     covid <- rbind(covid, chunk)
   }
-
-  
 }
+
+covid <- covid[order(covid$country_or_region, covid$province_or_state, covid$day),]
+
 
 label <-  "Data from Johns Hopkins CSSE via https://covid-19.datasettes.com"
 
-p_us <- covidPlot(confirmed~date | location, group=location,  
-                  data=subset(covid, startsWith(location, "US")),
-                  main="US", subtitle = label)
+# p_us <- covidPlot(confirmed~date | location, group=location,  
+#                   data=subset(covid, startsWith(location, "US")),
+#                   main="US", subtitle = label)
 
 p_china <- covidPlot(confirmed~date | location, group=location,  
                      data=subset(covid, startsWith(location, "China")),
                      main = 'China',subtitle = label)
 
+p_sweden <- covidPlot(confirmed~date | location, group=location,  
+                     data=subset(covid, startsWith(country_or_region, "Sweden")),
+                     main = 'Sweden',subtitle = label)
+
+
 p_world <- covidPlot(confirmed~date | location, group=location,  
                      data=subset(covid, !startsWith(location, "China") & !startsWith(location, "US")),
                      main = 'Rest of World',subtitle = label)
 
-p_us_deaths <- covidPlot(deaths~date | location, group=location,  
-                  data=subset(covid, startsWith(location, "US")),
-                  main="US", subtitle = label)
+# p_us_deaths <- covidPlot(deaths~date | location, group=location,  
+#                   data=subset(covid, startsWith(location, "US")),
+#                   main="US", subtitle = label)
 
 p_china_deaths <- covidPlot(deaths~date | location, group=location,  
                      data=subset(covid, startsWith(location, "China")),
                      main = 'China',subtitle = label)
+
+
+p_sweden_deaths <- covidPlot(deaths~date | location, group=location,  
+                            data=subset(covid, startsWith(country_or_region, "Sweden")),
+                            main = 'Sweden',subtitle = label)
 
 p_world_deaths <- covidPlot(deaths~date | location, group=location,  
                      data=subset(covid, !startsWith(location, "China") & !startsWith(location, "US")),
@@ -84,12 +104,14 @@ p_world_deaths <- covidPlot(deaths~date | location, group=location,
 
 
 printAll <- function(){
-  print(p_us)
+  #print(p_us)
   print(p_china)
+  print(p_sweden)
   print(p_world)
-  print(p_us_deaths)
+  #print(p_us_deaths)
   print(p_china_deaths)
   print(p_world_deaths)
+  print(p_sweden_deaths)
 }
 
 #print(p_china)
@@ -108,3 +130,4 @@ test <- function(){
   
   
 }
+

@@ -99,6 +99,11 @@ p_positivesPer <- covidPlot(100000*positive/state.population ~ date | state.abb,
 
 p_deltaPositivesPer <- symmetricPlot(100000*positiveIncrease/state.population ~ date | state.abb, group=dailies$state.abb, data=dailies, subtitle=label, ylab = "Increase (positives/day/100,000)", main="US States")
 
+#p_positive_fraction <- covidPlot2(positive/(positive + negative)~date | state.abb, group=state.abb, data=dailies, subtitle=label,ylab="fraction positve", main="US States")
+p_positive_fraction <- xyplot(positive/(positive + negative)~date | state.abb, group=state.abb, data=dailies, subtitle=label,ylab="fraction positve", main="US States", as.table=TRUE)
+
+
+
 p_deaths <- covidPlot(death ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "deaths", main="US States")
 
 p_deathsPer <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=dailies, subtitle=label, ylab = "deaths per 100,000", main="US States")
