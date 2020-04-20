@@ -1,6 +1,6 @@
 CovidPlots
 ================
-18 April 2020 04:48 PM PDT
+20 April 2020 04:30 PM PDT
 
   - [CDC All Deaths by Week](#cdc-all-deaths-by-week)
   - [Covid in a Few Interesting
