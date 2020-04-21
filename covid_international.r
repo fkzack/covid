@@ -77,7 +77,7 @@ p_china <- covidPlot(confirmed~date | location, group=location,
 
 p_sweden <- covidPlot(confirmed~date | location, group=location,  
                      data=subset(covid, startsWith(country_or_region, "Sweden")),
-                     main = 'Sweden',subtitle = label, numTickIntervalsX = 6)
+                     main = 'Sweden',subtitle = label, numTickIntervalsX = 12)
 
 
 p_world <- covidPlot(confirmed~date | location, group=location,  
@@ -95,7 +95,7 @@ p_china_deaths <- covidPlot(deaths~date | location, group=location,
 
 p_sweden_deaths <- covidPlot(deaths~date | location, group=location,  
                             data=subset(covid, startsWith(country_or_region, "Sweden")),
-                            main = 'Sweden',subtitle = label, numTickIntervalsX = 6)
+                            main = 'Sweden',subtitle = label, numTickIntervalsX = 12)
 
 p_world_deaths <- covidPlot(deaths~date | location, group=location,  
                      data=subset(covid, !startsWith(location, "China") & !startsWith(location, "US")),
