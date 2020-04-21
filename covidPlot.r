@@ -62,7 +62,11 @@ axisTicks <- function(x,logBase, numTickIntervals){
   majors <- NULL
   format <- NULL
   if (is.instant(x)){
-    t<- FredsRUtils::weekly_ticks(x, numIntervals = numTickIntervals)
+    if (max(x, na.rm = TRUE) - min(x, na.rm = TRUE) > 240){
+      t<- FredsRUtils::monthly_ticks(x, numIntervals = numTickIntervals)
+    } else {
+      t<- FredsRUtils::weekly_ticks(x, numIntervals = numTickIntervals)
+    }
     majors <- t$majors
     minors <- t$minors
     ticksAt <- majors

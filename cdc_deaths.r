@@ -66,7 +66,7 @@ yTicksAtRecent <- log_ticks(log10(c(yMin, yMax)))
 
 all_deaths_recentkey <- ifelse(is.na(all_deaths$all_deaths_2020), "2019 Deaths", "2020 Deaths")
 p_all_deaths_recent <- covidPlot(all_deaths ~ week_starts | state, data=all_deaths, group=all_deaths_recentkey, numTickIntervalsX = 10,
-                              auto.key=TRUE, xlab="Date", ylab="All Deaths")
+                              auto.key=TRUE, xlab="Date", ylab="All Deaths", main="Weekly Deaths From All Causes")
                               
                               
 # p_all_deaths_recent <- xyplot(all_deaths ~ week_starts | state, data=all_deaths, group=all_deaths_recentkey,
@@ -90,7 +90,7 @@ all_deaths_year_on_year_key <- ifelse(is.na(all_deaths$all_deaths_2020), "2019/2
 
 p_year_on_year <- covidPlot(year_on_year ~ week_starts | state, data=all_deaths, group=all_deaths_year_on_year_key, numTickIntervalsX = 6,
                             logX = FALSE, logY = FALSE,
-                            auto.key=TRUE, xlab="Date", ylab="All Deaths Year on Year Ratio" )
+                            auto.key=TRUE, xlab="Date", ylab="All Deaths Year on Year Ratio" , main="Weekly Deaths From All Causes")
 
 
 # p_year_on_year <- xyplot(year_on_year ~ week_starts | state, data=all_deaths, group=all_deaths_year_on_year_key,
