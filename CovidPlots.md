@@ -1,6 +1,6 @@
 CovidPlots
 ================
-22 April 2020 08:49 AM PDT
+22 April 2020 02:55 PM PDT
 
   - [CDC All Deaths by Week](#cdc-all-deaths-by-week)
   - [Covid in a Few Interesting
@@ -16,7 +16,7 @@ CovidPlots
       - [Positives](#positives)
       - [Deaths](#deaths-1)
   - [Covid in China](#covid-in-china)
-  - [Covid in Sweden](#covid-in-sweden)
+  - [Covid in Scandanavia](#covid-in-scandanavia)
 
 ## CDC All Deaths by Week
 
@@ -78,6 +78,6 @@ covidtracking.com <https://covidtracking.com>
 Covid data from Johns Hopkins CSSE via <https://covid-19.datasettes.com>
 <img src="CovidPlots_files/figure-gfm/china-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/china-2.svg" width="4800" />
 
-## Covid in Sweden
+## Covid in Scandanavia
 
-<img src="CovidPlots_files/figure-gfm/sweden-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/sweden-2.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/scandanavia-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-4.svg" width="4800" />

@@ -174,8 +174,10 @@ Covid data from Johns Hopkins CSSE via https://covid-19.datasettes.com
     print(p_china_deaths)
 ```
 
-## Covid in Sweden {.tabset}
-```{r,  sweden, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-  print(p_sweden)
-  print(p_sweden_deaths)
+## Covid in Scandanavia {.tabset}
+```{r,  scandanavia, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+  print(p_scandanavia)
+  print(p_scandanavia_per)
+  print(p_scandanavia_deaths)
+  print(p_scandanavia_deaths_per)
 ```

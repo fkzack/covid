@@ -55,6 +55,7 @@ for (i in seq(1, length(start_days)-1)){
   
   chunk$location   <- paste(chunk$country_or_region, ifelse(is.na(chunk$province_or_state), "", chunk$province_or_state))
   
+  
   if (is.null(covid)){
     covid <- chunk
   } else {
@@ -62,8 +63,25 @@ for (i in seq(1, length(start_days)-1)){
   }
 }
 
+
+
+#denmark changes assignments
+covid$province_or_state = ifelse(startsWith(covid$country_or_region, "Denmark") & is.na(covid$province_or_state), "Denmark", covid$province_or_state)
+covid$region <- ""
+covid$region <- ifelse(startsWith(covid$province_or_state, "Denmark"), "Scandanavia", covid$region)
+covid$region <- ifelse(startsWith(covid$location, "Sweden"), "Scandanavia", covid$region)
+covid$region <- ifelse(startsWith(covid$location, "Norway"), "Scandanavia", covid$region)
+
+
+population = data.frame(country_or_region = c("Norway", "Sweden", "Denmark") , population = c(5.368, 10.23, 5.806))
+population$population <- 1000000* population$population
+
+covid <- merge(covid, population, all.x = TRUE)
+
 covid <- covid[order(covid$country_or_region, covid$province_or_state, covid$day),]
 
+#want scandanavia sorted differently because of the changes in 
+scand <- 
 
 label <-  "Data from Johns Hopkins CSSE via https://covid-19.datasettes.com"
 
@@ -75,9 +93,15 @@ p_china <- covidPlot(confirmed~date | location, group=location,
                      data=subset(covid, startsWith(location, "China")),
                      main = 'China',subtitle = label)
 
-p_sweden <- covidPlot(confirmed~date | location, group=location,  
-                     data=subset(covid, startsWith(country_or_region, "Sweden")),
-                     main = 'Sweden',subtitle = label, numTickIntervalsX = 12)
+p_scandanavia <- covidPlot(confirmed~date | country_or_region, group=country_or_region,  
+                     data=subset(covid, startsWith(region, "Scandanavia")),
+                     main = 'Scandanavia',subtitle = label, numTickIntervalsX = 12)
+
+
+p_scandanavia_per  <- covidPlot(100000 * confirmed/population~date | country_or_region, group=country_or_region,  
+                           data=subset(covid, startsWith(region, "Scandanavia")),
+                           ylab = "Cases per 100,000",
+                           main = 'Scandanavia',subtitle = label, numTickIntervalsX = 12)
 
 
 p_world <- covidPlot(confirmed~date | location, group=location,  
@@ -93,9 +117,16 @@ p_china_deaths <- covidPlot(deaths~date | location, group=location,
                      main = 'China',subtitle = label)
 
 
-p_sweden_deaths <- covidPlot(deaths~date | location, group=location,  
-                            data=subset(covid, startsWith(country_or_region, "Sweden")),
-                            main = 'Sweden',subtitle = label, numTickIntervalsX = 12)
+
+p_scandanavia_deaths <- covidPlot(deaths~date | country_or_region, group=country_or_region,  
+                           data=subset(covid, startsWith(region, "Scandanavia")),
+                           main = 'Scandanavia',subtitle = label, numTickIntervalsX = 12)
+
+
+p_scandanavia_deaths_per  <- covidPlot(100000 * deaths/population~date | country_or_region, group=country_or_region,  
+                                data=subset(covid, startsWith(region, "Scandanavia")),
+                                ylab = "Deaths per 100,000",
+                                main = 'Scandanavia',subtitle = label, numTickIntervalsX = 12)
 
 p_world_deaths <- covidPlot(deaths~date | location, group=location,  
                      data=subset(covid, !startsWith(location, "China") & !startsWith(location, "US")),
@@ -106,12 +137,14 @@ p_world_deaths <- covidPlot(deaths~date | location, group=location,
 printAll <- function(){
   #print(p_us)
   print(p_china)
-  print(p_sweden)
-  print(p_world)
+  print(p_scandanavia)
+  print(p_scandanavia_per)
+  #print(p_world)
   #print(p_us_deaths)
   print(p_china_deaths)
-  print(p_world_deaths)
-  print(p_sweden_deaths)
+  #print(p_world_deaths)
+  print(p_scandanavia_deaths)
+  print(p_scandanavia_deaths_per)
 }
 
 #print(p_china)
