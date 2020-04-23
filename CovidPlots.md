@@ -1,6 +1,6 @@
 CovidPlots
 ================
-23 April 2020 08:50 AM PDT
+23 April 2020 12:10 PM PDT
 
   - [CDC All Deaths by Week](#cdc-all-deaths-by-week)
   - [Covid in a Few Interesting
@@ -23,6 +23,9 @@ CovidPlots
 The CDC Flu View website gives weekly deaths by state going back several
 years. Data entry and reporting lags by many weeks, so the last month or
 so of deaths will be under-reported
+
+<https://gis.cdc.gov/grasp/fluview/mortality.html>
+
 <img src="CovidPlots_files/figure-gfm/cdc_all_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/cdc_all_deaths-2.svg" width="4800" />
 
 ## Covid in a Few Interesting Counties
