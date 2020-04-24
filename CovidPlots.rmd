@@ -78,19 +78,21 @@ Covid case counts and death counts by county, based on daily data from NY Times 
                     ylab="Deaths",
                     xlab="Date"))
     
-    print(covidPlot(100000*deaths/county.population~date | county, data=selected, group=state, 
+  print(covidPlot(deaths~date | county, data=selected, group=state, 
+                    subtitle=subtext, 
+                    logY=2,
+                    main="Selected Counties",
+                    ylab="Deaths",
+                    xlab="Date"))
+    
+
+  print(covidPlot(100000*deaths/county.population~date | county, data=selected, group=state, 
                     subtitle=subtext, 
                     main="Selected Counties",
                     ylab="Deaths per 100,000",
                     xlab="Date"))
     
-     print(covidPlot(100000*deaths/county.population~date | county, data=selected, group=state, 
-                    subtitle=subtext, 
-                    logY=2,
-                    main="Selected Counties",
-                    ylab="Deaths per 100,000",
-                    xlab="Date"))
-
+     
     print(symmetricPlot(death.slope ~ date | county, data=selected, group=selected$state, 
                         subtitle = subtext, 
                         main="Selected Counties", 
