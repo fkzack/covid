@@ -1,3 +1,4 @@
+#NY Times also provides state level data, but I have not done much with it
 library(lattice)
 library(latticeExtra)
 library(plotly)
