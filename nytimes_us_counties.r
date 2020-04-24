@@ -22,30 +22,14 @@ rm(list=ls())
 source ("census.r")
 countyPopulations <- GetCountyPopulationsNYT()
 
-# an xyplot formatted for this
+# an xyplot formatted for this data
 source("covidPlot.r")
 
 
 #covid by county from ny times
-#Seems to be limited to around 1000 records, so get by state
-counties_url <- "https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+order+by+date+desc"
+#Seems to be limited to around 1000 records, so get by state insted
+#counties_url <- "https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+order+by+date+desc"
 
-
-# # Build up the encoded url to retireve data for seleced counties from covid-19-datasettes.com
-# getSelectedCountiesUrl <- function(){
-#   sql_url <- paste(
-#     "https://covid-19.datasettes.com/covid.json?sql=select",
-#     "rowid,date,county,state,fips,cases,deaths from ny_times_us_counties where county in (",
-#     "'Alameda', 'Contra Costa', 'San Francisco', 'San Mateo', 'Santa Clara', 'Los Angeles', 'New York City', ",
-#     " 'Harris', 'King'",
-#     ") and state in ('California', 'New York', 'Texas', 'Washington') order by county, date"
-#   )
-#   #urlencode does not work correctly for some reason, so do manually
-#   sql_url <- gsub(" ", "+", sql_url)
-#   sql_url <- gsub(",", "%2c", sql_url)
-#   print (sql_url)
-#   return(sql_url)
-# }
 
 # Build up the encoded url to retireve data for seleced counties in a state from covid-19-datasettes.com
 # State is the state name as a string 
@@ -95,12 +79,12 @@ addSelectedCounties <- function(selectedCounties, state, counties, population_da
   else {
     selectedCounties <- rbind(selectedCounties, selected)
   }
-  
-  
   return (selectedCounties)
 }
 
-#get data from a group of counties I find interesting
+# get data from a group of counties I find interesting
+# * population_data is the census population df retrieved above
+# * first_day is the first day to include in the returned df
 getSelectedCounties <- function(population_data, first_day) {
   print(paste('getSelectedCounties populationData',population_data ))
   selected <- NULL
@@ -139,10 +123,18 @@ getSelectedCounties <- function(population_data, first_day) {
     population_data
   )
   
+  selected <- addSelectedCounties(
+    selected,   
+    "Hawaii",
+    c('Kauai', 'Maui'),
+    population_data
+  )
+  
   # add in census population data
   selected <- merge(selected, population_data)
   
   selected <- subset(selected, selected$date >= first_day)
+  
   #sort and calculate slopes
   selected <- selected[order( selected$fips, selected$date),]
   selected$death.slope = centralDifference(selected$deaths, selected$date, selected$fips)
@@ -152,6 +144,12 @@ getSelectedCounties <- function(population_data, first_day) {
   return(selected)
 }
   
+
+# break county data retrieval into smappler chunks to avoid download limits
+# * state is the state we are pulling data for 
+# * get data for first_day and all later days
+# * get data in chuncks of chunk_days
+# * population_data is the previously loaded population by county df downloaded abovel
 getCountiesByChunk <- function (state, first_day, chunk_days, population_data){
   # 
   # state<-'California'
@@ -187,6 +185,7 @@ getCountiesByChunk <- function (state, first_day, chunk_days, population_data){
   
 
 #get county data from NYT
+#countyUrl is the url to retrieve json data for the desired counties and days
 getCounties <- function(countyUrl){
 
   rawJSON <- fromJSON(countyUrl)
@@ -203,49 +202,57 @@ getCounties <- function(countyUrl){
   counties$fips <- as.numeric(counties$fips)
   
   #special case NYC data since ny times aggregates all five boroughs
+  #36000 is just a made up fips that seems not to be used anywhere else
   counties$fips <- if_else(counties$county == "New York City NY", 36000, counties$fips)
   
   print(str(counties))
   return(counties)
 }
 
+#print the plots for a single county
+#inputs: countyData, a df containing the data to plot
+#        title, the main title for the plots
+plotCounty <- function(countyData, title, subtitle){
+  
+  print(covidPlot(cases~date | county, data=countyData, group=county, subtitle=subtitle, main=title))
+  
+  print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title))
+  
+  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
+                  ylab="Deaths per 100,000", main=title))
+  
+  
+  print(symmetricPlot(death.slope~date | county, data=countyData, group=county, 
+                      subtitle = subtitle, main=title, 
+                      ylab="Slope (Deaths/Day)",
+                      xlab="Date"))
+  
+  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=county, 
+                      subtitle = subtitle, main=title, 
+                      ylab="Slope (Deaths/Day/100,000)",
+                      xlab="Date"))
+}
+
+
+# download and plot all the county data
+# *  countyPopulations is the previously downloaded census population data
 plotCounties <- function (countyPopulations){
     subtitle <- "Data from NY Times via covid-19.datasettes.com"
     
     first_day <- ISOdate(2020,3,1, tz="")
     
-    ca <- getCountiesByChunk ('California', first_day, 5,  countyPopulations)
-    ny <- getCountiesByChunk ('New+York', first_day, 5,  countyPopulations)
-    
-    
-    
     selected <- getSelectedCounties(countyPopulations, first_day)
+    plotCounty(selected, "Selected Counties", subtitle)
     
-    print(covidPlot(cases~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
+    ca <- getCountiesByChunk ('California', first_day, 5,  countyPopulations)
+    plotCounty(ca, "California Counties", subtitle)
     
+    ny <- getCountiesByChunk ('New+York', first_day, 5,  countyPopulations)
+    plotCounty(ny, "New Yourk Counties", subtitle)
     
-    print(covidPlot(100000* cases/county.population ~ date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
-    print(covidPlot(deaths~date | county, data=ca, group=county, subtitle = subtitle, main="California Counties"))
+    hi <- getCountiesByChunk ('Hawaii', first_day, 5,  countyPopulations)
+    plotCounty(hi, "Hawaii Counties", subtitle)
     
-    print(covidPlot(cases~date | county, data=ny, group=county, subtitle = subtitle, main="New York Counties"))
-    print(covidPlot(deaths~date | county, data=ny, group=county, subtitle = subtitle, main="New York Counties"))
-    
-    
-    print(covidPlot(cases~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties"))
-    print(covidPlot(deaths~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties"))
-    #print(covidPlot(case.slope~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties", ylab="Slope (Cases/Day)"))
-    print(symmetricPlot(case.slope~date | county, data=selected, groupVector = selected$county , subtitle = subtitle, main="Selected Counties", ylab="Slope (Cases/Day)"))
-    #print(covidPlot(death.slope~date | county, data=selected, group=county, subtitle = subtitle, main="Selected Counties", ylab="Slope (Deaths/Day)"))
-    print(symmetricPlot(death.slope~date | county, data=selected, groupVector = selected$county, subtitle = subtitle, main="Selected Counties", ylab="Slope (Deaths/Day)"))
-    
-    
-    print(covidPlot(cases~date, data=selected, group=county, subtitle = subtitle, main="Selected Counties",
-                            auto.key= list(cex=0.6, columns=3),
-                            par.settings= list(superpose.symbol=list(pch=1:25)) ))
-    
-    print(covidPlot(deaths~date, data=selected, group=county, subtitle = subtitle, main="Selected Counties",
-                            auto.key= list(cex=0.6, columns=3),
-                            par.settings= list(superpose.symbol=list(pch=1:25)) ))
 }
 
 

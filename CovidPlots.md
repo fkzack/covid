@@ -1,8 +1,7 @@
 CovidPlots
 ================
-23 April 2020 12:10 PM PDT
+24 April 2020 01:08 PM PDT
 
-  - [CDC All Deaths by Week](#cdc-all-deaths-by-week)
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
       - [Cases](#cases)
@@ -11,22 +10,14 @@ CovidPlots
     Counties](#covid-in-all-california-counties)
   - [Covid in All New York Counties](#covid-in-all-new-york-counties)
   - [Covid in All Michigan Counties](#covid-in-all-michigan-counties)
+  - [Covid in All Hawaii Counties](#covid-in-all-hawaii-counties)
+  - [CDC All Deaths by Week](#cdc-all-deaths-by-week)
   - [Covid in US States](#covid-in-us-states)
       - [Hospitalizations](#hospitalizations)
       - [Positives](#positives)
       - [Deaths](#deaths-1)
   - [Covid in China](#covid-in-china)
   - [Covid in Scandanavia](#covid-in-scandanavia)
-
-## CDC All Deaths by Week
-
-The CDC Flu View website gives weekly deaths by state going back several
-years. Data entry and reporting lags by many weeks, so the last month or
-so of deaths will be under-reported
-
-<https://gis.cdc.gov/grasp/fluview/mortality.html>
-
-<img src="CovidPlots_files/figure-gfm/cdc_all_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/cdc_all_deaths-2.svg" width="4800" />
 
 ## Covid in a Few Interesting Counties
 
@@ -35,11 +26,11 @@ NY Times via <https://covid-19.datasettes.com>
 
 ### Cases
 
-<img src="CovidPlots_files/figure-gfm/selected_counties_cases-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-4.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/selected_counties_cases-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-5.svg" width="4800" />
 
 ### Deaths
 
-<img src="CovidPlots_files/figure-gfm/selected_counties_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-5.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/selected_counties_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-6.svg" width="4800" />
 
 ## Covid in All California Counties
 
@@ -51,13 +42,29 @@ NY Times via <https://covid-19.datasettes.com>
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/new_york_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-3.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/new_york_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-5.svg" width="4800" />
 
 ## Covid in All Michigan Counties
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/michigan_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-3.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/michigan_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-5.svg" width="4800" />
+
+## Covid in All Hawaii Counties
+
+Covid case counts and death counts by county, based on daily data from
+NY Times via <https://covid-19.datasettes.com>
+<img src="CovidPlots_files/figure-gfm/hawaii_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/hawaii_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/hawaii_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/hawaii_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/hawaii_counties-5.svg" width="4800" />
+
+## CDC All Deaths by Week
+
+The CDC Flu View website gives weekly deaths by state going back several
+years. Data entry and reporting lags by many weeks, so the last month or
+so of deaths will be under-reported or missing.
+
+<https://gis.cdc.gov/grasp/fluview/mortality.html>
+
+<img src="CovidPlots_files/figure-gfm/cdc_all_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/cdc_all_deaths-2.svg" width="4800" />
 
 ## Covid in US States
 

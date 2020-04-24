@@ -1,3 +1,4 @@
+#Download county and state population estimates for 2019 from the US Census
 library (jsonlite)
 
 
@@ -58,9 +59,6 @@ GetCountyPopulationsNYT <- function (){
   #remove five boroughs and add the combined boroughs
   pop <- pop[-which(pop$county.FIPS %in% nyc_fips & pop$state.FIPS==36),]
   pop <- rbind(nyc_entry, pop)
-  
-  
-  
   
   
 }

@@ -1,4 +1,4 @@
-#plot cdc all-death data by week
+# Plot  CDC death certificate data for deaths from all causes
 library (jsonlite)
 library(datasets)
 library(tidyverse)
@@ -24,15 +24,9 @@ rm(list=ls())
 source("covidPlot.r")
 
 
-#overall death rates in us
-#https://data.cdc.gov/api/views/bi63-dtpu/rows.json?accessType=DOWNLOAD
-
-#corona provisional death counts
-#https://data.cdc.gov/resource/hc4f-j6nb.json
-
 
 #cdc fluView has weekly all deaths, but in a web based interface, package cdcflueview queries this interface
-#there is a fairly long log (1 month or more) between actual deaths and data entry/availablility
+#there is a fairly long lag (several weeks to more than one month) between actual deaths and data entry/availablility
 mort <-  pi_mortality("state")
 str(mort)
 p_all_deaths <- xyplot(all_deaths ~week_start | region_name, data=mort)
@@ -44,75 +38,43 @@ all_deaths <- mort[c('year', 'weeknumber', 'week_start', 'region_name', 'all_dea
 names(all_deaths)[2] = "week_number"
 names(all_deaths)[4] = "state"
 
-#all_deaths <- dcast(all_deaths, weeknumber+week_start+region_name ~ year, value.var =  'all_deaths')
 all_deaths <- pivot_wider(all_deaths,id_cols=c('week_number', 'state', 'all_deaths'), names_from='year', values_from = c('all_deaths', 'week_start'))
-
-
-
 
 all_deaths$year_on_year <- ifelse(is.na(all_deaths$all_deaths_2020), all_deaths$all_deaths_2019/all_deaths$all_deaths_2018, all_deaths$all_deaths_2020/all_deaths$all_deaths_2019)
 all_deaths$all_deaths <- ifelse(is.na(all_deaths$all_deaths_2020), all_deaths$all_deaths_2019, all_deaths$all_deaths_2020)
 all_deaths$week_starts <- ifelse(is.na(all_deaths$all_deaths_2020), all_deaths$week_start_2019, all_deaths$week_start_2020)
 all_deaths$week_starts <-  as.Date(all_deaths$week_starts, origin = lubridate::origin)
 
-
 str(all_deaths)
-xTicksAt <- date_ticks(all_deaths$week_starts, 3, 0)$majors
 
-yMin <- min(all_deaths$all_deaths, na.rm=T)
-yMax <- max(all_deaths$all_deaths, na.rm=T)
-yTicksAtRecent <- log_ticks(log10(c(yMin, yMax)))
-
-
+subtext <- "Data from CDC FluView https://gis.cdc.gov/grasp/fluview/mortality.html"
+#combine 2019 and 2020 data into a rolling year
 all_deaths_recentkey <- ifelse(is.na(all_deaths$all_deaths_2020), "2019 Deaths", "2020 Deaths")
-p_all_deaths_recent <- covidPlot(all_deaths ~ week_starts | state, data=all_deaths, group=all_deaths_recentkey, numTickIntervalsX = 10,
-                              auto.key=TRUE, xlab="Date", ylab="All Deaths", main="Weekly Deaths From All Causes")
-                              
-                              
-# p_all_deaths_recent <- xyplot(all_deaths ~ week_starts | state, data=all_deaths, group=all_deaths_recentkey,
-#                          auto.key=TRUE, as.table=TRUE, 
-#                          ylab = "All Deaths",
-#                          main = "Weekly Death Data from CDC ",
-#                          xlab = "Date",
-#                          scales=list(x=list(at=xTicksAt, rot=45, format="%Y-%m-%d"), y = list(log=10, at=yTicksAtRecent$majors)),
-#                          yscale.components = latticeExtra::yscale.components.log10ticks,
-#                          panel=function(x,y,...){
-#                            panel.xyplot(x,y,...)
-#                            panel.abline(h=yTicksAtRecent$majors, alpha=0.1)
-#                            panel.abline(h=yTicksAtRecent$minors, alpha=0.05)
-#                            panel.abline(v=xTicksAt, alpha=0.1)
-#                          },
-#                          )
-# #print(p_all_deaths_recent)
+p_all_deaths_recent <- covidPlot(all_deaths ~ week_starts | state, data=all_deaths, group=all_deaths_recentkey, 
+                                 numTickIntervalsX = 5,
+                                 auto.key=TRUE, 
+                                 xlab="Date", 
+                                 ylab="All Deaths", 
+                                 subtitle = subtext,
+                                 main="Weekly Deaths From All Causes")
+  
 
-#yTicksAt <- linear_ticks(all_deaths$year_on_year, 4)
+#compare death rate this rolling year to same week previous year
 all_deaths_year_on_year_key <- ifelse(is.na(all_deaths$all_deaths_2020), "2019/2018 Ratio", "2020/2019 Ratio")
-
-p_year_on_year <- covidPlot(year_on_year ~ week_starts | state, data=all_deaths, group=all_deaths_year_on_year_key, numTickIntervalsX = 6,
+p_year_on_year <- covidPlot(year_on_year ~ week_starts | state, data=all_deaths, group=all_deaths_year_on_year_key, 
+                            numTickIntervalsX = 5,
                             logX = FALSE, logY = FALSE,
-                            auto.key=TRUE, xlab="Date", ylab="All Deaths Year on Year Ratio" , main="Weekly Deaths From All Causes")
+                            auto.key=TRUE, 
+                            xlab="Date", 
+                            ylab="All Deaths Year on Year Ratio" , 
+                            subtitle = subtext,
+                            main="Weekly Deaths From All Causes")
 
-
-# p_year_on_year <- xyplot(year_on_year ~ week_starts | state, data=all_deaths, group=all_deaths_year_on_year_key,
-#                          auto.key=TRUE, as.table=TRUE, 
-#                          ylab = "All Deaths Year on Year Ratio",
-#                          main = "Weekly Death Data from CDC ",
-#                          xlab = "Date",
-#                          scales=list(x=list(at=xTicksAt, rot=45, format="%Y-%m-%d"), y=list(at=yTicksAt)),
-#                          #scales=list(x=list(at=ticksAt, rot=45, format="%Y-%m-%d"), y = list(log=10)),
-#                          #yscale.components = latticeExtra::yscale.components.log10ticks
-#                          panel=function(x,y,...){
-#                            panel.xyplot(x,y,...)
-#                            panel.abline(h=yTicksAt, alpha=0.1)
-#                            panel.abline(v=xTicksAt, alpha=0.1)
-#                          },
-#                          
-#                          )
-#print(p_year_on_year)
 
 
 
 #cdc is quick-releasing provisional covid data, but it is still lagging by many weeks
+#have not yeat merged this in with longer term data because interpretation is unclear
 corona <- fromJSON("https://data.cdc.gov/resource/hc4f-j6nb.json")
 str(corona)
 week <- subset(corona, corona$group =="By week")
@@ -129,6 +91,9 @@ week <- subset(week, !is.na(date))
 #p_covid_provisional <- xyplot (value~date | key, data=week, scales=list(y=list(relation="free")))
 
 
-
-
+testDeaths <- function(){
+  print (p_all_deaths_recent)
+  print (p_year_on_year)
+}
+# testDeaths()
 

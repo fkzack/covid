@@ -1,3 +1,12 @@
+########################################################################################
+########################################################################################
+# This seems to be rarely updated, not very useful.
+# See NY Times data by county (us_counties.r in this project) for more useful data
+########################################################################################
+########################################################################################
+
+
+
 library (jsonlite)
 library(lattice)
 library(latticeExtra)
@@ -6,12 +15,7 @@ library(dplyr)
 library(lubridate)
 
 
-########################################################################################
-########################################################################################
-# This seems to be rarely updated, not very useful.
-# See NY Times data by county (us_counties.r in this project) for more useful data
-########################################################################################
-########################################################################################
+
 
 #stanford open data portal is showing covid data in a google sheet
 #csvLink <- "https://s3.us-east-2.amazonaws.com/open-data-portal/covid19_sccph.csv"

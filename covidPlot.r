@@ -1,48 +1,14 @@
+# Wrappers around xyplot to print covid plots in my format
+
 library(devtools)
 install_github("fkzack/FredsRUtils", type="source")
-# install.packages('D:/Data/R/FredsRUtils_0.1.0.tar.gz', repos=NULL, type="source" )
 library(FredsRUtils)
 library(lattice)
 library(latticeExtra)
 library(lubridate)        
 
 
-# Wrap xyplot to create the plot I want (log y axis, log 10 grids, ...)
-# depends on x variable being $date, should change this once I figure out how to decode formula
-covidPlot_old <- function(formula1, data, subtitle = "", numTickIntervals = 5, ...){
-  
-  
-  #this gets the incoming data frame
-  #print(get_all_vars(formula, data=data))
-  #print(formula(formula1))
-  
-  
-  #ticksAt <-as.Date(pretty_dates(get_all_vars(formula1, data=data)$date, 3))
-  #ticksAt <-as.Date(weekly_ticks(get_all_vars(formula1, data=data)$date, 0, numTickIntervals)$majors)
-  date_var <- get_all_vars(formula1, data=data)$date
-  ticksAt <- date_ticks(date_var,numTickIntervals, 0)
-  
-  #print(paste("ticksAt:", class(ticksAt)))
-  #print(paste("date:   ", class(date_var)))
-  
-  
-  p <- xyplot(formula1,  data = data,
-              scales=list(y=list(log=10),
-                          x=list(rot=45, at=ticksAt, format="%Y-%m-%d")
-              ),
-              yscale.components = latticeExtra::yscale.components.log10ticks,
-              sub=list(label=paste(subtitle, "   "), cex=0.5, x=1, just="right"),
-              par.strip.text=list(cex=0.75),
-              type=c('p', 'l'),
-              grid=FALSE,
-              as.table=TRUE,
-              panel=function(x,y,...){
-                panel.xyplot(x,y,...)
-              },
-              
-              ...)
-  return (addGrid(p))
-}
+
 
 
 
@@ -89,7 +55,13 @@ axisTicks <- function(x,logBase, numTickIntervals){
 }
 
 
-#this will become the generic covid plot function with a bit more mork
+#Plot covid data in my format
+#Parameters are same as for xyplot, except that 
+#   * I have not yet implemented subset as an argument
+#   * logX, logY determine if the axis are log or not (FALSE = linear, True = Log10, N = LogN)
+#   * formatX, formatY are the format to apply to axis ticks
+#   * numTickIntervalsX, numTickIntervalsY are the approximate number of intervals between tick marks
+#    
 covidPlot <- function(formula1, data, groups=NULL,  
                       logX = FALSE, logY = TRUE, 
                       subtitle = "", 
@@ -101,14 +73,9 @@ covidPlot <- function(formula1, data, groups=NULL,
                       ...){
   
   
-  #this gets the incoming data frame
-  #print(get_all_vars(formula, data=data))
-  #print(formula(formula1))
-  
   if (logX==TRUE){
     logX <- 10
   }
-  
   if (logY==TRUE){3
     logY <- 10
   }
@@ -119,19 +86,22 @@ covidPlot <- function(formula1, data, groups=NULL,
   gav <- get_all_vars(formula1, data)
   print(gav)
   
-  #latticeParseFormula gives the results of applying the forular
+  #latticeParseFormula gives the results of applying the formula
   #lpf <- latticeParseFormula(formula1, data=data)
   formula <- formula1
   groups <- eval(substitute(groups), data, environment(formula1))
   lpf <- latticeParseFormula(formula, data=data, groups = groups, multiple = allow.multiple, 
                              outer = outer,  subscripts = TRUE,
                              drop = drop.unused.levels)
-  print (lpf$left)
-  print (lpf$right)
-  print(lpf$condition)
+  #print (lpf$left)
+  #print (lpf$right)
+  #print(lpf$condition)
   if (is.null(lpf$condition)){
     lpf$condition <- ""
   }
+  
+  #should probably do something similar to groups handling above for subset, but I don't use the subset parameter so
+  #have not yet tried to implement this
   
   df <- data.frame(lpf$right, lpf$left, unlist(lpf$condition, use.names = FALSE), lpf$groups)
   names(df) <- c('x', 'y', 'condition', 'groups')
@@ -141,9 +111,6 @@ covidPlot <- function(formula1, data, groups=NULL,
   if (is.null(ylab)) {
     ylab <- lpf$left.name
   }
-  
-  
-  
   
   
   xTicks <-axisTicks(df$x, logX, numTickIntervalsX)
@@ -157,9 +124,6 @@ covidPlot <- function(formula1, data, groups=NULL,
     formatY <- xTicks$formatY
   }
 
-
-
-  
   
   p <- xyplot(y~x | condition,  data = df, groups = groups,
               xTicks=xTicks, yTicks=yTicks,
@@ -175,7 +139,7 @@ covidPlot <- function(formula1, data, groups=NULL,
  
               panel=function(x,y, subscripts,xTicks,  groups, yTicks, ...){
                 panel.abline(h=yTicks$majors, alpha=0.1)
-                panel.abline(h=yTicks$minors, alpha=0.1)
+                panel.abline(h=yTicks$minors, alpha=0.05)
                 panel.abline(v=xTicks$majors, alpha=0.1)
                 panel.abline(v=xTicks$minors, alpha=0.05)
                 panel.xyplot(x,y,subscripts=subscripts,groups=groups, ...)
@@ -211,8 +175,15 @@ testCovidPlot <- function (){
 
 
 
-# create a "symmetric log plot", with postive values on a log plot going up from zero, zero values at 0, 
+# Create a "symmetric log plot", with postive values on a log plot going up from zero, zero values at 0, 
 # and negitive values as a plot of log of absolute error going down from zero
+# Parameters are same as for xyplot, except that 
+#   * I have not yet implemented subset as an argument
+#   * logX, logY determine if the axis are log or not (FALSE = linear, True = Log10, N = LogN)
+#   * formatX, formatY are the format to apply to axis ticks
+#   * numTickIntervalsX, numTickIntervalsY are the approximate number of intervals between tick marks
+
+
 symmetricPlot <- function(formula1, data,   groups=NULL, 
                           subtitle = "", numTickIntervals = 5, 
                           xlab=NULL, numTickIntervalsX = 5, formatX=NULL,
@@ -221,10 +192,6 @@ symmetricPlot <- function(formula1, data,   groups=NULL,
                           outer = !is.null(groups),
                           drop.unused.levels = lattice.getOption("drop.unused.levels"), 
                           ...){
-  #this gets the incoming data frame
-  #print(head(group))
-  #original_df <- get_all_vars(formula1, data=data)
-  #print(formula(formula1))
   
   formula <- formula1
   groups <- eval(substitute(groups), data, environment(formula1))

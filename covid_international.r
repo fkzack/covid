@@ -1,3 +1,5 @@
+# Retrieve and plot international covid data from Johns Hopkins CSEE via covid-19.datasettes.com
+
 library (jsonlite)
 library(lattice)
 library(latticeExtra)
@@ -14,11 +16,8 @@ start_days <- seq(ymd('2020-01-01'),Sys.Date() ,by= as.difftime(days(chunk_days)
 start_days <- c(start_days, start_days[length(start_days)] + days(chunk_days))
 
 # https://covid-19.datasettes.com/covid.json?sql=select+*+from+johns_hopkins_csse_daily_reports+where+\"day\"+>=+:p0+and+\"day\"+<+:p1&p0=2020-03-31&p1=2020-04-04
-base_url <-"https://covid-19.datasettes.com/covid.json?sql=select+*+from+johns_hopkins_csse_daily_reports+where+%22day%22+%3E%3D+%3Ap0+and+%22day%22+%3C+%3Ap1"  
-#"&p0=2020-03-04&p1=2020-03-06"
-
-#base_url <-"https://covid-19.datasettes.com/covid.json?sql=select+*+from+johns_hopkins_csse_daily_reports+where+%22day%22+%3E%3D+%3Ap0+and+%22day%22+%3C+%3Ap1"  
 base_url <-"select * from johns_hopkins_csse_daily_reports where 'country_or_region' != 'US' and 'day' >= :p0 and 'day' < :p1"
+#automatic encoding not working for some reason, so do manually
 base_url <- gsub(" ", "+", base_url) 
 base_url <- gsub(",", "%2c", base_url)
 base_url <- gsub("'", "%22", base_url)
@@ -26,7 +25,6 @@ base_url <- gsub("<", "%3c", base_url)
 base_url <- gsub(">", "%3e", base_url)
 base_url <- gsub("=", "%3D", base_url)
 base_url <- paste("https://covid-19.datasettes.com/covid.json?sql=", base_url, sep = "")
-
 
 covid <- NULL
 for (i in seq(1, length(start_days)-1)){
@@ -50,7 +48,7 @@ for (i in seq(1, length(start_days)-1)){
   chunk$latitude   <- as.numeric(chunk$latitude)
   chunk$longitude  <- as.numeric(chunk$longitude)
   
-  #China is sometimes mainland china, sometimes china,  so make all china
+  #China is sometimes mainland china, sometimes china,  so make all China
   chunk$country_or_region <-  ifelse(startsWith(chunk$country_or_region, "Mainland"), "China", chunk$country_or_region)
   
   chunk$location   <- paste(chunk$country_or_region, ifelse(is.na(chunk$province_or_state), "", chunk$province_or_state))
@@ -64,8 +62,8 @@ for (i in seq(1, length(start_days)-1)){
 }
 
 
-
-#denmark changes assignments
+# Denmark is sometimes Denmark, sometimes Denmark,Greenland, Denmark, Faroe Islands, .... 
+# Consider only "Denmark, Denmark" and "Denmark,NA" to be actually denmark, as anything else appears to be an outlying teritory
 covid$province_or_state = ifelse(startsWith(covid$country_or_region, "Denmark") & is.na(covid$province_or_state), "Denmark", covid$province_or_state)
 covid$region <- ""
 covid$region <- ifelse(startsWith(covid$province_or_state, "Denmark"), "Scandanavia", covid$region)
@@ -73,15 +71,13 @@ covid$region <- ifelse(startsWith(covid$location, "Sweden"), "Scandanavia", covi
 covid$region <- ifelse(startsWith(covid$location, "Norway"), "Scandanavia", covid$region)
 
 
+#population data for scandanavia from quick google search
 population = data.frame(country_or_region = c("Norway", "Sweden", "Denmark") , population = c(5.368, 10.23, 5.806))
 population$population <- 1000000* population$population
 
 covid <- merge(covid, population, all.x = TRUE)
 
 covid <- covid[order(covid$country_or_region, covid$province_or_state, covid$day),]
-
-#want scandanavia sorted differently because of the changes in 
-scand <- 
 
 label <-  "Data from Johns Hopkins CSSE via https://covid-19.datasettes.com"
 

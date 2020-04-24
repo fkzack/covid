@@ -32,6 +32,10 @@ print(str(corona))
 head(corona)
 
 
+
+
+# most recent corona data by state for interactive map
+
 coronaData<- merge(states, corona)
 coronaData$state.population <- as.numeric(coronaData$state.population)
 coronaData$deaths.per.million <- 1000000 * coronaData$death / coronaData$state.population
@@ -63,6 +67,7 @@ str(coronaData)
 
 redPallete <- colorRamp(c("#FFFFFF", "#FF0000"), interpolate="spline", space="Lab", bias = 10)
 
+#interactive maps do not work nicely with display via gethub, so leave out for now
 
 # f <- plot_ly(type='choropleth', locations = coronaData$state.abb, locationmode="USA-states",  z=coronaData$deaths.per.million,
 #              text=coronaData$hover, colors = redPallete) 
@@ -79,6 +84,7 @@ redPallete <- colorRamp(c("#FFFFFF", "#FF0000"), interpolate="spline", space="La
 # print(p_death_map)
 
 
+#daily data by state
 
 
 dailies <- fromJSON("https://covidtracking.com/api/states/daily")

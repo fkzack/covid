@@ -13,25 +13,12 @@ knitr::opts_chunk$set(out.width = 4800,  fig.width = 12, fig.asp=0.62,  dev = 's
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## CDC All Deaths by Week
-The CDC Flu View website gives weekly deaths by state going back several years. Data entry and reporting lags by many weeks, so the last month or so of deaths will be under-reported
-
-https://gis.cdc.gov/grasp/fluview/mortality.html
-
-```{r, cdc_all_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-  source("cdc_deaths.r")
-  print(p_all_deaths_recent)
-  print(p_year_on_year)
-
-```
-
-
-
-```{r, get_data, include=FALSE}
+```{r, get_county_data, include=FALSE}
     source("nytimes_us_counties.r")
     ca <- getCountiesByChunk ('California', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
     ny <- getCountiesByChunk ('New+York', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
     mi <- getCountiesByChunk ('Michigan', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
+    hi <- getCountiesByChunk ('Hawaii', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
     selected <- getSelectedCounties(countyPopulations, ISOdate(2020,3,1, tz=""))
     subtext = "Data from NY Times via covid-19.datasettes.com"
 
@@ -45,20 +32,38 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
 ```{r, selected_counties_cases, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
-    print(covidPlot(cases~date | county, data=selected, subtitle=subtext, group=state, main="Selected Counties"))
+    print(covidPlot(cases~date | county, data=selected, group=state, 
+                    subtitle=subtext, 
+                    main="Selected Counties",
+                    ylab="Cases",
+                    xlab="Date"))
     
-    print(covidPlot(100000*cases/county.population~date | county, data=selected, subtitle=subtext, group=state, main="Selected Counties",
-          ylab="Cases per 100,000"))
+    print(covidPlot(100000*cases/county.population~date | county, data=selected, group=state, 
+                    subtitle=subtext, 
+                    main="Selected Counties",
+                    ylab="Cases per 100,000",
+                    xlab="Date"))
     
     print(symmetricPlot(100000*case.slope/county.population~date | county, data=selected, group=selected$state, 
-          subtitle = subtext, main="Selected Counties", 
-          ylab="Slope (Cases/Day/100,000)",
-          xlab="Date"))
+                        subtitle = subtext, 
+                        main="Selected Counties", 
+                        ylab="Slope (Cases/Day/100,000)",
+                        xlab="Date"))
     
-    print(covidPlot(cases~date, data=selected, group=county, subtitle=subtext, main="Selected Counties",
-        auto.key= list(cex=0.6, columns=3),
-        par.settings= list(superpose.symbol=list(pch=1:25)) ))
+    print(covidPlot(cases~date, data=selected, group=county, 
+                    subtitle=subtext, 
+                    main="Selected Counties",
+                    ylab="Cases",
+                    xlab="Date",
+                    auto.key= list(cex=0.6, columns=3), 
+                    par.settings= list(superpose.symbol=list(pch=1:25)) ))
     
+    print(covidPlot(100000*cases/county.population~date , data=selected, group=county,
+                    subtitle=subtext, 
+                    main="Selected Counties",
+                    ylab="Cases per 100,000", 
+                    auto.key= list(cex=0.6, columns=3),
+                    par.settings= list(superpose.symbol=list(pch=1:25)) ))
     
 
 ```
@@ -67,28 +72,42 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
 ```{r, selected_counties_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}    
     
-    print(covidPlot(deaths~date | county, data=selected, subtitle=subtext, group=state, main="Selected Counties"))
+    print(covidPlot(deaths~date | county, data=selected, group=state,
+                    subtitle=subtext, 
+                    main="Selected Counties",
+                    ylab="Cases",
+                    xlab="Date"))
     
     print(covidPlot(100000*deaths/county.population~date | county, data=selected, group=state, 
-                            subtitle=subtext, ylab="Deaths per 100,000", main="Selected Counties"))
+                    subtitle=subtext, 
+                    main="Selected Counties",
+                    ylab="Deaths per 100,000",
+                    xlab="Date"))
 
-    
     print(symmetricPlot(death.slope ~ date | county, data=selected, group=selected$state, 
-        subtitle = subtext, main="Selected Counties", 
-        ylab="Slope (Deaths/Day)",
-        xlab="Date"))
+                        subtitle = subtext, 
+                        main="Selected Counties", 
+                        ylab="Slope (Deaths/Day)",
+                        xlab="Date"))
 
-    
     print(symmetricPlot(100000*death.slope/county.population~date | county, data=selected, group=selected$state, 
-        subtitle = subtext, main="Selected Counties", 
-        ylab="Slope (Deaths/Day/100,000)",
-        xlab="Date"))
-
+                        subtitle = subtext, 
+                        main="Selected Counties", 
+                        ylab="Slope (Deaths/Day/100,000)",
+                        xlab="Date"))
     
+    print(covidPlot(deaths~date, data=selected, group=county, 
+                    subtitle=subtext, main="Selected Counties",
+                    auto.key= list(cex=0.6, columns=3),
+                    par.settings= list(superpose.symbol=list(pch=1:25)) ))
     
-    print(covidPlot(deaths~date, data=selected, group=county, subtitle=subtext, main="Selected Counties",
-                            auto.key= list(cex=0.6, columns=3),
-                            par.settings= list(superpose.symbol=list(pch=1:25)) ))
+    print(covidPlot(100000*deaths/county.population~date , data=selected, group=county, 
+                    subtitle=subtext, 
+                    main="Selected Counties",
+                    ylab="Deaths per 100,000",
+                    xlab="Date",
+                    auto.key= list(cex=0.6, columns=3),
+                    par.settings= list(superpose.symbol=list(pch=1:25)) ))
     
 
 ```
@@ -96,44 +115,41 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 ## Covid in All California Counties {.tabset}
 Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 ```{r, california_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-    print(covidPlot(cases~date | county, data=ca, group=county, subtitle=subtext, main="California Counties"))
-    print(covidPlot(deaths~date | county, data=ca, group=county, subtitle=subtext, main="California Counties"))
-    print(covidPlot(100000*deaths/county.population~date | county, data=ca, group=county, subtitle=subtext, 
-                            ylab="Deaths per 100,000", main="California Counties"))
-    
-    
-    print(symmetricPlot(death.slope~date | county, data=ca, group=ca$county, 
-        subtitle = subtext, main="California Counties", 
-        ylab="Slope (Deaths/Day)",
-        xlab="Date"))
-    
-    
-     print(symmetricPlot(100000*death.slope/county.population~date | county, data=ca, group=ca$county, 
-        subtitle = subtext, main="California Counties", 
-        ylab="Slope (Deaths/Day/100,000)",
-        xlab="Date"))
-    
+   plotCounty(ca, "California Counties", subtext) 
 ```
 
 ## Covid in All New York Counties {.tabset}
 Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 ```{r, new_york_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-    print(covidPlot(cases~date | county, data=ny, group=county, subtitle=subtext, main="New York Counties"))
-    print(covidPlot(deaths~date | county, data=ny, group=county, subtitle=subtext, main="New York Counties"))
-    print(covidPlot(100000*deaths/county.population~date | county, data=ny, group=county, subtitle=subtext, 
-                            ylab="Deaths per 100,000", main="New York Counties"))
-    
+    plotCounty(ny, "New York Counties", subtext) 
 ```
 
 ## Covid in All Michigan Counties {.tabset}
 Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 ```{r, michigan_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-    print(covidPlot(cases~date | county, data=mi, group=county, subtitle=subtext, main="Michigan Counties"))
-    print(covidPlot(deaths~date | county, data=mi, group=county, subtitle=subtext, main="Michigan Counties"))
-    print(covidPlot(100000*deaths/county.population~date | county, data=mi, group=county, subtitle=subtext, 
-                            ylab="Deaths per 100,000", main="Michigan Counties"))
-    
+    plotCounty(mi, "Michigan Counties", subtext) 
 ```
+
+## Covid in All Hawaii Counties {.tabset}
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
+```{r, hawaii_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+    plotCounty(hi, "Hawaii Counties", subtext) 
+```
+
+## CDC All Deaths by Week
+The CDC Flu View website gives weekly deaths by state going back several years. Data entry and reporting lags by many weeks, so the last month or so of deaths will be under-reported or missing.
+
+https://gis.cdc.gov/grasp/fluview/mortality.html
+
+```{r, cdc_all_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+  source("cdc_deaths.r")
+  print(p_all_deaths_recent)
+  print(p_year_on_year)
+
+```
+
+
+
 
 
 ## Covid in US States {.tabset}
