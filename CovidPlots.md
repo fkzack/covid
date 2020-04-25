@@ -1,6 +1,6 @@
 CovidPlots
 ================
-25 April 2020 01:12 PM PDT
+25 April 2020 02:22 PM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
@@ -26,7 +26,7 @@ NY Times via <https://covid-19.datasettes.com>
 
 ### Cases
 
-<img src="CovidPlots_files/figure-gfm/selected_counties_cases-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-5.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/selected_counties_cases-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_cases-6.svg" width="4800" />
 
 ### Deaths
 
