@@ -19,6 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
     ny <- getCountiesByChunk ('New+York', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
     mi <- getCountiesByChunk ('Michigan', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
     hi <- getCountiesByChunk ('Hawaii', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
+    tx <- getCountiesByChunk ('Texas', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
     selected <- getSelectedCounties(countyPopulations, ISOdate(2020,3,1, tz=""))
     subtext = "Data from NY Times via covid-19.datasettes.com"
 
@@ -32,32 +33,7 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
 ```{r, selected_counties_cases, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
-    print(covidPlot(cases~date | county, data=selected, group=state, 
-                    subtitle=subtext, 
-                    main="Selected Counties",
-                    ylab="Cases",
-                    xlab="Date"))
-
-    print(covidPlot(cases~date | county, data=selected, group=state, 
-                    subtitle=subtext, 
-                    logY=2,
-                    main="Selected Counties",
-                    ylab="Cases",
-                    xlab="Date"))
-    
-    print(covidPlot(100000*cases/county.population~date | county, data=selected, group=state, 
-                    subtitle=subtext, 
-                    main="Selected Counties",
-                    ylab="Cases per 100,000",
-                    xlab="Date"))
-    
-    
-    
-    print(symmetricPlot(100000*case.slope/county.population~date | county, data=selected, group=selected$state, 
-                        subtitle = subtext, 
-                        main="Selected Counties", 
-                        ylab="Slope (Cases/Day/100,000)",
-                        xlab="Date"))
+    plotCounty(selected,"Selected Counties", subtext)
     
     print(covidPlot(cases~date, data=selected, group=county, 
                     subtitle=subtext, 
@@ -89,7 +65,7 @@ Covid case counts and death counts by county, based on daily data from NY Times 
     
   print(covidPlot(deaths~date | county, data=selected, group=state, 
                     subtitle=subtext, 
-                    logY=2,
+                    logY=4,
                     main="Selected Counties",
                     ylab="Deaths",
                     xlab="Date"))
@@ -155,6 +131,13 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 ```{r, hawaii_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     plotCounty(hi, "Hawaii Counties", subtext) 
 ```
+
+## Covid in All Texas Counties {.tabset}
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
+```{r, texas_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+    plotCounty(tx, "Texas Counties", subtext) 
+```
+
 
 ## CDC All Deaths by Week
 The CDC Flu View website gives weekly deaths by state going back several years. Data entry and reporting lags by many weeks, so the last month or so of deaths will be under-reported or missing.

@@ -218,6 +218,8 @@ plotCounty <- function(countyData, title, subtitle){
   
   print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title))
   
+  print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title, logY = 16))
+  
   print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
                   ylab="Deaths per 100,000", main=title))
   

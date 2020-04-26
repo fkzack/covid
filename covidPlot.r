@@ -99,9 +99,13 @@ covidPlot <- function(formula1, data, groups=NULL,
   if (is.null(lpf$condition)){
     lpf$condition <- ""
   }
+  if(is.null(lpf$groups)){
+    lpf$groups <- ""
+  }
   
   #should probably do something similar to groups handling above for subset, but I don't use the subset parameter so
   #have not yet tried to implement this
+  
   
   df <- data.frame(lpf$right, lpf$left, unlist(lpf$condition, use.names = FALSE), lpf$groups)
   names(df) <- c('x', 'y', 'condition', 'groups')
