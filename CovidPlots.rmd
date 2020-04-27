@@ -181,7 +181,7 @@ Covid positive tests, deaths, and hospitalizations by state from covidtracking.c
   print(p_hospPer)
 ```
 
-### Positives
+### Tests
 
 ```{r,  state_positves, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     source("covidtracking_us_states.r")
@@ -189,6 +189,8 @@ Covid positive tests, deaths, and hospitalizations by state from covidtracking.c
   print(p_positive_fraction)
   print(p_positivesPer)
   print (p_deltaPositivesPer)
+  print(p_total_tests)
+  print(p_total_tests_per)
 ```
 
 ### Deaths

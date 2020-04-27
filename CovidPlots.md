@@ -1,6 +1,6 @@
 CovidPlots
 ================
-27 April 2020 09:52 AM PDT
+27 April 2020 04:01 PM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
@@ -17,7 +17,7 @@ CovidPlots
   - [CDC All Deaths by Week](#cdc-all-deaths-by-week)
   - [Covid in US States](#covid-in-us-states)
       - [Hospitalizations](#hospitalizations)
-      - [Positives](#positives)
+      - [Tests](#tests)
       - [Deaths](#deaths-1)
   - [Covid in China](#covid-in-china)
   - [Covid in Scandanavia](#covid-in-scandanavia)
@@ -96,9 +96,9 @@ covidtracking.com <https://covidtracking.com>
 
 <img src="CovidPlots_files/figure-gfm/state_hospital-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_hospital-2.svg" width="4800" />
 
-### Positives
+### Tests
 
-<img src="CovidPlots_files/figure-gfm/state_positves-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_positves-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_positves-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_positves-4.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/state_positves-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_positves-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_positves-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_positves-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_positves-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_positves-6.svg" width="4800" />
 
 ### Deaths
 

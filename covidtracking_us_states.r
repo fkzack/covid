@@ -114,6 +114,13 @@ p_positive_fraction <- covidPlot(positive/(positive + negative)~date | state.abb
                                  subtitle=label,ylab="fraction positve", main="US States")
 
 
+p_total_tests <- covidPlot(totalTestResults ~ date | state.abb, group=state.abb, data=dailies, 
+                               subtitle=label, ylab = "Total Tests", main="US States")
+
+
+p_total_tests_per <- covidPlot(100000*totalTestResults/state.population ~ date | state.abb, group=state.abb, data=dailies, 
+                            subtitle=label, ylab = "Total Tests per 100,000", main="US States")
+
 
 p_deaths <- covidPlot(death ~ date | state.abb, group=state.abb, data=dailies, 
                       subtitle=label, ylab = "deaths", main="US States")
