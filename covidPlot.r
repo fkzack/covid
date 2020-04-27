@@ -83,11 +83,10 @@ covidPlot <- function(formula1, data, groups=NULL,
   
   
   #get_all_vars gives every column used by the formula in its original form
-  gav <- get_all_vars(formula1, data)
-  print(gav)
+  ## gav <- get_all_vars(formula1, data)
+  ## print(gav)
   
-  #latticeParseFormula gives the results of applying the formula
-  #lpf <- latticeParseFormula(formula1, data=data)
+  # extract formula information using latticeParseFormula
   formula <- formula1
   groups <- eval(substitute(groups), data, environment(formula1))
   lpf <- latticeParseFormula(formula, data=data, groups = groups, multiple = allow.multiple, 
@@ -128,6 +127,11 @@ covidPlot <- function(formula1, data, groups=NULL,
     formatY <- xTicks$formatY
   }
 
+  if (length(unique(unlist(lpf$condition))) > 100){
+    labelSize <- 0.5
+  } else {
+    labelSize <- 1
+  }
   
   p <- xyplot(y~x | condition,  data = df, groups = groups,
               xTicks=xTicks, yTicks=yTicks,
@@ -140,6 +144,7 @@ covidPlot <- function(formula1, data, groups=NULL,
               as.table=TRUE,
               xlab = xlab,
               ylab=ylab,
+              strip = strip.custom(par.strip.text = list(cex=labelSize)),
  
               panel=function(x,y, subscripts,xTicks,  groups, yTicks, ...){
                 panel.abline(h=yTicks$majors, alpha=0.1)
@@ -218,6 +223,13 @@ symmetricPlot <- function(formula1, data,   groups=NULL,
     ylab <- lpf$left.name
   }
   
+  if (length(unique(unlist(lpf$condition))) > 100){
+    labelSize <- 0.5
+  } else {
+    labelSize <- 1
+  }
+  
+  
   
   #scale values
   min_absolute <- min(ifelse(df$y==0, NA,abs(df$y)), na.rm = TRUE)
@@ -272,6 +284,8 @@ symmetricPlot <- function(formula1, data,   groups=NULL,
               par.strip.text=list(cex=0.75),
               type=c('p', 'l'),
               as.table=TRUE,
+              strip = strip.custom(par.strip.text = list(cex=labelSize)),
+              
               panel=function(x,y, subscripts,xTicks, yTicks, groups, ...){
                panel.abline(h = 0, col=rgb(0,0,0), alpha=0.1,  lwd=20)
                 panel.abline(h=yTicks, alpha=0.1)

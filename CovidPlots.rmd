@@ -20,6 +20,9 @@ knitr::opts_chunk$set(echo = TRUE)
     mi <- getCountiesByChunk ('Michigan', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
     hi <- getCountiesByChunk ('Hawaii', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
     tx <- getCountiesByChunk ('Texas', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
+    fl <- getCountiesByChunk ('Florida', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
+    ga <- getCountiesByChunk ('Georgia', ISOdate(2020,3,1, tz=""), 5,  countyPopulations)
+    
     selected <- getSelectedCounties(countyPopulations, ISOdate(2020,3,1, tz=""))
     subtext = "Data from NY Times via covid-19.datasettes.com"
 
@@ -136,6 +139,18 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 ```{r, texas_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     plotCounty(tx, "Texas Counties", subtext) 
+```
+
+## Covid in All Florida Counties {.tabset}
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
+```{r, florida_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+    plotCounty(fl, "Florida Counties", subtext) 
+```
+
+## Covid in All Georgia Counties {.tabset}
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
+```{r, georgia_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+    plotCounty(ga, "Georgia Counties", subtext) 
 ```
 
 

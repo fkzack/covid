@@ -86,7 +86,7 @@ addSelectedCounties <- function(selectedCounties, state, counties, population_da
 # * population_data is the census population df retrieved above
 # * first_day is the first day to include in the returned df
 getSelectedCounties <- function(population_data, first_day) {
-  print(paste('getSelectedCounties populationData',population_data ))
+  #print(paste('getSelectedCounties populationData',population_data ))
   selected <- NULL
   selected <- addSelectedCounties(
     selected, 
@@ -205,7 +205,7 @@ getCounties <- function(countyUrl){
   #36000 is just a made up fips that seems not to be used anywhere else
   counties$fips <- if_else(counties$county == "New York City NY", 36000, counties$fips)
   
-  print(str(counties))
+  #print(str(counties))
   return(counties)
 }
 
@@ -214,22 +214,24 @@ getCounties <- function(countyUrl){
 #        title, the main title for the plots
 plotCounty <- function(countyData, title, subtitle){
   
-  print(covidPlot(cases~date | county, data=countyData, group=county, subtitle=subtitle, main=title))
+  print(covidPlot(cases~date | county, data=countyData, group=state, subtitle=subtitle, main=title))
+  print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=state, subtitle=subtitle, 
+                  ylab="Cases per 100,000", main=title))
   
-  print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title))
+  print(covidPlot(deaths~date | county, data=countyData, group=state, subtitle=subtitle, main=title))
   
-  print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title, logY = 16))
+  print(covidPlot(deaths~date | county, data=countyData, group=state, subtitle=subtitle, main=title, logY = 16))
   
-  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
+  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=state, subtitle=subtitle, 
                   ylab="Deaths per 100,000", main=title))
   
   
-  print(symmetricPlot(death.slope~date | county, data=countyData, group=county, 
+  print(symmetricPlot(death.slope~date | county, data=countyData, group=state, 
                       subtitle = subtitle, main=title, 
                       ylab="Slope (Deaths/Day)",
                       xlab="Date"))
   
-  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=county, 
+  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=state, 
                       subtitle = subtitle, main=title, 
                       ylab="Slope (Deaths/Day/100,000)",
                       xlab="Date"))
@@ -254,6 +256,15 @@ plotCounties <- function (countyPopulations){
     
     hi <- getCountiesByChunk ('Hawaii', first_day, 5,  countyPopulations)
     plotCounty(hi, "Hawaii Counties", subtitle)
+    
+    tx <- getCountiesByChunk ('Texas', first_day, 5,  countyPopulations)
+    plotCounty(tx, "Texas Counties", subtitle)
+    
+    ga <- getCountiesByChunk ('Georgia', first_day, 5,  countyPopulations)
+    plotCounty(ga, "Georgia Counties", subtitle)
+    
+    fl <- getCountiesByChunk ('Florida', first_day, 5,  countyPopulations)
+    plotCounty(fl, "Florida Counties", subtitle)
     
 }
 
