@@ -36,7 +36,25 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
 ```{r, selected_counties_cases, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
-    plotCounty(selected,"Selected Counties", subtext)
+
+    print(covidPlot(cases~date | county, data=selected, group=state,
+                    subtitle=subtext, 
+                    main="Selected Counties",
+                    ylab="Cases",
+                    xlab="Date"))
+    
+    print(covidPlot(cases~date | county, data=selected, group=state, 
+                    subtitle=subtext, 
+                    logY=4,
+                    main="Selected Counties",
+                    ylab="Cases",
+                    xlab="Date"))
+    
+    print(covidPlot(100000*cases/county.population~date | county, data=selected, group=state, 
+                    subtitle=subtext, 
+                    main="Selected Counties",
+                    ylab="Cases per 100,000",
+                    xlab="Date"))
     
     print(covidPlot(cases~date, data=selected, group=county, 
                     subtitle=subtext, 
@@ -53,14 +71,13 @@ Covid case counts and death counts by county, based on daily data from NY Times 
                     auto.key= list(cex=0.6, columns=3),
                     par.settings= list(superpose.symbol=list(pch=1:25)) ))
     
-
 ```
         
 ### Deaths
 
 ```{r, selected_counties_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}    
     
-    print(covidPlot(deaths~date | county, data=selected, group=state,
+ print(covidPlot(deaths~date | county, data=selected, group=state,
                     subtitle=subtext, 
                     main="Selected Counties",
                     ylab="Deaths",
@@ -79,6 +96,10 @@ Covid case counts and death counts by county, based on daily data from NY Times 
                     main="Selected Counties",
                     ylab="Deaths per 100,000",
                     xlab="Date"))
+					
+									
+					
+					
     
      
     print(symmetricPlot(death.slope ~ date | county, data=selected, group=selected$state, 
@@ -92,20 +113,6 @@ Covid case counts and death counts by county, based on daily data from NY Times 
                         main="Selected Counties", 
                         ylab="Slope (Deaths/Day/100,000)",
                         xlab="Date"))
-    
-    
-    print(covidPlot(deaths~date, data=selected, group=county, 
-                    subtitle=subtext, main="Selected Counties",
-                    auto.key= list(cex=0.6, columns=3),
-                    par.settings= list(superpose.symbol=list(pch=1:25)) ))
-    
-    print(covidPlot(100000*deaths/county.population~date , data=selected, group=county, 
-                    subtitle=subtext, 
-                    main="Selected Counties",
-                    ylab="Deaths per 100,000",
-                    xlab="Date",
-                    auto.key= list(cex=0.6, columns=3),
-                    par.settings= list(superpose.symbol=list(pch=1:25)) ))
     
     
 

@@ -214,24 +214,25 @@ getCounties <- function(countyUrl){
 #        title, the main title for the plots
 plotCounty <- function(countyData, title, subtitle){
   
-  print(covidPlot(cases~date | county, data=countyData, group=state, subtitle=subtitle, main=title))
-  print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=state, subtitle=subtitle, 
+  
+  print(covidPlot(cases~date | county, data=countyData, group=county,  subtitle=subtitle, main=title))
+  print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
                   ylab="Cases per 100,000", main=title))
   
-  print(covidPlot(deaths~date | county, data=countyData, group=state, subtitle=subtitle, main=title))
+  print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title))
   
-  print(covidPlot(deaths~date | county, data=countyData, group=state, subtitle=subtitle, main=title, logY = 16))
+  print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title, logY = 16))
   
-  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=state, subtitle=subtitle, 
+  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
                   ylab="Deaths per 100,000", main=title))
   
   
-  print(symmetricPlot(death.slope~date | county, data=countyData, group=state, 
+  print(symmetricPlot(death.slope~date | county, data=countyData, group=county, 
                       subtitle = subtitle, main=title, 
                       ylab="Slope (Deaths/Day)",
                       xlab="Date"))
   
-  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=state, 
+  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=county, 
                       subtitle = subtitle, main=title, 
                       ylab="Slope (Deaths/Day/100,000)",
                       xlab="Date"))
