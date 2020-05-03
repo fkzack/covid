@@ -1,6 +1,6 @@
 CovidPlots
 ================
-03 May 2020 01:55 PM PDT
+03 May 2020 02:29 PM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
@@ -42,31 +42,31 @@ The following states are plotted on seperate pages:
 
 ### California Counties
 
-[California](California_Counties.md)
+[California County Plots](California_Counties.md)
 
 ### New York Counties
 
-[New York](New%20York_Counties.md)
+[New York County Plots](New%20York_Counties.md)
 
 ### Michigan Counties
 
-[Michigan](Michigan_Counties.md)
+[Michigan County Plots](Michigan_Counties.md)
 
 ### Hawaii Counties
 
-[Hawaii](Hawaii_Counties.md)
+[Hawaii County Plots](Hawaii_Counties.md)
 
 ### Texas Counties
 
-[Texas](Texas_Counties.md)
+[Texas County Plots](Texas_Counties.md)
 
 ### Georgia Counties
 
-[Georgia](Georgia_Counties.md)
+[Georgia County Plots](Georgia_Counties.md)
 
 ### Florida Counties
 
-[Florida](Florida_Counties.md)
+[Florida County Plots](Florida_Counties.md)
 
 ## CDC All Deaths by Week
 
@@ -102,4 +102,4 @@ Covid data from Johns Hopkins CSSE via <https://covid-19.datasettes.com>
 
 ## Covid in Scandanavia
 
-<img src="CovidPlots_files/figure-gfm/scandanavia-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-5.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/scandanavia-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-6.svg" width="4800" />
