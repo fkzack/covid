@@ -99,6 +99,11 @@ p_scandanavia_per  <- covidPlot(100000 * confirmed/population~date | country_or_
                            ylab = "Cases per 100,000",
                            main = 'Scandanavia',subtitle = label, numTickIntervalsX = 12)
 
+p_scandanavia_per_log2 <- covidPlot(100000 * confirmed/population~date | country_or_region, group=country_or_region,  
+                                data=subset(covid, startsWith(region, "Scandanavia")),
+                                logY=2,
+                                ylab = "Cases per 100,000",
+                                main = 'Scandanavia',subtitle = label, numTickIntervalsX = 12)
 
 p_world <- covidPlot(confirmed~date | location, group=location,  
                      data=subset(covid, !startsWith(location, "China") & !startsWith(location, "US")),

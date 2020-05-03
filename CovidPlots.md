@@ -1,19 +1,20 @@
 CovidPlots
 ================
-03 May 2020 08:01 AM PDT
+03 May 2020 01:33 PM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
       - [Cases](#cases)
       - [Deaths](#deaths)
-  - [Covid in All California
-    Counties](#covid-in-all-california-counties)
-  - [Covid in All New York Counties](#covid-in-all-new-york-counties)
-  - [Covid in All Michigan Counties](#covid-in-all-michigan-counties)
-  - [Covid in All Hawaii Counties](#covid-in-all-hawaii-counties)
-  - [Covid in All Texas Counties](#covid-in-all-texas-counties)
-  - [Covid in All Florida Counties](#covid-in-all-florida-counties)
-  - [Covid in All Georgia Counties](#covid-in-all-georgia-counties)
+  - [Covid in Several States by
+    County](#covid-in-several-states-by-county)
+      - [California Counties](#california-counties)
+      - [New York Counties](#new-york-counties)
+      - [Michigan Counties](#michigan-counties)
+      - [Hawaii Counties](#hawaii-counties)
+      - [Texas Counties](#texas-counties)
+      - [Georgia Counties](#georgia-counties)
+      - [Florida Counties](#florida-counties)
   - [CDC All Deaths by Week](#cdc-all-deaths-by-week)
   - [Covid in US States](#covid-in-us-states)
       - [Hospitalizations](#hospitalizations)
@@ -35,47 +36,37 @@ NY Times via <https://covid-19.datasettes.com>
 
 <img src="CovidPlots_files/figure-gfm/selected_counties_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-5.svg" width="4800" />
 
-## Covid in All California Counties
+## Covid in Several States by County
 
-Covid case counts and death counts by county, based on daily data from
-NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/california_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/california_counties-7.svg" width="4800" />
+The following states are plotted on seperate pages:
 
-## Covid in All New York Counties
+### California Counties
 
-Covid case counts and death counts by county, based on daily data from
-NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/new_york_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/new_york_counties-7.svg" width="4800" />
+[California](California.md)
 
-## Covid in All Michigan Counties
+### New York Counties
 
-Covid case counts and death counts by county, based on daily data from
-NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/michigan_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/michigan_counties-7.svg" width="4800" />
+[New York](New%20York.md)
 
-## Covid in All Hawaii Counties
+### Michigan Counties
 
-Covid case counts and death counts by county, based on daily data from
-NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/hawaii_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/hawaii_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/hawaii_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/hawaii_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/hawaii_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/hawaii_counties-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/hawaii_counties-7.svg" width="4800" />
+[Michigan](Michigan.md)
 
-## Covid in All Texas Counties
+### Hawaii Counties
 
-Covid case counts and death counts by county, based on daily data from
-NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/texas_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/texas_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/texas_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/texas_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/texas_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/texas_counties-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/texas_counties-7.svg" width="4800" />
+[Hawaii](Hawaii.md)
 
-## Covid in All Florida Counties
+### Texas Counties
 
-Covid case counts and death counts by county, based on daily data from
-NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/florida_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/florida_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/florida_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/florida_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/florida_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/florida_counties-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/florida_counties-7.svg" width="4800" />
+[Texas](Texas.md)
 
-## Covid in All Georgia Counties
+### Georgia Counties
 
-Covid case counts and death counts by county, based on daily data from
-NY Times via <https://covid-19.datasettes.com>
-<img src="CovidPlots_files/figure-gfm/georgia_counties-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/georgia_counties-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/georgia_counties-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/georgia_counties-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/georgia_counties-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/georgia_counties-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/georgia_counties-7.svg" width="4800" />
+[Georgia](Georgia.md)
+
+### Florida Counties
+
+[Florida](Florida.md)
 
 ## CDC All Deaths by Week
 
@@ -85,7 +76,7 @@ so of deaths will be under-reported or missing.
 
 <https://gis.cdc.gov/grasp/fluview/mortality.html>
 
-<img src="CovidPlots_files/figure-gfm/cdc_all_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/cdc_all_deaths-2.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/cdc_all_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/cdc_all_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/cdc_all_deaths-3.svg" width="4800" />
 
 ## Covid in US States
 
@@ -111,4 +102,4 @@ Covid data from Johns Hopkins CSSE via <https://covid-19.datasettes.com>
 
 ## Covid in Scandanavia
 
-<img src="CovidPlots_files/figure-gfm/scandanavia-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-4.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/scandanavia-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-5.svg" width="4800" />

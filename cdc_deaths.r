@@ -61,9 +61,18 @@ p_all_deaths_recent <- covidPlot(all_deaths ~ week_starts | state, data=all_deat
 
 #compare death rate this rolling year to same week previous year
 all_deaths_year_on_year_key <- ifelse(is.na(all_deaths$all_deaths_2020), "2019/2018 Ratio", "2020/2019 Ratio")
-p_year_on_year <- covidPlot(year_on_year ~ week_starts | state, data=all_deaths, group=all_deaths_year_on_year_key, 
+p_year_on_year_linear <- covidPlot(year_on_year ~ week_starts | state, data=all_deaths, group=all_deaths_year_on_year_key, 
                             numTickIntervalsX = 5,
                             logX = FALSE, logY = FALSE,
+                            auto.key=TRUE, 
+                            xlab="Date", 
+                            ylab="All Deaths Year on Year Ratio" , 
+                            subtitle = subtext,
+                            main="Weekly Deaths From All Causes")
+
+p_year_on_year <- covidPlot(year_on_year ~ week_starts | state, data=all_deaths, group=all_deaths_year_on_year_key, 
+                            numTickIntervalsX = 5,
+                            logX = FALSE, logY = 2,
                             auto.key=TRUE, 
                             xlab="Date", 
                             ylab="All Deaths Year on Year Ratio" , 

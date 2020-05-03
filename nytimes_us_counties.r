@@ -269,6 +269,33 @@ plotCounties <- function (countyPopulations){
     
 }
 
+#plot data for for all counties in a state to to a mark down file for display in github
+plotCountiesOfStateToMd <- function(stateName, countyPopulations){
+  subtitle <- "Data from NY Times via covid-19.datasettes.com"
+  first_day <- ISOdate(2020,3,1, tz="")
+  title <- paste(stateName, "Counties")
+  county <- getCountiesByChunk (gsub(' ', '+', stateName), first_day, 5,  countyPopulations)
+  rmarkdown::render("countyPlots.rmd", output_file=paste(stateName, "Counties", sep="_"))
+  
+}
+#plotCountiesOfStateToMd("California", countyPopulations)
+
+
+
+
+plotCountiesToMD <- function(states, countyPopulations){
+
+  for(state in states){
+    print(paste("Generating plots for counties of", state))
+    plotCountiesOfStateToMd(state, countyPopulations)
+  }
+          
+}
+
+#plotCountiesToMD(c("California", "New York", "Michigan", "Hawaii", "Texas", "Georgia", "Florida"),
+#                 countyPopulations)
+
+
 
 
  # s <- getSelectedCounties(countyPopulations, ISOdate(2020, 3,1, tz=""))

@@ -1,0 +1,16 @@
+---
+title: '`r title`'
+output: github_document
+date: '`r format(Sys.time(), "%d %B %Y %I:%M %p %Z")`'
+---
+```{r, setup_county, include=FALSE}
+knitr::opts_chunk$set(out.width = 4800,  fig.width = 12, fig.asp=0.62,  dev = 'svg') 
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
+
+```{r, plot_one_county, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+      plotCounty(county,title, subtitle)
+    
+```
