@@ -87,7 +87,7 @@ redPallete <- colorRamp(c("#FFFFFF", "#FF0000"), interpolate="spline", space="La
 #daily data by state
 
 
-dailies <- fromJSON("https://covidtracking.com/api/states/daily.json")
+dailies <- fromJSON("https://covidtracking.com/api/states/daily")
 dailies$date <- as.Date(as.character(dailies$date), "%Y%m%d")
 dailies <- rename (dailies, "state.abb" = "state")
 dailies <- merge(states, dailies)
