@@ -1,6 +1,6 @@
 CovidPlots
 ================
-03 May 2020 01:33 PM PDT
+03 May 2020 01:55 PM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
@@ -42,31 +42,31 @@ The following states are plotted on seperate pages:
 
 ### California Counties
 
-[California](California.md)
+[California](California_Counties.md)
 
 ### New York Counties
 
-[New York](New%20York.md)
+[New York](New%20York_Counties.md)
 
 ### Michigan Counties
 
-[Michigan](Michigan.md)
+[Michigan](Michigan_Counties.md)
 
 ### Hawaii Counties
 
-[Hawaii](Hawaii.md)
+[Hawaii](Hawaii_Counties.md)
 
 ### Texas Counties
 
-[Texas](Texas.md)
+[Texas](Texas_Counties.md)
 
 ### Georgia Counties
 
-[Georgia](Georgia.md)
+[Georgia](Georgia_Counties.md)
 
 ### Florida Counties
 
-[Florida](Florida.md)
+[Florida](Florida_Counties.md)
 
 ## CDC All Deaths by Week
 

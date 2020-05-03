@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```
 
-## Covid in a Few Interesting Counties {.tabset} 
+## Covid in a Few Interesting Counties  
 
 Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 
@@ -109,7 +109,7 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 
 ```
 
-## Covid in Several States by County {.tabset} 
+## Covid in Several States by County  
 The following states are plotted on seperate pages:
 
 ```{r, plot_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
@@ -122,7 +122,7 @@ plotCountiesToMD(states_to_plot, countyPopulations)
 
 for (state in states_to_plot){
   cat(paste("###", state, "Counties", "\n"))
-  cat(paste("[", state, "](", state, ".md)", "\n", sep=""))
+  cat(paste("[", state, " County Plots](", state, "_Counties.md)", "\n", sep=""))
   cat("\n")
 }
 
@@ -146,7 +146,7 @@ https://gis.cdc.gov/grasp/fluview/mortality.html
 
 
 
-## Covid in US States {.tabset}
+## Covid in US States 
 Covid positive tests, deaths, and hospitalizations by state from covidtracking.com https://covidtracking.com
 
 ### Hospitalizations
@@ -180,7 +180,7 @@ Covid positive tests, deaths, and hospitalizations by state from covidtracking.c
 ```
 
 
-## Covid in China {.tabset}
+## Covid in China 
 
 Covid data from Johns Hopkins CSSE via https://covid-19.datasettes.com
 ```{r,  china, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
@@ -189,7 +189,7 @@ Covid data from Johns Hopkins CSSE via https://covid-19.datasettes.com
     print(p_china_deaths)
 ```
 
-## Covid in Scandanavia {.tabset}
+## Covid in Scandanavia 
 ```{r,  scandanavia, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
   print(p_scandanavia)
   print(p_scandanavia_per)
