@@ -152,6 +152,8 @@ printAll <- function(){
   #print(p_world_deaths)
   print(p_scandanavia_deaths)
   print(p_scandanavia_deaths_per)
+  print(p_scandanavia_deaths_per_log2)
+  
 }
 
 #print(p_china)
