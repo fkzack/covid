@@ -115,7 +115,7 @@ The following states are plotted on seperate pages:
 ```{r, plot_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
   
 states_to_plot <- c("California", "New York", "Michigan", "Hawaii", "Texas", "Georgia", "Florida")
-#plotCountiesToMD(states_to_plot, countyPopulations)
+plotCountiesToMD(states_to_plot, countyPopulations)
 ```
 
 ```{r, plot_counties)links, echo=FALSE, results='asis'}

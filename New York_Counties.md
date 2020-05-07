@@ -1,6 +1,6 @@
 New York Counties
 ================
-03 May 2020 02:24 PM PDT
+07 May 2020 03:28 PM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
