@@ -1,6 +1,6 @@
 CovidPlots
 ================
-09 May 2020 08:55 AM PDT
+09 May 2020 09:32 AM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
@@ -34,7 +34,7 @@ NY Times via <https://covid-19.datasettes.com>
 
 ### Deaths
 
-<img src="CovidPlots_files/figure-gfm/selected_counties_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-5.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/selected_counties_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/selected_counties_deaths-6.svg" width="4800" />
 
 ## Covid in Several States by County
 
@@ -93,7 +93,7 @@ covidtracking.com <https://covidtracking.com>
 
 ### Deaths
 
-<img src="CovidPlots_files/figure-gfm/state_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-3.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/state_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-4.svg" width="4800" />
 
 ## Covid in China
 
@@ -102,4 +102,4 @@ Covid data from Johns Hopkins CSSE via <https://covid-19.datasettes.com>
 
 ## Covid in Scandanavia
 
-<img src="CovidPlots_files/figure-gfm/scandanavia-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-6.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/scandanavia-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-7.svg" width="4800" />

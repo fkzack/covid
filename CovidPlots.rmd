@@ -82,7 +82,14 @@ Covid case counts and death counts by county, based on daily data from NY Times 
                     main="Selected Counties",
                     ylab="Deaths",
                     xlab="Date"))
-    
+  
+  print(covidPlot(100000*deaths/county.population~date | county, data=selected, group=state, 
+                    subtitle=subtext,
+                    logY = FALSE,
+                    main="Selected Counties",
+                    ylab="Deaths per 100,000",
+                    xlab="Date"))
+	  
 
   print(covidPlot(100000*deaths/county.population~date | county, data=selected, group=state, 
                     subtitle=subtext, 
@@ -174,6 +181,7 @@ Covid positive tests, deaths, and hospitalizations by state from covidtracking.c
 ```{r,  state_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
     
   print(p_deaths)
+  print(p_deathsPerLinear)
   print (p_deathsPer)
   print(p_deltaDeathsPer)
     
@@ -195,6 +203,7 @@ Covid data from Johns Hopkins CSSE via https://covid-19.datasettes.com
   print(p_scandanavia_per)
   print(p_scandanavia_per_log2)
   print(p_scandanavia_deaths)
+  print(p_scandanavia_deaths_per_linear)
   print(p_scandanavia_deaths_per)
   print(p_scandanavia_deaths_per_log2)
 ```

@@ -125,6 +125,11 @@ p_total_tests_per <- covidPlot(100000*totalTestResults/state.population ~ date |
 p_deaths <- covidPlot(death ~ date | state.abb, group=state.abb, data=dailies, 
                       subtitle=label, ylab = "deaths", main="US States")
 
+
+p_deathsPerLinear <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=dailies, 
+                         subtitle=label, logY=FALSE,  ylab = "deaths per 100,000", main="US States")
+
+
 p_deathsPer <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=dailies, 
                          subtitle=label, ylab = "deaths per 100,000", main="US States")
 

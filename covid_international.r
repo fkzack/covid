@@ -134,6 +134,12 @@ p_scandanavia_deaths_per_log2  <- covidPlot(100000 * deaths/population~date | co
                                        ylab = "Deaths per 100,000",
                                        main = 'Scandanavia',subtitle = label, numTickIntervalsX = 12)
 
+p_scandanavia_deaths_per_linear  <- covidPlot(100000 * deaths/population~date | country_or_region, group=country_or_region,  
+                                       data=subset(covid, startsWith(region, "Scandanavia")),
+                                       logY=FALSE,
+                                       ylab = "Deaths per 100,000",
+                                       main = 'Scandanavia',subtitle = label, numTickIntervalsX = 12)
+
 
 p_world_deaths <- covidPlot(deaths~date | location, group=location,  
                      data=subset(covid, !startsWith(location, "China") & !startsWith(location, "US")),
