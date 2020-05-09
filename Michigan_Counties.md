@@ -1,6 +1,6 @@
 Michigan Counties
 ================
-07 May 2020 03:29 PM PDT
+09 May 2020 08:56 AM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
