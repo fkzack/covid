@@ -1,6 +1,6 @@
 California Counties
 ================
-09 May 2020 09:32 AM PDT
+11 May 2020 10:44 AM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
