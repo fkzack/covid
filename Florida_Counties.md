@@ -1,6 +1,6 @@
 Florida Counties
 ================
-22 May 2020 09:00 AM PDT
+26 May 2020 09:23 AM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>

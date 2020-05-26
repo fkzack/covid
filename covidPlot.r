@@ -64,6 +64,7 @@ axisTicks <- function(x,logBase, numTickIntervals){
 #    
 covidPlot <- function(formula1, data, groups=NULL,  
                       logX = FALSE, logY = TRUE, 
+                      type = c('p', 'l'),
                       subtitle = "", 
                       xlab=NULL, numTickIntervalsX = 5, formatX=NULL,
                       ylab=NULL,  numTickIntervalsY=5, formatY=NULL,
@@ -116,6 +117,8 @@ covidPlot <- function(formula1, data, groups=NULL,
   }
   
   
+
+
   xTicks <-axisTicks(df$x, logX, numTickIntervalsX)
   yTicks <- axisTicks(df$y, logY, numTickIntervalsY)
   
@@ -140,7 +143,7 @@ covidPlot <- function(formula1, data, groups=NULL,
                 y=list(at=yTicks$ticksAt, log=logY, format=formatY)),
               sub=list(label=paste(subtitle, "   "), cex=0.5, x=1, just="right"),
               par.strip.text=list(cex=0.75),
-              type=c('p', 'l'),
+              type=type,
               as.table=TRUE,
               xlab = xlab,
               ylab=ylab,

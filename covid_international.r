@@ -3,7 +3,8 @@
 library (jsonlite)
 library(lattice)
 library(latticeExtra)
-library(lubridate)str(covid)
+library(lubridate)
+
 
 rm(list=ls())
 

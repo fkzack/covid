@@ -1,6 +1,6 @@
 CovidPlots
 ================
-22 May 2020 08:56 AM PDT
+26 May 2020 08:42 AM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
@@ -102,4 +102,4 @@ Covid data from Johns Hopkins CSSE via <https://covid-19.datasettes.com>
 
 ## Covid in Scandanavia
 
-<img src="CovidPlots_files/figure-gfm/scandanavia-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-7.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/scandanavia-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-6.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-7.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/scandanavia-8.svg" width="4800" />
