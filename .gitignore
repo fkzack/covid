@@ -38,5 +38,5 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-#covid html plots we don't need to upload
-*_Counties.html
+#we don't need to upload the large html previews
+*.html
