@@ -1,6 +1,27 @@
 CovidPlots
 ================
-29 May 2020 12:26 PM PDT
+29 May 2020 04:59 PM PDT
+
+  - [Covid in a Few Interesting
+    Counties](#covid-in-a-few-interesting-counties)
+      - [Cases](#cases)
+      - [Deaths](#deaths)
+  - [Covid in Several States by
+    County](#covid-in-several-states-by-county)
+      - [California Counties](#california-counties)
+      - [New York Counties](#new-york-counties)
+      - [Michigan Counties](#michigan-counties)
+      - [Hawaii Counties](#hawaii-counties)
+      - [Texas Counties](#texas-counties)
+      - [Georgia Counties](#georgia-counties)
+      - [Florida Counties](#florida-counties)
+  - [CDC All Deaths by Week](#cdc-all-deaths-by-week)
+  - [Covid in US States](#covid-in-us-states)
+      - [Hospitalizations](#hospitalizations)
+      - [Tests](#tests)
+      - [Deaths](#deaths-1)
+  - [Covid in China](#covid-in-china)
+  - [Covid in Scandanavia](#covid-in-scandanavia)
 
 ## Covid in a Few Interesting Counties
 
