@@ -130,7 +130,7 @@ p_deaths_liner <- covidPlot(death ~ date | state.abb, group=state.abb, data=dail
 
 
 p_deltaDeaths <- symmetricPlot(pmax(-10, deathIncrease) ~ date | state.abb, group=dailies$state.abb, data=dailies, 
-                                  subtitle=label, type=list('p'), ylab = "Increase (deaths) (negetive deaths clipped to -10) ", main="US States")
+                                  subtitle=label, type=list('p'), ylab = "Increase (deaths/day) (negetive deaths clipped to -10) ", main="US States")
 
 
 p_deathsPerLinear <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=dailies, 
