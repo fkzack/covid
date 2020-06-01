@@ -1,6 +1,6 @@
 CovidPlots
 ================
-01 June 2020 09:18 AM PDT
+01 June 2020 09:59 AM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
@@ -93,7 +93,7 @@ covidtracking.com <https://covidtracking.com>
 
 ### Deaths
 
-<img src="CovidPlots_files/figure-gfm/state_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-4.svg" width="4800" />
+<img src="CovidPlots_files/figure-gfm/state_deaths-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-2.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-3.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-4.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-5.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_deaths-6.svg" width="4800" />
 
 ## Covid in China
 

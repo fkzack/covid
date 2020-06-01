@@ -1,6 +1,6 @@
 Texas Counties
 ================
-01 June 2020 09:19 AM PDT
+01 June 2020 10:01 AM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
