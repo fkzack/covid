@@ -125,6 +125,13 @@ p_total_tests_per <- covidPlot(100000*totalTestResults/state.population ~ date |
 p_deaths <- covidPlot(death ~ date | state.abb, group=state.abb, data=dailies, 
                       subtitle=label, ylab = "deaths", main="US States")
 
+p_deaths_liner <- covidPlot(death ~ date | state.abb, group=state.abb, data=dailies, 
+                      subtitle=label, logY = FALSE, ylab = "deaths", main="US States")
+
+
+p_deltaDeaths <- symmetricPlot(pmax(-10, deathIncrease) ~ date | state.abb, group=dailies$state.abb, data=dailies, 
+                                  subtitle=label, type=list('p'), ylab = "Increase (deaths) (negetive deaths clipped to -10) ", main="US States")
+
 
 p_deathsPerLinear <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=dailies, 
                          subtitle=label, logY=FALSE,  ylab = "deaths per 100,000", main="US States")
@@ -133,8 +140,9 @@ p_deathsPerLinear <- covidPlot(100000*death/state.population ~ date | state.abb,
 p_deathsPer <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=dailies, 
                          subtitle=label, ylab = "deaths per 100,000", main="US States")
 
-p_deltaDeathsPer <- symmetricPlot(100000*deathIncrease/state.population ~ date | state.abb, group=dailies$state.abb, data=dailies, 
-                                  subtitle=label, ylab = "Increase (deaths/day/100,000)", main="US States")
+
+p_deltaDeathsPer <- symmetricPlot(pmax(-0.001, 100000*deathIncrease/state.population) ~ date | state.abb, group=dailies$state.abb, data=dailies, 
+                                  subtitle=label, type=list('p'), ylab = "Increase (deaths/day/100,000) (negetive deaths clipped to -0.001) ", main="US States")
 
 
 p_hosp <- covidPlot(hospitalized ~ date | state.abb, group=state.abb, data=dailies, 
