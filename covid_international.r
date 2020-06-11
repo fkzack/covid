@@ -4,7 +4,7 @@ library (jsonlite)
 library(lattice)
 library(latticeExtra)
 library(lubridate)
-
+library(dplyr)
 
 rm(list=ls())
 
@@ -64,6 +64,11 @@ for (i in seq(1, length(start_days)-1)){
   }
 }
 
+
+#sweden is now reporting by individual state, so need to aggreate them
+sweden <- subset(covid, country_or_region=="Sweden")
+covid < subset(covid, country_or_region != "Sweden")
+summarise_all(sweden)
 
 # Denmark is sometimes Denmark, sometimes Denmark,Greenland, Denmark, Faroe Islands, .... 
 # Consider only "Denmark, Denmark" and "Denmark,NA" to be actually denmark, as anything else appears to be an outlying teritory
