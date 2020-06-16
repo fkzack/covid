@@ -4,7 +4,7 @@ library (jsonlite)
 library(lattice)
 library(latticeExtra)
 library(lubridate)
-library(dplyr)
+library(plyr)
 
 rm(list=ls())
 
