@@ -94,7 +94,7 @@ covid <- merge(covid, population, all.x = TRUE)
 covid <- covid[order(covid$country_or_region, covid$province_or_state, covid$day),]
 
 covid$deaths.slope <-  centralDifference(covid$deaths, covid$date, covid$country_or_region)
-covid$deaths.slope <- ifelse(abs(covid$deaths.slope) > 10, NA, covid$deaths.slope)
+
 
 
 label <-  "Data from Johns Hopkins CSSE via https://covid-19.datasettes.com"
@@ -160,11 +160,17 @@ p_scandanavia_deaths_per_linear  <- covidPlot(100000 * deaths/population~date | 
                                        ylab = "Deaths per 100,000",
                                        main = 'Scandanavia',subtitle = label, numTickIntervalsX = 12)
 
-p_scandanavia_deaths_per_slope  <- covidPlot(100000 * deaths.slope/population~date | country_or_region, group=country_or_region,  
+
+# exclude some really noisy sampling issues with sweden
+covid$deaths_per_slope <- 100000 * covid$deaths.slope/covid$population
+covid$deaths_per_slope <- ifelse(covid$deaths_per_slope > 5, NA, covid$deaths_per_slope)
+covid$deaths_per_slope <- ifelse(covid$deaths_per_slope < 0, NA, covid$deaths_per_slope)
+p_scandanavia_deaths_per_slope  <- covidPlot(deaths_per_slope~date | country_or_region, group=country_or_region,  
                                              data=subset(covid, startsWith(region, "Scandanavia")),
                                              logY=FALSE,
                                              ylab = "Slope(Deaths per 100,000 per day",
                                              main = 'Scandanavia',subtitle = label, numTickIntervalsX = 12)
+p_scandanavia_deaths_per_slope 
 
 
 p_world_deaths <- covidPlot(deaths~date | location, group=location,  
