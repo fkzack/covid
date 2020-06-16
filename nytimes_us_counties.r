@@ -57,20 +57,6 @@ getSelectedCountiesUrl <- function(state, counties){
 }
 
 
-# # central diference approx to dx/dy, 
-# # y is a date, we assume we are sorted in date order (ascending)
-# # group_id identifies series that are in order, do not calculate across changes in group id
-# centralDifference <- function (x,y, group_id){
-#   dx <- lead(x,1) - lag(x,1)
-#   dy <- lead(y,1) - lag(y,1)
-#   dy <- as.numeric(dy, units='days' )
-#   slope <- dx/dy
-#   breaks <- (group_id != lag(group_id,1)) | (lead(group_id,1) != group_id)
-#   slope <- ifelse(breaks, NA, slope)
-#   return (slope)
-# }
-
-
 #combine several selected counties data into a single df
 addSelectedCounties <- function(selectedCounties, state, counties, population_data){
   selectedUrl <- getSelectedCountiesUrl(state, counties)
@@ -140,7 +126,9 @@ getSelectedCounties <- function(population_data, first_day) {
   #sort and calculate slopes
   selected <- selected[order( selected$fips, selected$date),]
   selected$death.slope = centralDifference(selected$deaths, selected$date, selected$fips)
+  selected$death.slope = ifelse(selected$death.slope < 0, NA, selected$death.slope)
   selected$case.slope = centralDifference(selected$cases, selected$date, selected$fips)
+  selected$case.slope = ifelse(selected$case.slope < 0, NA, selected$case.slope)
   selected <-  selected[order(selected$county.name, selected$date),]
 
   return(selected)
@@ -179,8 +167,10 @@ getCountiesByChunk <- function (state, first_day, chunk_days, population_data){
   
   #sort and calculate slopes
   counties <- counties[order( counties$fips, counties$date),]
-  counties$death.slope = centralDifference(counties$deaths, counties$date, counties$fips)
-  counties$case.slope = centralDifference(counties$cases, counties$date, counties$fips)
+  counties$death.slope <- centralDifference(counties$deaths, counties$date, counties$fips)
+  counties$death.slope <- ifelse(counties$death.slope < 0, NA, counties$death.slope)
+  counties$case.slope <- centralDifference(counties$cases, counties$date, counties$fips)
+  counties$case.slope <- ifelse(counties$case.slope < 0, NA, counties$case.slope)
   counties <-  counties[order(counties$county.name, counties$date),]
   return (counties)
 }
@@ -220,6 +210,17 @@ plotCounty <- function(countyData, title, subtitle){
   print(covidPlot(cases~date | county, data=countyData, group=county,  subtitle=subtitle, main=title))
   print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
                   ylab="Cases per 100,000", main=title))
+  print(symmetricPlot(case.slope~date | county, data=countyData, group=county, 
+                      type = c("p"),
+                      subtitle = subtitle, main=title, 
+                      ylab="Slope (New Cases/Day)",
+                      xlab="Date"))
+  
+  print(symmetricPlot(100000*case.slope/county.population~date | county, data=countyData, group=county, 
+                      type = c("p"),
+                      subtitle = subtitle, main=title, 
+                      ylab="Slope (New Cases/Day/100,000)",
+                      xlab="Date"))
   
   print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title))
   
@@ -235,11 +236,13 @@ plotCounty <- function(countyData, title, subtitle){
   
   
   print(symmetricPlot(death.slope~date | county, data=countyData, group=county, 
+                      type = c("p"),
                       subtitle = subtitle, main=title, 
                       ylab="Slope (Deaths/Day)",
                       xlab="Date"))
   
   print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=county, 
+                      type = c("p"),
                       subtitle = subtitle, main=title, 
                       ylab="Slope (Deaths/Day/100,000)",
                       xlab="Date"))

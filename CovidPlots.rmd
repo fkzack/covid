@@ -49,6 +49,13 @@ Covid case counts and death counts by county, based on daily data from NY Times 
                     ylab="Cases per 100,000",
                     xlab="Date"))
     
+    print(symmetricPlot(100000*case.slope/county.population~date | county, data=selected, group=selected$state, 
+                        subtitle = subtext, 
+                        type = c("p"),
+                        main="Selected Counties", 
+                        ylab="Slope (New Cases/Day/100,000)",
+                        xlab="Date"))
+    
     print(covidPlot(cases~date, data=selected, group=county, 
                     subtitle=subtext, 
                     main="Selected Counties",
@@ -102,12 +109,14 @@ Covid case counts and death counts by county, based on daily data from NY Times 
 					
     print(symmetricPlot(death.slope ~ date | county, data=selected, group=selected$state, 
                         subtitle = subtext, 
+                        type=c("p"),
                         main="Selected Counties", 
                         ylab="Slope (Deaths/Day)",
                         xlab="Date"))
 
     print(symmetricPlot(100000*death.slope/county.population~date | county, data=selected, group=selected$state, 
                         subtitle = subtext, 
+                        type = c("p"),
                         main="Selected Counties", 
                         ylab="Slope (Deaths/Day/100,000)",
                         xlab="Date"))
