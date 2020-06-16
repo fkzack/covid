@@ -1,6 +1,6 @@
 Georgia Counties
 ================
-16 June 2020 09:17 AM PDT
+16 June 2020 09:55 AM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>

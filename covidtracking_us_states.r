@@ -93,6 +93,7 @@ dailies <- rename (dailies, "state.abb" = "state")
 dailies <- merge(states, dailies)
 dailies$state.population <- as.numeric(dailies$state.population)
 dailies <- dailies[order(dailies$state.abb, dailies$date),]
+dailies$positiveIncrease <- ifelse(dailies$positiveIncrease < 0, NA, dailies$positiveIncrease)
 
 str(dailies)
 
@@ -105,8 +106,12 @@ p_positives <- covidPlot(positive~date | state.abb, group=state.abb, data=dailie
 p_positivesPer <- covidPlot(100000*positive/state.population ~ date | state.abb, group=state.abb, data=dailies, 
                             subtitle=label, ylab = "positves per 100,000", main="US States")
 
-p_deltaPositivesPer <- symmetricPlot(100000*positiveIncrease/state.population ~ date | state.abb, group=dailies$state.abb, 
-                                     data=dailies, subtitle=label, ylab = "Increase (positives/day/100,000)", main="US States")
+p_deltaPositivesPer <- symmetricPlot(100000*positiveIncrease/state.population ~ date | state.abb, data=dailies, 
+                                     group=state.abb, 
+                                     type = c("p"),
+                                     subtitle=label, 
+                                     ylab = "Increase (positives/day/100,000)", main="US States")
+
 
 #p_positive_fraction <- covidPlot2(positive/(positive + negative)~date | state.abb, group=state.abb, data=dailies, subtitle=label,ylab="fraction positve", main="US States")
 #p_positive_fraction <- xyplot(positive/(positive + negative)~date | state.abb, group=state.abb, data=dailies, subtitle=label,ylab="fraction positve", main="US States", as.table=TRUE)

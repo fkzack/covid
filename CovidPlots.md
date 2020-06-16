@@ -1,6 +1,6 @@
 CovidPlots
 ================
-16 June 2020 09:14 AM PDT
+16 June 2020 09:52 AM PDT
 
   - [Covid in a Few Interesting
     Counties](#covid-in-a-few-interesting-counties)
