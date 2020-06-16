@@ -71,6 +71,8 @@ c2 <- subset(covid, country_or_region != "Sweden")
 s2 <- ddply(sweden,"day",numcolwise(sum))
 s2$date <-  as.POSIXct(s2$day)
 s2$country_or_region <- "Sweden"
+s2$location <- "Sweden"
+covid <- rbind.fill(c2,s2)
 
 
 
@@ -92,6 +94,8 @@ covid <- merge(covid, population, all.x = TRUE)
 covid <- covid[order(covid$country_or_region, covid$province_or_state, covid$day),]
 
 covid$deaths.slope <-  centralDifference(covid$deaths, covid$date, covid$country_or_region)
+covid$deaths.slope <- ifelse(abs(covid$deaths.slope) > 10, NA, covid$deaths.slope)
+
 
 label <-  "Data from Johns Hopkins CSSE via https://covid-19.datasettes.com"
 

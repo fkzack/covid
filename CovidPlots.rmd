@@ -206,7 +206,7 @@ Covid data from Johns Hopkins CSSE via https://covid-19.datasettes.com
   print(p_scandanavia_per_log2)
   print(p_scandanavia_deaths)
   print(p_scandanavia_deaths_per_linear)
-  print (p_scandanavia_deaths_per_slope)
+  print(p_scandanavia_deaths_per_slope)
   print(p_scandanavia_deaths_per)
   print(p_scandanavia_deaths_per_log2)
 ```
