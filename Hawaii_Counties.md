@@ -1,6 +1,6 @@
 Hawaii Counties
 ================
-23 June 2020 06:27 AM PDT
+23 June 2020 12:27 PM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
