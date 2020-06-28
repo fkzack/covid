@@ -11,6 +11,12 @@ knitr::opts_chunk$set(echo = TRUE)
 Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
 
 ```{r, plot_one_county, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-      plotCounty(county,title, subtitle)
+cat("###Summary\n")
+plotCountySummary(countyData,title, subtitle)
+cat("###Details\n")
+plotCountyDetails(countyData,title, subtitle)
+
+      
+
     
 ```

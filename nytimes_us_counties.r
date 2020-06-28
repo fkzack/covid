@@ -201,106 +201,235 @@ getCounties <- function(countyUrl){
   return(counties)
 }
 
-#print the plots for a single county
-#inputs: countyData, a df containing the data to plot
-#        title, the main title for the plots
-plotCounty <- function(countyData, title, subtitle){
+#hide loess errors when not enough data is available to create line with given params
+#unfortunately this also hides other warnings, so may need to disable if things are weird
+ignore <- function(e){
+  #do nothing
+}
+lattice.options(panel.error=ignore)
+
+plotCountySummary <- function(countyData, title, subtitle){
   
   
-  print(covidPlot(cases~date | county, data=countyData, group=county,  subtitle=subtitle, main=title))
   print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
-                  ylab="Cases per 100,000", main=title))
-  print(symmetricPlot(case.slope~date | county, data=countyData, group=county, 
-                      type = c("p"),
-                      subtitle = subtitle, main=title, 
-                      ylab="Slope (New Cases/Day)",
-                      xlab="Date"))
-  
-  print(symmetricPlot(100000*case.slope/county.population~date | county, data=countyData, group=county, 
-                      type = c("p"),
+                  ylab="Cases per 100,000", main=title, logY=16))
+  print(symmetricPlot(case.slope/county.population~date | county, 
+                      data=countyData, group=county, 
+                      type = c("p", "smooth"),
+                      span=0.2,
                       subtitle = subtitle, main=title, 
                       ylab="Slope (New Cases/Day/100,000)",
                       xlab="Date"))
   
+  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
+                  ylab="Deaths per 100,000", main=title, logY = 16))
+  
+  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=county, 
+                      type = c("p", "smooth"),
+                      span=0.2,
+                      panel.error=ignore,
+                      subtitle = subtitle, main=title, 
+                      ylab="Slope (Deaths/Day/100,000)",
+                      xlab="Date"))
+  
+}
+
+countySummaryTest <- function(){
+  subtitle <- paste("Data from NY Times via covid-19.datasettes.com on", Sys.Date());
+  first_day <- ISOdate(2020,3,1, tz="")
+  
+  countyData <- getSelectedCounties(countyPopulations, first_day)
+  title = "Selected Counties"
+  plotCountySummary(countyData,title, subtitle)
+}
+#countySummaryTest()
+
+
+
+plotCountyDetails <- function(countyData, title, subtitle){
+  
+  print(covidPlot(cases~date | county, data=countyData, group=county,  subtitle=subtitle, main=title, logY = 16))
+  
+  print(covidPlot(cases~date | county, data=countyData, group=county,  subtitle=subtitle, main=title), logY=10)
+  
+  print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
+                  ylab="Cases per 100,000", main=title))
+  
+  print(symmetricPlot(case.slope~date | county, data=countyData, group=county, 
+                      type = c("p", "smooth"),
+                      span=0.2,
+                      subtitle = subtitle, main=title, 
+                      ylab="Slope (New Cases/Day)",
+                      xlab="Date"))
+  
+    
   print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title))
-  
-  print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title, logY = 16))
-  
   
   print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
                   logY=FALSE, ylab="Deaths per 100,000", main=title))
   
-  
   print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
                   ylab="Deaths per 100,000", main=title))
   
-  
   print(symmetricPlot(death.slope~date | county, data=countyData, group=county, 
-                      type = c("p"),
+                      type = c("p", "smooth"),
+                      span=0.2,
                       subtitle = subtitle, main=title, 
                       ylab="Slope (Deaths/Day)",
                       xlab="Date"))
   
   print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=county, 
-                      type = c("p"),
+                      type = c("p", "smooth"),
+                      span=0.2,
                       subtitle = subtitle, main=title, 
                       ylab="Slope (Deaths/Day/100,000)",
                       xlab="Date"))
 }
 
 
-# download and plot all the county data
-# *  countyPopulations is the previously downloaded census population data
-plotCounties <- function (countyPopulations){
-    subtitle <- "Data from NY Times via covid-19.datasettes.com"
+# # download and plot all the county data
+# # *  countyPopulations is the previously downloaded census population data
+# plotCounties <- function (countyPopulations){
+#     subtitle <- "Data from NY Times via covid-19.datasettes.com"
+#     
+#     first_day <- ISOdate(2020,3,1, tz="")
+#     
+#     selected <- getSelectedCounties(countyPopulations, first_day)
+#     plotCounty(selected, "Selected Counties", subtitle)
+#     
+#     ca <- getCountiesByChunk ('California', first_day, 5,  countyPopulations)
+#     plotCounty(ca, "California Counties", subtitle)
+#     
+#     ny <- getCountiesByChunk ('New+York', first_day, 5,  countyPopulations)
+#     plotCounty(ny, "New Yourk Counties", subtitle)
+#     
+#     hi <- getCountiesByChunk ('Hawaii', first_day, 5,  countyPopulations)
+#     plotCounty(hi, "Hawaii Counties", subtitle)
+#     
+#     tx <- getCountiesByChunk ('Texas', first_day, 5,  countyPopulations)
+#     plotCounty(tx, "Texas Counties", subtitle)
+#     
+#     ga <- getCountiesByChunk ('Georgia', first_day, 5,  countyPopulations)
+#     plotCounty(ga, "Georgia Counties", subtitle)
+#     
+#     fl <- getCountiesByChunk ('Florida', first_day, 5,  countyPopulations)
+#     plotCounty(fl, "Florida Counties", subtitle)
+#     
+# }
+
+
+# #plot summary data in the current rmd and detail data in a detail rmd
+# #county data is the data to plot
+# #state is the name of the state or other group we are plotting(e.g. 'California' or 'Selected' )
+# #returns the name of the output file used
+# plotDataForOneState<- function(countyData, title, subtitle){
+#   plotCountySummary(countyData,title, subtitle)
+#   
+#   
+#   out_file_name <- gsub(' ', '_', title)
+#   cat(paste("[", state, " Details](", out_file_name, ")\n", sep=""))
+#   rmarkdown::render("countyPlots.rmd", output_file=out_file_name)
+#   return(paste(out_file_name, ".md", sep=""))
+#   
+# }
+
+
+#read data  and generate plots
+#countyPopulation is the census data loaded above
+#first_day is the first day to include in the plots
+CreateCountyPlots <- function(countyPopulations, first_day){
+  subtitle <- paste("Data from NY Times via covid-19.datasettes.com on", Sys.Date());
+  
+  #plot selected summary in main rmd
+  
+  t <- system.time( countyData <- getSelectedCounties(countyPopulations, first_day))
+  cat("*** get selected ", t, "\n")
+  
+  
+  title = "Selected Counties"
+  t <- system.time(plotCountySummary(countyData, title, subtitle))
+  cat("*** plot selected ", t, "\n")
+  
+  
+  #plot selected and details to sub rmd
+  #plot
+  out_file_name <- gsub(' ', '_', title)
+  t <- system.time(rmarkdown::render("countyPlots.rmd", output_file=out_file_name))
+  cat("*** render county plots  ", t, "\n")
+  
+  #create link to detail
+  cat(paste("[", title, " Details](", out_file_name, ",md)\n", sep=""))
+  
+  states_to_plot <- c("California", "New York", "Michigan", "Hawaii", "Texas", "Georgia", "Florida")
+  
+  for(state in states_to_plot){
+    title = paste(state, "Counties")
+    countyData <- getCountiesByChunk (gsub(' ', '+', state), first_day, 5,  countyPopulations)
+    out_file_name <- gsub(' ', '_', title)
+    rmarkdown::render("countyPlots.rmd", output_file=out_file_name)
     
-    first_day <- ISOdate(2020,3,1, tz="")
+    #create link to detail
+    cat(paste("[", title, " Details](", out_file_name, ",md)\n", sep=""))
     
-    selected <- getSelectedCounties(countyPopulations, first_day)
-    plotCounty(selected, "Selected Counties", subtitle)
-    
-    ca <- getCountiesByChunk ('California', first_day, 5,  countyPopulations)
-    plotCounty(ca, "California Counties", subtitle)
-    
-    ny <- getCountiesByChunk ('New+York', first_day, 5,  countyPopulations)
-    plotCounty(ny, "New Yourk Counties", subtitle)
-    
-    hi <- getCountiesByChunk ('Hawaii', first_day, 5,  countyPopulations)
-    plotCounty(hi, "Hawaii Counties", subtitle)
-    
-    tx <- getCountiesByChunk ('Texas', first_day, 5,  countyPopulations)
-    plotCounty(tx, "Texas Counties", subtitle)
-    
-    ga <- getCountiesByChunk ('Georgia', first_day, 5,  countyPopulations)
-    plotCounty(ga, "Georgia Counties", subtitle)
-    
-    fl <- getCountiesByChunk ('Florida', first_day, 5,  countyPopulations)
-    plotCounty(fl, "Florida Counties", subtitle)
-    
+    }
 }
 
-#plot data for for all counties in a state to to a mark down file for display in github
-plotCountiesOfStateToMd <- function(stateName, countyPopulations){
-  subtitle <- "Data from NY Times via covid-19.datasettes.com"
+plotTest <- function(){
+  subtitle <- paste("Data from NY Times via covid-19.datasettes.com on", Sys.Date());
   first_day <- ISOdate(2020,3,1, tz="")
-  title <- paste(stateName, "Counties")
-  county <- getCountiesByChunk (gsub(' ', '+', stateName), first_day, 5,  countyPopulations)
-  rmarkdown::render("countyPlots.rmd", output_file=paste(stateName, "Counties", sep="_"))
+  
+  countyData <- getSelectedCounties(countyPopulations, first_day)
+  title = "Selected Counties"
+  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=county, 
+                      type = c("p", "smooth"),
+                      span=0.2,
+                      subtitle = subtitle, main=title, 
+                      ylab="Slope (Deaths/Day/100,000)",
+                      xlab="Date"))
   
 }
+plotTest()
+
+
+#CreateCountyPlots(countyPopulations, ISOdate(2020,3,1, tz=""))
+
+# #plot data for for all counties in a state to to a mark down file for display in github
+# plotCountiesOfStateToMd <- function(stateName, countyPopulations){
+#   subtitle <- "Data from NY Times via covid-19.datasettes.com"
+#   first_day <- ISOdate(2020,3,1, tz="")
+#   title <- paste(stateName, "Counties")
+#  
+#   county <- getCountiesByChunk (gsub(' ', '+', stateName), first_day, 5,  countyPopulations)
+#   rmarkdown::render("countyPlots.rmd", output_file=paste(stateName, "Counties", sep="_"))
+#   
+# }
+# 
+# plotSelectedCountiesToMd <- function( countyPopulations){
+#   subtitle <- "Data from NY Times via covid-19.datasettes.com"
+#   first_day <- ISOdate(2020,3,1, tz="")
+#   title <-  "Selected Counties"
+#   
+#   county <- selected #getSelectedCounties(countyPopulations, first_day )
+#   
+#   rmarkdown::render("countyPlots.rmd", output_file="Selected_Counties")
+#   
+# }
+
+
 #plotCountiesOfStateToMd("California", countyPopulations)
 
 
 
 
-plotCountiesToMD <- function(states, countyPopulations){
-
-  for(state in states){
-    print(paste("Generating plots for counties of", state))
-    plotCountiesOfStateToMd(state, countyPopulations)
-  }
-          
-}
+# plotCountiesToMD <- function(states, countyPopulations){
+# 
+#   plotSelectedCountiesToMd
+#   for(state in states){
+#     print(paste("Generating plots for counties of", state))
+#     plotCountiesOfStateToMd(state, countyPopulations)
+#   }
+#           
+# }
 
 #plotCountiesToMD(c("California", "New York", "Michigan", "Hawaii", "Texas", "Georgia", "Florida"),
 #                 countyPopulations)
