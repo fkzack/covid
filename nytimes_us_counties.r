@@ -213,7 +213,7 @@ plotCountySummary <- function(countyData, title, subtitle){
   
   print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
                   ylab="Cases per 100,000", main=title, logY=16))
-  print(symmetricPlot(case.slope/county.population~date | county, 
+  print(symmetricPlot(100000*case.slope/county.population~date | county, 
                       data=countyData, group=county, 
                       type = c("p", "smooth"),
                       span=0.2,
@@ -344,25 +344,24 @@ CreateCountyPlots <- function(countyPopulations, first_day){
   #plot selected summary in main rmd
   
   t <- system.time( countyData <- getSelectedCounties(countyPopulations, first_day))
-  cat("*** get selected ", t, "\n")
+  print(paste("*** get selected times ", t, "\n"))
   
   
   title = "Selected Counties"
   t <- system.time(plotCountySummary(countyData, title, subtitle))
-  cat("*** plot selected ", t, "\n")
+  print(paste("*** plot selected ", t, "\n"))
   
   
   #plot selected and details to sub rmd
   #plot
   out_file_name <- gsub(' ', '_', title)
   t <- system.time(rmarkdown::render("countyPlots.rmd", output_file=out_file_name))
-  cat("*** render county plots  ", t, "\n")
+  print(paste("*** render county plots  ", t, "\n"))
   
   #create link to detail
-  links <- c(paste("[", title, " Details](", out_file_name, ",md)\n", sep=""))
+  links <- c(paste("[", title, " Details](", out_file_name, ".html)\n", sep=""))
   
   states_to_plot <- c("California", "New York", "Michigan", "Hawaii", "Texas", "Georgia", "Florida")
-  states_to_plot <- c("California")
   for(state in states_to_plot){
     title = paste(state, "Counties")
     countyData <- getCountiesByChunk (gsub(' ', '+', state), first_day, 5,  countyPopulations)
@@ -370,7 +369,7 @@ CreateCountyPlots <- function(countyPopulations, first_day){
     rmarkdown::render("countyPlots.rmd", output_file=out_file_name)
     
     #create link to detail
-    links <- c(links, paste("[", title, " Details](", out_file_name, ",md)\n", sep=""))
+    links <- c(links, paste("[", title, " Details](", out_file_name, ".html)\n", sep=""))
     
   }
   
