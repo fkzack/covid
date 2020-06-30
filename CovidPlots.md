@@ -1,6 +1,6 @@
 CovidPlots
 ================
-29 June 2020 12:26 PM PDT
+29 June 2020 06:26 PM PDT
 
   - [Covid by County](#covid-by-county)
 
