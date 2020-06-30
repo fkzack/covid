@@ -22,20 +22,24 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Covid by County  
 ### Selected Counties
 
-Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com
+
+Covid case counts and death counts by county, based on daily data from NY Times via https://covid-19.datasettes.com  
+
 ```{r, plot_counties, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 first_day <- ISOdate(2020,3,1, tz="")
 links <- CreateCountyPlots(countyPopulations, first_day)
-```
-### County Details
-```{r, plot_counties_links, echo=FALSE, results='asis', message=FALSE,warning=FALSE}
-for (l in links){
-  cat (l, "\n")
-}
 
-``` 
+```
+
+### County Details
+
+```{r, plot_counties_links, echo=FALSE, results='asis', message=FALSE,warning=FALSE}
+   for (l in links){
+      cat (l, "\n")
+   }
+```
  
- ## CDC All Deaths by Week
+## CDC All Deaths by Week
  The CDC Flu View website gives weekly deaths by state going back several years. Data entry and reporting lags by many weeks, so the last month or so of deaths will be under-reported or missing.
  
  https://gis.cdc.gov/grasp/fluview/mortality.html
@@ -52,10 +56,10 @@ for (l in links){
  
  
  
- ## Covid in US States
+## Covid in US States
  Covid positive tests, deaths, and hospitalizations by state from covidtracking.com https://covidtracking.com
 
- ### Hospitalizations
+### Hospitalizations
 
  ```{r,  state_hospital, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
      source("covidtracking_us_states.r")
@@ -63,7 +67,7 @@ for (l in links){
    print(p_hospPer)
  ```
 
- ### Tests
+### Tests
 
  ```{r,  state_positves, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
@@ -75,7 +79,7 @@ for (l in links){
    print(p_total_tests_per)
  ```
 
- ### Deaths
+### Deaths
 
  ```{r,  state_deaths, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
 
@@ -89,7 +93,7 @@ for (l in links){
  ```
 
 
- ## Covid in China
+## Covid in China
 
  Covid data from Johns Hopkins CSSE via https://covid-19.datasettes.com
  ```{r,  china, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
@@ -98,7 +102,7 @@ for (l in links){
      print(p_china_deaths)
  ```
 
- ## Covid in Scandanavia
+## Covid in Scandanavia
  ```{r,  scandanavia, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
    print(p_scandanavia)
    print(p_scandanavia_per)
