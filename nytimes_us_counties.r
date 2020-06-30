@@ -52,7 +52,7 @@ getSelectedCountiesUrl <- function(state, counties){
   #urlencode does not work correctly for some reason, so do manually
   sql_url <- gsub(" ", "+", sql_url)
   sql_url <- gsub(",", "%2c", sql_url)
-  print (sql_url)
+  #print (sql_url)
   return(sql_url)
 }
 
@@ -153,7 +153,7 @@ getCountiesByChunk <- function (state, first_day, chunk_days, population_data){
   base_url <- 'https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3E%3D+%3Ap0+and+%22date%22+%3C+%3Ap1+and+%22state%22+%3D+%3Ap2+order+by+county%2C+date+desc'
   for (i in seq(1, length(start_days)-1)){
     chunk_url <- paste(base_url,"&p0=",start_days[i], "&p1=", start_days[i+1], "&p2=", state, sep="")
-    print(paste("chunk url:", chunk_url))
+    #print(paste("chunk url:", chunk_url))
     c <- getCounties(chunk_url )
     if (is.null(counties)){
       counties <- c
@@ -337,6 +337,7 @@ plotCountyDetails <- function(countyData, title, subtitle){
 #read data  and generate plots
 #countyPopulation is the census data loaded above
 #first_day is the first day to include in the plots
+#returns links to all of the detail plots since we need to print them from rmd
 CreateCountyPlots <- function(countyPopulations, first_day){
   subtitle <- paste("Data from NY Times via covid-19.datasettes.com on", Sys.Date());
   
@@ -358,10 +359,10 @@ CreateCountyPlots <- function(countyPopulations, first_day){
   cat("*** render county plots  ", t, "\n")
   
   #create link to detail
-  cat(paste("[", title, " Details](", out_file_name, ",md)\n", sep=""))
+  links <- c(paste("[", title, " Details](", out_file_name, ",md)\n", sep=""))
   
   states_to_plot <- c("California", "New York", "Michigan", "Hawaii", "Texas", "Georgia", "Florida")
-  
+  states_to_plot <- c("California")
   for(state in states_to_plot){
     title = paste(state, "Counties")
     countyData <- getCountiesByChunk (gsub(' ', '+', state), first_day, 5,  countyPopulations)
@@ -369,9 +370,11 @@ CreateCountyPlots <- function(countyPopulations, first_day){
     rmarkdown::render("countyPlots.rmd", output_file=out_file_name)
     
     #create link to detail
-    cat(paste("[", title, " Details](", out_file_name, ",md)\n", sep=""))
+    links <- c(links, paste("[", title, " Details](", out_file_name, ",md)\n", sep=""))
     
-    }
+  }
+  
+  return (links)
 }
 
 plotTest <- function(){
@@ -388,10 +391,10 @@ plotTest <- function(){
                       xlab="Date"))
   
 }
-plotTest()
+#plotTest()
 
 
-#CreateCountyPlots(countyPopulations, ISOdate(2020,3,1, tz=""))
+#links <- CreateCountyPlots(countyPopulations, ISOdate(2020,3,1, tz=""))
 
 # #plot data for for all counties in a state to to a mark down file for display in github
 # plotCountiesOfStateToMd <- function(stateName, countyPopulations){

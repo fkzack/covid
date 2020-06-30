@@ -211,9 +211,9 @@ symmetricPlot <- function(formula1, data,   groups=NULL,
   lpf <- latticeParseFormula(formula, data=data, groups = groups, multiple = allow.multiple, 
                              outer = outer,  subscripts = TRUE,
                              drop = drop.unused.levels)
-  print (lpf$left)
-  print (lpf$right)
-  print(lpf$condition)
+  #print (lpf$left)
+  #print (lpf$right)
+  #print(lpf$condition)
   if (is.null(lpf$condition)){
     lpf$condition <- ""
   }

@@ -28,7 +28,7 @@ states <- GetStatesAndPopulation()
 #get latest corona data from covidtracking.com
 corona <- fromJSON("https://covidtracking.com/api/states")
 corona <- rename(corona, "state.abb" = state )
-print(str(corona))
+#print(str(corona))
 head(corona)
 
 
