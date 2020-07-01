@@ -57,6 +57,56 @@ getSelectedCountiesUrl <- function(state, counties){
 }
 
 
+getYesterdaysValues <- function(){
+  #  https://covid-19.datasettes.com/covid.json?sql=select+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+order+by+fips&p0=2020-06-29
+  
+  #https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+and+%22fips%22+%3E+%3Ap1+and+%22fips%22+%3C%3D+%3Ap2+order+by+date+desc+limit+101&p0=2020-06-29&p1=0&p2=2000
+  
+  # https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+and+%22fips%22+%3E+%3Ap1+and+%22fips%22+%3C%3D+%3Ap2+order+by+fips+desc+&p0=2020-06-29&p1=50000&p2=60000
+  
+  #select rowid, date, county, state, fips, cases, deaths from ny_times_us_counties where "date" = :p0 and "fips" > :p1 and "fips" <= :p2 order by fips desc 
+  base_url <- "https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+and+%22fips%22+%3E+%3Ap1+and+%22fips%22+%3C+%3Ap2+order+by+fips+asc"
+                   
+  
+  fipsStep <- 10000
+  votes <- NULL
+  for (startFips in seq(0, 50000, fipsStep)){
+    sql_url <- paste(base_url,
+                     "&p0=", Sys.Date()-1,
+                     "&p1=", startFips,
+                     "&p2=", startFips + fipsStep,
+                     sep="")
+    v <- getCounties(sql_url)
+    if(is.null(votes)){
+      votes <- v
+    } else {
+      votes <- rbind(votes,v)
+    }
+  }
+  
+  return(votes)
+  }
+    
+  # counties <- NULL
+  # base_url <- 'https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3E%3D+%3Ap0+and+%22date%22+%3C+%3Ap1+and+%22state%22+%3D+%3Ap2+order+by+county%2C+date+desc'
+  # for (i in seq(1, length(start_days)-1)){
+  #   chunk_url <- paste(base_url,"&p0=",start_days[i], "&p1=", start_days[i+1], "&p2=", state, sep="")
+  #   #print(paste("chunk url:", chunk_url))
+  #   c <- getCounties(chunk_url )
+  #   if (is.null(counties)){
+  #     counties <- c
+  #   } else {
+  #     counties <- rbind(counties,c)
+  #   }
+  # }
+    
+                   
+                   
+  
+  #chunk_url <- paste(base_url,"&p0=",start_days[i], "&p1=", start_days[i+1], "&p2=", state, sep="")
+  #counties <- getCounties(sql_url)
+
+  
 #combine several selected counties data into a single df
 addSelectedCounties <- function(selectedCounties, state, counties, population_data){
   selectedUrl <- getSelectedCountiesUrl(state, counties)
