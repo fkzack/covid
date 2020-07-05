@@ -1,6 +1,6 @@
 Florida Counties
 ================
-04 July 2020 06:30 PM PDT
+05 July 2020 06:31 AM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
