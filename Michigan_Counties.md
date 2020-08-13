@@ -1,6 +1,6 @@
 Michigan Counties
 ================
-13 August 2020 04:25 PM PDT
+13 August 2020 04:37 PM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
