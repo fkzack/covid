@@ -109,14 +109,19 @@ getYesterdaysValues <- function(){
   
 #combine several selected counties data into a single df
 addSelectedCounties <- function(selectedCounties, state, counties, population_data){
-  selectedUrl <- getSelectedCountiesUrl(state, counties)
-  selected <- getCounties(selectedUrl)
-  if (is.null(selectedCounties)){
-    selectedCounties <- selected
+  
+  
+  for (county in counties){
+    selectedUrl <- getSelectedCountiesUrl(state, c(county))
+    selected <- getCounties(selectedUrl)
+    if (is.null(selectedCounties)){
+      selectedCounties <- selected
+    }
+    else {
+      selectedCounties <- rbind(selectedCounties, selected)
+    }  
   }
-  else {
-    selectedCounties <- rbind(selectedCounties, selected)
-  }
+  
   return (selectedCounties)
 }
 
@@ -185,7 +190,7 @@ getSelectedCounties <- function(population_data, first_day) {
 }
   
 
-# break county data retrieval into smappler chunks to avoid download limits
+t# break county data retrieval into smappler chunks to avoid download limits
 # * state is the state we are pulling data for 
 # * get data for first_day and all later days
 # * get data in chuncks of chunk_days
@@ -392,7 +397,7 @@ CreateCountyPlots <- function(countyPopulations, first_day){
   subtitle <- paste("Data from NY Times via covid-19.datasettes.com on", Sys.Date());
   
   #plot selected summary in main rmd
-  
+  browser()
   t <- system.time( countyData <- getSelectedCounties(countyPopulations, first_day))
   print(paste("*** get selected times ", t, "\n"))
   
@@ -440,7 +445,9 @@ plotTest <- function(){
                       xlab="Date"))
   
 }
-#plotTest()
+
+
+plotTest()
 
 
 #links <- CreateCountyPlots(countyPopulations, ISOdate(2020,3,1, tz=""))
