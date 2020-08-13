@@ -265,21 +265,26 @@ lattice.options(panel.error=ignore)
 
 plotCountySummary <- function(countyData, title, subtitle){
   
+ if (length(unique(countyData$state)) < 2) {
+   countyData$plotGroup <- countyData$county
+   } else {
+    countyData$plotGroup <- countyData$state
+   }
   
-  print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
+  print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=plotGroup, subtitle=subtitle, 
                   ylab="Cases per 100,000", main=title, logY=16))
   print(symmetricPlot(100000*case.slope/county.population~date | county, 
-                      data=countyData, group=county, 
+                      data=countyData, group=plotGroup, 
                       type = c("p", "smooth"),
                       span=0.2,
                       subtitle = subtitle, main=title, 
                       ylab="Slope (New Cases/Day/100,000)",
                       xlab="Date"))
   
-  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
+  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=plotGroup, subtitle=subtitle, 
                   ylab="Deaths per 100,000", main=title, logY = 16))
   
-  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=county, 
+  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=plotGroup, 
                       type = c("p", "smooth"),
                       span=0.2,
                       panel.error=ignore,
@@ -303,14 +308,20 @@ countySummaryTest <- function(){
 
 plotCountyDetails <- function(countyData, title, subtitle){
   
-  print(covidPlot(cases~date | county, data=countyData, group=county,  subtitle=subtitle, main=title, logY = 16))
+  if (length(unique(countyData$state)) < 2) {
+    countyData$plotGroup <- countyData$county
+  } else {
+    countyData$plotGroup <- countyData$state
+  }
   
-  print(covidPlot(cases~date | county, data=countyData, group=county,  subtitle=subtitle, main=title), logY=10)
+  print(covidPlot(cases~date | county, data=countyData, group=plotGroup,  subtitle=subtitle, main=title, logY = 16))
   
-  print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
+  print(covidPlot(cases~date | county, data=countyData, group=plotGroup,  subtitle=subtitle, main=title), logY=10)
+  
+  print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=plotGroup, subtitle=subtitle, 
                   ylab="Cases per 100,000", main=title))
   
-  print(symmetricPlot(case.slope~date | county, data=countyData, group=county, 
+  print(symmetricPlot(case.slope~date | county, data=countyData, group=plotGroup, 
                       type = c("p", "smooth"),
                       span=0.2,
                       subtitle = subtitle, main=title, 
@@ -318,22 +329,22 @@ plotCountyDetails <- function(countyData, title, subtitle){
                       xlab="Date"))
   
     
-  print(covidPlot(deaths~date | county, data=countyData, group=county, subtitle=subtitle, main=title))
+  print(covidPlot(deaths~date | county, data=countyData, group=plotGroup, subtitle=subtitle, main=title))
   
-  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
+  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=plotGroup, subtitle=subtitle, 
                   logY=FALSE, ylab="Deaths per 100,000", main=title))
   
-  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=county, subtitle=subtitle, 
+  print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=plotGroup, subtitle=subtitle, 
                   ylab="Deaths per 100,000", main=title))
   
-  print(symmetricPlot(death.slope~date | county, data=countyData, group=county, 
+  print(symmetricPlot(death.slope~date | county, data=countyData, group=plotGroup, 
                       type = c("p", "smooth"),
                       span=0.2,
                       subtitle = subtitle, main=title, 
                       ylab="Slope (Deaths/Day)",
                       xlab="Date"))
   
-  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=county, 
+  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=plotGroup, 
                       type = c("p", "smooth"),
                       span=0.2,
                       subtitle = subtitle, main=title, 
@@ -397,7 +408,7 @@ CreateCountyPlots <- function(countyPopulations, first_day){
   subtitle <- paste("Data from NY Times via covid-19.datasettes.com on", Sys.Date());
   
   #plot selected summary in main rmd
-  browser()
+  #browser()
   t <- system.time( countyData <- getSelectedCounties(countyPopulations, first_day))
   print(paste("*** get selected times ", t, "\n"))
   
@@ -431,6 +442,12 @@ CreateCountyPlots <- function(countyPopulations, first_day){
   return (links)
 }
 
+testCountyPlots <- function(){
+  first_day <- ISOdate(2020,3,1, tz="")
+  CreateCountyPlots(countyPopulations, first_day)
+  
+}
+
 plotTest <- function(){
   subtitle <- paste("Data from NY Times via covid-19.datasettes.com on", Sys.Date());
   first_day <- ISOdate(2020,3,1, tz="")
@@ -447,7 +464,7 @@ plotTest <- function(){
 }
 
 
-plotTest()
+#plotTest()
 
 
 #links <- CreateCountyPlots(countyPopulations, ISOdate(2020,3,1, tz=""))
