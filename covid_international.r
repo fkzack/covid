@@ -5,6 +5,7 @@ library(lattice)
 library(latticeExtra)
 library(lubridate)
 library(plyr)
+library(zoo)
 
 rm(list=ls())
 
@@ -65,13 +66,19 @@ for (i in seq(1, length(start_days)-1)){
 }
 
 
-#sweden is now reporting by individual state, so need to aggreate them
+#sweden is now reporting by individual state, so need to aggregate them
 sweden <- subset(covid, country_or_region=="Sweden")
-c2 <- subset(covid, country_or_region != "Sweden")
+#values for different states are missing on different days, so interpolate in the intermediate days
+sweden$deaths <- ( sweden  %>% group_by(location) %>%mutate(interpDeaths = na.approx(deaths,na.rm=F)))$interpDeaths
+sweden$confirmed <- (sweden  %>% group_by(location) %>%mutate(interpConfirmed = na.approx(confirmed,na.rm=F)))$interpConfirmed
+#now sum all states by day
 s2 <- ddply(sweden,"day",numcolwise(sum))
 s2$date <-  as.POSIXct(s2$day)
 s2$country_or_region <- "Sweden"
 s2$location <- "Sweden"
+
+#replace original sweden data with interpolated and summed data
+c2 <- subset(covid, country_or_region != "Sweden")
 covid <- rbind.fill(c2,s2)
 
 
