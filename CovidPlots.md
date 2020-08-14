@@ -1,6 +1,6 @@
 CovidPlots
 ================
-14 August 2020 11:00 AM PDT
+14 August 2020 12:26 PM PDT
 
   - [Covid by County](#covid-by-county)
       - [Selected Counties](#selected-counties)
