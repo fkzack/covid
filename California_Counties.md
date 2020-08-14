@@ -1,6 +1,6 @@
 California Counties
 ================
-14 August 2020 06:26 AM PDT
+14 August 2020 11:00 AM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
