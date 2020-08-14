@@ -68,9 +68,21 @@ for (i in seq(1, length(start_days)-1)){
 
 #sweden is now reporting by individual state, so need to aggregate them
 sweden <- subset(covid, country_or_region=="Sweden")
+sweden$date <- as.POSIXct(sweden$day)
+#sweden <- subset(sweden, date > ISOdate(2020,8,1))
+
 #values for different states are missing on different days, so interpolate in the intermediate days
-sweden$deaths <- ( sweden  %>% group_by(location) %>%mutate(interpDeaths = na.approx(deaths,na.rm=F)))$interpDeaths
-sweden$confirmed <- (sweden  %>% group_by(location) %>%mutate(interpConfirmed = na.approx(confirmed,na.rm=F)))$interpConfirmed
+#sweden<-  sweden  %>% group_by(location) %>%mutate(interpDeaths = na.approx(deaths,na.rm=F))
+first_day <- min(sweden$date)
+last_day <- max(sweden$date)
+dates <- seq(first_day, last_day, "days")
+locations=unique(sweden$location)
+dl = merge(dates, locations)
+names(dl) = c("date", "location")
+sweden <- merge(x=sweden, y=dl, by=c('location', 'date'), all.y=T)
+xyplot(deaths~date, data=sweden, group=location)
+sweden <- sweden  %>% group_by(location) %>%mutate(deaths = na.approx(deaths,na.rm=F))
+sweden <- sweden  %>% group_by(location) %>%mutate(confirmed = na.approx(confirmed,na.rm=F))
 #now sum all states by day
 s2 <- ddply(sweden,"day",numcolwise(sum))
 s2$date <-  as.POSIXct(s2$day)
