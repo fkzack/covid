@@ -6,6 +6,7 @@ library(latticeExtra)
 library(lubridate)
 library(plyr)
 library(zoo)
+library(dplyr)
 
 rm(list=ls())
 
@@ -55,7 +56,8 @@ for (i in seq(1, length(start_days)-1)){
   #China is sometimes mainland china, sometimes china,  so make all China
   chunk$country_or_region <-  ifelse(startsWith(chunk$country_or_region, "Mainland"), "China", chunk$country_or_region)
   
-  chunk$location   <- paste(chunk$country_or_region, ifelse(is.na(chunk$province_or_state), "", chunk$province_or_state))
+  chunk$location   <- trimws(paste(chunk$country_or_region, ifelse(is.na(chunk$province_or_state), "", chunk$province_or_state)))
+  
   
   
   if (is.null(covid)){
@@ -69,29 +71,46 @@ for (i in seq(1, length(start_days)-1)){
 #sweden is now reporting by individual state, so need to aggregate them
 sweden <- subset(covid, country_or_region=="Sweden")
 sweden$date <- as.POSIXct(sweden$day)
-#sweden <- subset(sweden, date > ISOdate(2020,8,1))
+#sweden_save <- sweden
+#sweden <- sweden_save
 
 #values for different states are missing on different days, so interpolate in the intermediate days
 #sweden<-  sweden  %>% group_by(location) %>%mutate(interpDeaths = na.approx(deaths,na.rm=F))
-first_day <- min(sweden$date)
-last_day <- max(sweden$date)
-dates <- seq(first_day, last_day, "days")
-locations=unique(sweden$location)
+#prior to 6/5/2020 data was for whole country
+switchover_time = as.Date(ISOdate(2020,6,5))
+sweden_prior <- subset(sweden, date < switchover_time)
+sweden_after  <- subset(sweden, date > switchover_time)
+
+#different states are missing different dates, so fill in all possible date/state combos
+first_day <- min(sweden_after$date)
+last_day <- max(sweden_after$date)
+dates <- seq(first_day, last_day, "day")
+dates <- round_date(dates, "day")
+locations=unique(sweden_after$location)
 dl = merge(dates, locations)
 names(dl) = c("date", "location")
-sweden <- merge(x=sweden, y=dl, by=c('location', 'date'), all.y=T)
-xyplot(deaths~date, data=sweden, group=location)
-sweden <- sweden  %>% group_by(location) %>%mutate(deaths = na.approx(deaths,na.rm=F))
-sweden <- sweden  %>% group_by(location) %>%mutate(confirmed = na.approx(confirmed,na.rm=F))
+sweden_after <- merge(x=sweden_after, y=dl, by=c('location', 'date'), all.y=T, all.x = T)
+#xyplot(deaths~date, data=sweden_after, group=location)
+
+#interpolate in missing days for each location 
+sweden_after <-  sweden_after  %>% group_by(location) %>%mutate(deaths = na.approx(deaths, na.rm=F))
+sweden_after <-  sweden_after  %>% group_by(location) %>%mutate(confirmed = na.approx(confirmed, na.rm=F))
+sweden_after <-  sweden_after  %>% group_by(location) %>%mutate(recovered = na.approx(recovered, na.rm=F))
+#xyplot(deaths~date, data=sweden_after, group=location, auto.key = T)
+
 #now sum all states by day
-s2 <- ddply(sweden,"day",numcolwise(sum))
-s2$date <-  as.POSIXct(s2$day)
+s2 <- sweden_after %>% dplyr::group_by(date) %>% dplyr::summarise( confirmed = sum(confirmed, na.rm=T), 
+                                                             deaths = sum(deaths, na.rm=T),
+                                                             recovered = sum(recovered, na.rm=T)
+                                                             )
+
 s2$country_or_region <- "Sweden"
 s2$location <- "Sweden"
 
-#replace original sweden data with interpolated and summed data
+#replace original sweden data with interpolated data
 c2 <- subset(covid, country_or_region != "Sweden")
-covid <- rbind.fill(c2,s2)
+covid <- plyr::rbind.fill(c2,s2)
+covid <- plyr::rbind.fill(covid,sweden_prior)
 
 
 
