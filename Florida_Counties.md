@@ -1,6 +1,6 @@
 Florida Counties
 ================
-03 September 2020 12:33 PM PDT
+04 September 2020 06:32 AM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
