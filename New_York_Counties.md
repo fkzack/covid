@@ -1,6 +1,6 @@
 New York Counties
 ================
-07 September 2020 06:27 PM PDT
+08 September 2020 06:27 AM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
