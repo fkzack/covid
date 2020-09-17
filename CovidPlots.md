@@ -1,6 +1,6 @@
 CovidPlots
 ================
-16 September 2020 06:26 PM PDT
+17 September 2020 06:26 AM PDT
 
   - [Covid by County](#covid-by-county)
       - [Selected Counties](#selected-counties)
