@@ -1,6 +1,6 @@
 Georgia Counties
 ================
-26 October 2020 06:30 AM PDT
+26 October 2020 12:31 PM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
