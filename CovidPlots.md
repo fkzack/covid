@@ -1,6 +1,6 @@
 CovidPlots
 ================
-28 October 2020 06:26 PM PDT
+30 October 2020 06:26 PM PDT
 
   - [Covid by County](#covid-by-county)
       - [Selected Counties](#selected-counties)
