@@ -26,8 +26,9 @@ source("covidPlot.r")
 states <- GetStatesAndPopulation()
 
 #get latest corona data from covidtracking.com
-corona <- fromJSON("https://covidtracking.com/api/states")
-corona <- rename(corona, "state.abb" = state )
+#corona <- fromJSON("https://covidtracking.com/api/states")
+corona <- fromJSON("https://covidtracking.com/api//v1/states/daily.json")
+#corona <- rename(corona, "state.abb" = state )
 #print(str(corona))
 head(corona)
 
