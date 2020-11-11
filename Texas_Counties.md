@@ -1,6 +1,6 @@
 Texas Counties
 ================
-11 November 2020 06:29 AM PST
+11 November 2020 12:29 PM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
