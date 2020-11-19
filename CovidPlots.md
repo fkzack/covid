@@ -1,6 +1,6 @@
 CovidPlots
 ================
-18 November 2020 06:26 PM PST
+19 November 2020 06:26 AM PST
 
   - [Covid by County](#covid-by-county)
       - [Selected Counties](#selected-counties)
