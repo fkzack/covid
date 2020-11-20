@@ -1,6 +1,6 @@
 Florida Counties
 ================
-19 November 2020 06:32 PM PST
+20 November 2020 06:32 AM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
