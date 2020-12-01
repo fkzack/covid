@@ -1,6 +1,6 @@
 Michigan Counties
 ================
-01 December 2020 06:27 AM PST
+01 December 2020 12:28 PM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
