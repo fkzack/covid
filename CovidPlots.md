@@ -1,6 +1,6 @@
 CovidPlots
 ================
-09 December 2020 06:26 PM PST
+10 December 2020 06:26 AM PST
 
   - [Covid by County](#covid-by-county)
       - [Selected Counties](#selected-counties)
