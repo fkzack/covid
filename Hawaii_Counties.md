@@ -1,6 +1,6 @@
 Hawaii Counties
 ================
-16 December 2020 06:28 PM PST
+17 December 2020 06:29 AM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
