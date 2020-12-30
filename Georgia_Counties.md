@@ -1,6 +1,6 @@
 Georgia Counties
 ================
-30 December 2020 06:32 AM PST
+30 December 2020 12:31 PM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
