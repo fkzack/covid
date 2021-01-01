@@ -1,6 +1,6 @@
 CovidPlots
 ================
-01 January 2021 06:26 AM PST
+01 January 2021 12:26 PM PST
 
   - [Covid by County](#covid-by-county)
       - [Selected Counties](#selected-counties)
