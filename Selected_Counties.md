@@ -1,6 +1,6 @@
 Selected Counties
 ================
-02 January 2021 06:26 AM PST
+02 January 2021 12:26 PM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
