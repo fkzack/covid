@@ -16,13 +16,18 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Covid in US States
 Covid positive tests, deaths, and hospitalizations by state from covidtracking.com https://covidtracking.com
  
-```{r,  state_data, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+```{r,  state_plots, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
      source("covidtracking_us_states.r")
      print (p_deathsPerLinear)
      print (p_deathsPerLinearLastMonth)
      link <- CreateStatePlots()
-     cat(link, "\n")
+     
 ```
+
+```{r,  state_links, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+   cat(link, "\n")
+```
+
 
 
 
