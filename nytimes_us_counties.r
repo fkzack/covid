@@ -57,35 +57,35 @@ getSelectedCountiesUrl <- function(state, counties){
 }
 
 
-getYesterdaysValues <- function(){
-  #  https://covid-19.datasettes.com/covid.json?sql=select+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+order+by+fips&p0=2020-06-29
-  
-  #https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+and+%22fips%22+%3E+%3Ap1+and+%22fips%22+%3C%3D+%3Ap2+order+by+date+desc+limit+101&p0=2020-06-29&p1=0&p2=2000
-  
-  # https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+and+%22fips%22+%3E+%3Ap1+and+%22fips%22+%3C%3D+%3Ap2+order+by+fips+desc+&p0=2020-06-29&p1=50000&p2=60000
-  
-  #select rowid, date, county, state, fips, cases, deaths from ny_times_us_counties where "date" = :p0 and "fips" > :p1 and "fips" <= :p2 order by fips desc 
-  base_url <- "https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+and+%22fips%22+%3E+%3Ap1+and+%22fips%22+%3C+%3Ap2+order+by+fips+asc"
-                   
-  
-  fipsStep <- 10000
-  votes <- NULL
-  for (startFips in seq(0, 50000, fipsStep)){
-    sql_url <- paste(base_url,
-                     "&p0=", Sys.Date()-1,
-                     "&p1=", startFips,
-                     "&p2=", startFips + fipsStep,
-                     sep="")
-    v <- getCounties(sql_url)
-    if(is.null(votes)){
-      votes <- v
-    } else {
-      votes <- rbind(votes,v)
-    }
-  }
-  
-  return(votes)
-  }
+# getYesterdaysValues <- function(){
+#   #  https://covid-19.datasettes.com/covid.json?sql=select+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+order+by+fips&p0=2020-06-29
+#   
+#   #https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+and+%22fips%22+%3E+%3Ap1+and+%22fips%22+%3C%3D+%3Ap2+order+by+date+desc+limit+101&p0=2020-06-29&p1=0&p2=2000
+#   
+#   # https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+and+%22fips%22+%3E+%3Ap1+and+%22fips%22+%3C%3D+%3Ap2+order+by+fips+desc+&p0=2020-06-29&p1=50000&p2=60000
+#   
+#   #select rowid, date, county, state, fips, cases, deaths from ny_times_us_counties where "date" = :p0 and "fips" > :p1 and "fips" <= :p2 order by fips desc 
+#   base_url <- "https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3D+%3Ap0+and+%22fips%22+%3E+%3Ap1+and+%22fips%22+%3C+%3Ap2+order+by+fips+asc"
+#                    
+#   
+#   fipsStep <- 10000
+#   votes <- NULL
+#   for (startFips in seq(0, 50000, fipsStep)){
+#     sql_url <- paste(base_url,
+#                      "&p0=", Sys.Date()-1,
+#                      "&p1=", startFips,
+#                      "&p2=", startFips + fipsStep,
+#                      sep="")
+#     v <- getCounties(sql_url)
+#     if(is.null(votes)){
+#       votes <- v
+#     } else {
+#       votes <- rbind(votes,v)
+#     }
+#   }
+#   
+#   return(votes)
+#   }
     
   # counties <- NULL
   # base_url <- 'https://covid-19.datasettes.com/covid.json?sql=select+rowid%2C+date%2C+county%2C+state%2C+fips%2C+cases%2C+deaths+from+ny_times_us_counties+where+%22date%22+%3E%3D+%3Ap0+and+%22date%22+%3C+%3Ap1+and+%22state%22+%3D+%3Ap2+order+by+county%2C+date+desc'
@@ -270,27 +270,19 @@ plotCountySummary <- function(countyData, title, subtitle){
    } else {
     countyData$plotGroup <- countyData$state
    }
-  
-  print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=plotGroup, subtitle=subtitle, 
-                  ylab="Cases per 100,000", main=title, logY=16))
-  print(symmetricPlot(100000*case.slope/county.population~date | county, 
-                      data=countyData, group=plotGroup, 
-                      type = c("p", "smooth"),
-                      span=0.2,
-                      subtitle = subtitle, main=title, 
-                      ylab="Slope (New Cases/Day/100,000)",
-                      xlab="Date"))
+ 
   
   print(covidPlot(100000*deaths/county.population~date | county, data=countyData, group=plotGroup, subtitle=subtitle, 
                   ylab="Deaths per 100,000", main=title, logY = 16))
   
-  print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=plotGroup, 
-                      type = c("p", "smooth"),
-                      span=0.2,
-                      panel.error=ignore,
-                      subtitle = subtitle, main=title, 
-                      ylab="Slope (Deaths/Day/100,000)",
-                      xlab="Date"))
+  month_ago = Sys.Date() - months(1)
+  
+  print(covidPlot(100000*deaths/county.population~date | county, data=subset(countyData$date > month_ago) , group=plotGroup, subtitle=subtitle, 
+                  ylab="Deaths per 100,000", main=title, logY = 16))
+  
+  
+  
+  
   
 }
 
@@ -314,12 +306,33 @@ plotCountyDetails <- function(countyData, title, subtitle){
     countyData$plotGroup <- countyData$state
   }
   
+  
+  #  print(symmetricPlot(100000*case.slope/county.population~date | county, 
+  #                      data=countyData, group=plotGroup, 
+  #                      type = c("p", "smooth"),
+  #                      span=0.2,
+  #                      subtitle = subtitle, main=title, 
+  #                      ylab="Slope (New Cases/Day/100,000)",
+  #                      xlab="Date"))  
+  
+  # print(symmetricPlot(100000*death.slope/county.population~date | county, data=countyData, group=plotGroup, 
+  #                      type = c("p", "smooth"),
+  #                     span=0.2,
+  #                      panel.error=ignore,
+  #                     subtitle = subtitle, main=title, 
+  #                      ylab="Slope (Deaths/Day/100,000)",
+  #                      xlab="Date"))
+  
+  
   print(covidPlot(cases~date | county, data=countyData, group=plotGroup,  subtitle=subtitle, main=title, logY = 16))
   
   print(covidPlot(cases~date | county, data=countyData, group=plotGroup,  subtitle=subtitle, main=title), logY=10)
   
   print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=plotGroup, subtitle=subtitle, 
                   ylab="Cases per 100,000", main=title))
+  
+    print(covidPlot(100000*cases/county.population~date | county, data=countyData, group=plotGroup, subtitle=subtitle, 
+                    ylab="Cases per 100,000", main=title, logY=16))
   
   print(symmetricPlot(case.slope~date | county, data=countyData, group=plotGroup, 
                       type = c("p", "smooth"),
