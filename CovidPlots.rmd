@@ -73,6 +73,10 @@ links <- CreateCountyPlots(countyPopulations, first_day)
    print(p_year_on_year)
  
  ```
+ 
+ ```{r,  international, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+  source("covid_international.r")
+```
 
 ## Covid in Scandanavia
  ```{r,  scandanavia, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
@@ -92,7 +96,7 @@ links <- CreateCountyPlots(countyPopulations, first_day)
 
  Covid data from Johns Hopkins CSSE via https://covid-19.datasettes.com
  ```{r,  china, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
-     source("covid_international.r")
+     
      print(p_china)
      print(p_china_deaths)
  ```

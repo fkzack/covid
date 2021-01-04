@@ -1,6 +1,6 @@
 Florida Counties
 ================
-04 January 2021 02:19 PM PST
+04 January 2021 02:56 PM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
