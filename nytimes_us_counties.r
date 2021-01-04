@@ -277,7 +277,7 @@ plotCountySummary <- function(countyData, title, subtitle){
   
   month_ago = Sys.Date() - months(1)
   
-  print(covidPlot(100000*deaths/county.population~date | county, data=subset(countyData$date > month_ago) , group=plotGroup, subtitle=subtitle, 
+  print(covidPlot(100000*deaths/county.population~date | county, data=subset(countyData, countyData$date > month_ago) , group=plotGroup, subtitle=subtitle, 
                   ylab="Deaths per 100,000", main=title, logY = 16))
   
   

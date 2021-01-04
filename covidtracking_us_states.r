@@ -142,6 +142,13 @@ p_deltaDeaths <- symmetricPlot(pmax(-10, deathIncrease) ~ date | state.abb, grou
 p_deathsPerLinear <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=dailies, 
                          subtitle=label, logY=FALSE,  ylab = "deaths per 100,000", main="US States")
 
+month_ago = Sys.Date() - months(1)
+p_deathsPerLinearLastMonth <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=subset(dailies, dailies$date > month_ago), 
+                               subtitle=label, logY=FALSE,  ylab = "deaths per 100,000", main="US States")
+
+
+
+
 
 p_deathsPer <- covidPlot(100000*death/state.population ~ date | state.abb, group=state.abb, data=dailies, 
                          subtitle=label, ylab = "deaths per 100,000", main="US States")
@@ -187,6 +194,15 @@ showColorPalette<- function (pal){
   image(df$x, 1, as.matrix(df$x), col=rgb(df$col, maxColorValue = 255))
   
   
+}
+
+CreateStatePlots <- function(){
+  out_file_name = "statePlots"
+  title <- "State"
+  t <- system.time(rmarkdown::render("statePlots.rmd", output_file = "statePlots"))
+  print(paste("*** render state plots  ", t, "\n"))
+  link <- paste("[", title, " Details](", out_file_name, ".html)\n", sep="")
+  return(link)
 }
 
 # par(mfcol=c(3,1))
