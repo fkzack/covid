@@ -24,7 +24,7 @@ Covid positive tests, deaths, and hospitalizations by state from covidtracking.c
      
 ```
 
-```{r,  state_links, echo=FALSE, results='hide', message=FALSE,warning=FALSE}
+```{r,  state_links, echo=FALSE, results='asis', message=FALSE,warning=FALSE}
    cat(link, "\n")
 ```
 

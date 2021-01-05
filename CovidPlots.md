@@ -1,6 +1,6 @@
 CovidPlots
 ================
-04 January 2021 03:42 PM PST
+04 January 2021 04:20 PM PST
 
   - [Covid in US States](#covid-in-us-states)
   - [Covid by County](#covid-by-county)
@@ -16,6 +16,8 @@ Covid positive tests, deaths, and hospitalizations by state from
 covidtracking.com <https://covidtracking.com>
 
 <img src="CovidPlots_files/figure-gfm/state_plots-1.svg" width="4800" /><img src="CovidPlots_files/figure-gfm/state_plots-2.svg" width="4800" />
+
+[State Details](statePlots.html)
 
 ## Covid by County
 
