@@ -1,6 +1,6 @@
 Georgia Counties
 ================
-08 January 2021 06:36 PM PST
+09 January 2021 06:35 AM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
