@@ -1,6 +1,6 @@
 CovidPlots
 ================
-09 January 2021 12:26 PM PST
+09 January 2021 06:26 PM PST
 
   - [Covid in US States](#covid-in-us-states)
   - [Covid by County](#covid-by-county)
