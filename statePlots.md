@@ -1,6 +1,6 @@
 State
 ================
-18 January 2021 12:30 PM PST
+18 January 2021 06:30 PM PST
 
   - [Deaths](#deaths)
   - [Tests](#tests)
