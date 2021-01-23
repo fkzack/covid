@@ -1,6 +1,6 @@
 California Counties
 ================
-22 January 2021 06:31 PM PST
+23 January 2021 06:31 AM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
