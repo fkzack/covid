@@ -1,6 +1,6 @@
 New York Counties
 ================
-23 January 2021 06:32 PM PST
+24 January 2021 06:32 AM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
