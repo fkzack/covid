@@ -1,6 +1,6 @@
 Michigan Counties
 ================
-04 February 2021 06:33 AM PST
+04 February 2021 12:33 PM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
