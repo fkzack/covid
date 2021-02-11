@@ -1,6 +1,6 @@
 Texas Counties
 ================
-11 February 2021 06:35 AM PST
+11 February 2021 12:34 PM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
