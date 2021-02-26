@@ -1,6 +1,6 @@
 Hawaii Counties
 ================
-25 February 2021 06:34 PM PST
+26 February 2021 06:34 AM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
