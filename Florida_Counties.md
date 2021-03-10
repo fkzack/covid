@@ -1,6 +1,6 @@
 Florida Counties
 ================
-09 March 2021 06:38 PM PST
+10 March 2021 06:38 AM PST
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
