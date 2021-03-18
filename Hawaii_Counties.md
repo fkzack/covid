@@ -1,6 +1,6 @@
 Hawaii Counties
 ================
-17 March 2021 12:34 PM PDT
+17 March 2021 06:34 PM PDT
 
 Covid case counts and death counts by county, based on daily data from
 NY Times via <https://covid-19.datasettes.com>
